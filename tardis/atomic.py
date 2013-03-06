@@ -17,7 +17,6 @@ import pandas as pd
 
 try:
     import sqlparse
-
     sqlparse_available = True
 except ImportError:
     sqlparse_available = False
