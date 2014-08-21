@@ -187,7 +187,7 @@ int64_t montecarlo_one_packet_loop(storage_model_t *storage, rpacket_t *packet,
   Getter and setter methods.
 */
 
-inline double rpacket_get_nu(rpacket_t *packet)
+extern inline double rpacket_get_nu(rpacket_t *packet)
 {
   return packet->nu;
 }
@@ -207,7 +207,7 @@ inline void rpacket_set_mu(rpacket_t *packet, double mu)
   packet->mu = mu;
 }
 
-inline double rpacket_get_energy(rpacket_t *packet)
+extern inline double rpacket_get_energy(rpacket_t *packet)
 {
   return packet->energy;
 }

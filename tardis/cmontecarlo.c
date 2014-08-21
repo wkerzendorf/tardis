@@ -105,7 +105,7 @@ inline double compute_distance2boundary(rpacket_t *packet, storage_model_t *stor
     }
 }
 
-inline tardis_error_t compute_distance2line(rpacket_t *packet, storage_model_t *storage, double *result)
+extern inline tardis_error_t compute_distance2line(rpacket_t *packet, storage_model_t *storage, double *result)
 {
   tardis_error_t ret_val = TARDIS_ERROR_OK;
   if (rpacket_get_last_line(packet))
@@ -421,7 +421,7 @@ void montecarlo_line_scatter(rpacket_t *packet, storage_model_t *storage, double
     }
 }
 
-inline void montecarlo_compute_distances(rpacket_t *packet, storage_model_t *storage)
+extern inline void montecarlo_compute_distances(rpacket_t *packet, storage_model_t *storage)
 {
   // Check if the last line was the same nu as the current line.
   if (rpacket_get_close_line(packet))
@@ -441,7 +441,7 @@ inline void montecarlo_compute_distances(rpacket_t *packet, storage_model_t *sto
     }
 }
 
-inline montecarlo_event_handler_t get_event_handler(rpacket_t *packet, storage_model_t *storage, double *distance)
+extern inline montecarlo_event_handler_t get_event_handler(rpacket_t *packet, storage_model_t *storage, double *distance)
 {
   double d_boundary, d_electron, d_line;
   montecarlo_compute_distances(packet, storage);
@@ -501,7 +501,7 @@ int64_t montecarlo_one_packet_loop(storage_model_t *storage, rpacket_t *packet, 
   return rpacket_get_status(packet) == TARDIS_PACKET_STATUS_REABSORBED ? 1 : 0;
 }
 
-inline tardis_error_t rpacket_init(rpacket_t *packet, storage_model_t *storage, int packet_index, int virtual_packet_flag)
+extern inline tardis_error_t rpacket_init(rpacket_t *packet, storage_model_t *storage, int packet_index, int virtual_packet_flag)
 {
   double nu_line;
   double current_r;
