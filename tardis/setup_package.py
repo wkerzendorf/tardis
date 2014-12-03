@@ -15,20 +15,22 @@ randomkit_files = ['tardis/randomkit/rk_isaac.c', 'tardis/randomkit/rk_mt.c',
 
 
 def get_extensions():
-    extra_compile_args, extra_link_args = _get_compile_link_args()
+    (extra_compile_args, extra_link_args,
+     compile_openmp) = _get_compile_link_args()
     return [Extension('tardis.montecarlo',
                       ['tardis/montecarlo.pyx', 'tardis/cmontecarlo.c'] +
                       randomkit_files,
                       include_dirs=['tardis/randomkit', np.get_include()],
                       extra_compile_args= extra_compile_args,
                       extra_link_args= extra_link_args,
-                      cython_compile_time_env = {'OPENMP': True},
+                      cython_compile_time_env = {'OPENMP': compile_openmp},
                       )]
 
 ##OpenMP
 
 def hasfunction(cc, funcname, include=None, extra_postargs=None):
-    # From http://stackoverflow.com/questions/7018879/disabling-output-when-compiling-with-distutils
+    # From http://stackoverflow.com/questions/7018879/
+    # disabling-output-when-compiling-with-distutils
     tmpdir = tempfile.mkdtemp(prefix='hasfunction-')
     devnull = oldstderr = None
     try:
@@ -83,9 +85,9 @@ def _get_compile_link_args():
     if (no_openmp is None or no_openmp==False) and has_openmp:
         extra_compile_args = ['-fopenmp']
         extra_link_args = ['-lgomp']
-
+        compile_openmp = True
     else:
         extra_compile_args = []
         extra_link_args = []
-
-    return extra_compile_args, extra_link_args
+        compile_openmp = False
+    return extra_compile_args, extra_link_args, compile_openmp
