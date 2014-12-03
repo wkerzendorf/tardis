@@ -22,7 +22,7 @@ def get_extensions():
                       include_dirs=['tardis/randomkit', np.get_include()],
                       extra_compile_args= extra_compile_args,
                       extra_link_args= extra_link_args,
-                      pyrex_compile_time_env = {'OPENMP': True}
+                      define_macros = [('OPENMP', True)],
                       )]
 
 ##OpenMP
@@ -62,7 +62,7 @@ def hasfunction(cc, funcname, include=None, extra_postargs=None):
             os.dup2(oldstderr, sys.stderr.fileno())
         if devnull is not None:
             devnull.close()
-            #shutil.rmtree(tmpdir)
+            shutil.rmtree(tmpdir)
 
 
 def detect_openmp():
