@@ -1,5 +1,5 @@
 #setting the right include
-from setuptools import Extension
+from Cython.Distutils import  Extension
 import numpy as np
 import os
 import sys
@@ -22,7 +22,7 @@ def get_extensions():
                       include_dirs=['tardis/randomkit', np.get_include()],
                       extra_compile_args= extra_compile_args,
                       extra_link_args= extra_link_args,
-                      define_macros = [('OPENMP', True)],
+                      cython_compile_time_env = {'OPENMP': True},
                       )]
 
 ##OpenMP
