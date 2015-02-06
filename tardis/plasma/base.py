@@ -48,6 +48,9 @@ class BasePlasma(object):
                         plasma_module.name, input))
                 self.graph.add_edge(input, plasma_module.name)
 
+
+
+
             
 
 
@@ -65,6 +68,27 @@ class BasePlasma(object):
         def update_plasma(self, **kwargs):
             for key, value in kwargs.items():
                 pass
+
+    def get_plasma_todo(self,graph, changed_modules):
+        """
+        returns a list of all plasma models which are affected by the  changed_modules due to there dependency in the
+        the plasma_graph.
+        @param graph: <Type 'NetworkX DiGraph'> The plasma grap as
+        @param changed_modules: <Type 'list'> all modules changed in the plasma
+        @return: <Type 'list'> all affected modules.
+        """
+        descendants_ob = []
+
+        for module in changed_modules:
+            descendants_ob+= nx.descendants(graph, module)
+
+        descendants_ob = list(set(descendants_ob))
+        sort_order = nx.topological_sort(graph)
+        sort_order_dict = {sort_order[i]: i for i in range(0,len(sort_order))}
+        descendants_ob.sort(key=lambda val: sort_order_dict[val[1]])
+
+        return descendants_ob
+
 
 
 
