@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from astropy import units as u, constants as const
 
+from tardis import macro_atom
 from tardis.plasma.properties.base import ProcessingPlasmaProperty
 
 logger = logging.getLogger(__name__)
@@ -125,6 +126,13 @@ class TauSobolev(ProcessingPlasmaProperty):
 
 
 class BetaSobolev(ProcessingPlasmaProperty):
+
     name = 'beta_sobolev'
 
-    pass
+    def __init__(self,plama_parent):
+        super(BetaSobolev, self).__init__(plasma_parent)
+
+        tau_sovolevs = TauSobolev.calculate(lines, levels, level_number_density, lines_upper_level_index, lines_lower_level_index, time_explosion)
+        self.beta_sobolevs = np.zeros_like(tau_sobolevs.values)
+
+        macro_atom.calculate_beta_sobolev(tau_sobolevs.values.ravel(order='F'), self.beta_sobolevs.ravel(order='F'))
