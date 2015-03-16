@@ -129,10 +129,30 @@ class BetaSobolev(ProcessingPlasmaProperty):
 
     name = 'beta_sobolev'
 
-    def __init__(self,plama_parent):
+    def __init__(self, plama_parent, lines, levels, level_number_density, lines_upper_level_index,
+                lines_lower_level_index, time_explosion, nlte_config=None, j_blues=None):
+
         super(BetaSobolev, self).__init__(plasma_parent)
 
-        tau_sovolevs = TauSobolev.calculate(lines, levels, level_number_density, lines_upper_level_index, lines_lower_level_index, time_explosion)
-        self.beta_sobolevs = np.zeros_like(tau_sobolevs.values)
+        self.nlte_config = nlte_config
+        self.j_blues = j_blues
 
-        macro_atom.calculate_beta_sobolev(tau_sobolevs.values.ravel(order='F'), self.beta_sobolevs.ravel(order='F'))
+        self.tau_sobolevs = TauSobolev().calculate(lines, levels, level_number_density, lines_upper_level_index, lines_lower_level_index, time_explosion)
+        self.beta_sobolevs = np.zeros_like(self.tau_sobolevs.values)
+
+    def precalculate_beta_sobolevs():      
+        macro_atom.calculate_beta_sobolev(self.tau_sobolevs.values.ravel(order='F'), self.beta_sobolevs.ravel(order='F'))
+
+        self.beta_sobolevs_precalculated = True
+
+    def set_beta_sobolevs():
+        if self.nlte_config.get('coronal_approximation', False):
+            beta_sobolevs = np.ones_like(self.beta_sobolevs)
+            j_blues = np.zeros_like(self.j_blues)
+            logger.info('using coronal approximation = setting beta_sobolevs to 1 AND j_blues to 0')
+        else if self.nlte_config.get('classical_nebular', False):
+            beta_sobolevs = np.ones_like(self.beta_sobolevs)
+            logger.info('using Classical Nebular = setting beta_sobolevs to 1')
+        else:
+            beta_sobolevs = self.beta_sobolevs
+            j_blues = self.j_blues.values
