@@ -126,8 +126,7 @@ class TauSobolev(ProcessingPlasmaProperty):
 
 class BetaSobolev(ProcessingPlasmaProperty):
     name = 'beta_sobolev'
-	
-	def __init__(self, plasma_parent):
+    def __init__(self, plasma_parent):
         super(BetaSobolev, self).__init__(plasma_parent)
 		
     def calculate(self, tau_sobolev):
