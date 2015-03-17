@@ -129,7 +129,7 @@ class BetaSobolev(ProcessingPlasmaProperty):
     def __init__(self, plasma_parent):
         super(BetaSobolev, self).__init__(plasma_parent)
 		
-    def calculate(self, tau_sobolev):
+    def calculate(self, tau_sobolevs):
         beta_sobolevs = np.zeros_like(tau_sobolevs.values)
         macro_atom.calculate_beta_sobolev(tau_sobolevs.values.ravel(order='F'),
                                           beta_sobolevs.ravel(order='F'))
