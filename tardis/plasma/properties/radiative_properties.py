@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from astropy import units as u, constants as const
 
+from tardis import macro_atom
 from tardis.plasma.properties.base import ProcessingPlasmaProperty
 
 logger = logging.getLogger(__name__)
