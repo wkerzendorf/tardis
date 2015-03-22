@@ -126,5 +126,11 @@ class TauSobolev(ProcessingPlasmaProperty):
 
 class BetaSobolev(ProcessingPlasmaProperty):
     name = 'beta_sobolev'
-
-    pass
+    def calculate(self):
+         if not hasattr(self, 'beta_sobolevs'):
+             self.beta_sobolevs = np.zeros_like(self.tau_sobolevs.values)
+         macro_atom.calculate_beta_sobolev(self.tau_sobolevs.values.ravel(order='F'),
+                                           self.beta_sobolevs.ravel(order='F'))    
+        beta_sobolevs = self.beta_sobolevs
+        return beta_sobolevs
+   
