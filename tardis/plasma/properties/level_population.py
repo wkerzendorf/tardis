@@ -129,3 +129,51 @@ class LevelPopulationNLTE(ProcessingPlasmaProperty):
             for i in xrange(len(self.t_rads)):
                 relative_level_populations = np.linalg.solve(rates_matrix[:, :, i], x)
                 self.level_populations[i].ix[species] = relative_level_populations * self.ion_populations[i].ix[species]
+
+#In Progress: Approximation to account for ionisation of helium by fast electron collisions. Boyle et al., 2015
+class HeliumLevelPopulationsNLTE(ProcessingPlasmaProperty):
+
+    @staticmethod
+    def calculate(levels, partition_function,
+                                    level_boltzmann_factor,
+                                    ion_number_density, w, n_electron, ionization_data, beta_rad, atom_data, g_electron):
+        partition_function_broadcast = partition_function.ix[
+            levels.index.droplevel(2)].values
+
+        ion_number_density_broadcast = ion_number_density.ix[levels.index.droplevel(2)].values
+
+        total_helium_number_density = copy.deepcopy(ion_number_density.ix[2].sum())
+
+        #He I excited state populations
+        neutral = level_boltzmann_factor.ix[2].ix[0] * n_electron * np.exp(ionization_data.ionization_energy.ix[2].ix[1] * beta_rad * (1 / (2 * atom_data.levels.g.ix[2].ix[1].ix[0] * g_electron * np.min([w, np.ones_like(w)]) * (self.t_rads / self.t_electrons)**0.5)
+        self.level_populations.ix[2].ix[0].update(neutral)
+        self.level_populations.ix[2].ix[0].ix[1] *= (1/w)
+        self.level_populations.ix[2].ix[0].ix[2] *= (1/w)
+
+        #He I ground state population
+        self.level_populations.ix[2].ix[0].ix[0] = 0
+            
+        #He II populations
+        excited = level_boltzmann_factor.ix[2,1].mul(w * (atom_data.levels.g.ix[2,1].ix[0]**(-1)))
+            
+        #He III population
+        delta = self.delta_treatment
+        zeta_data = self.atom_data.zeta_data
+
+        zeta = interpolate.interp1d(zeta_data.columns.values, zeta_data.ix[2,2].values)(self.t_rads)
+
+        ground = 2 * ((n_electron)**(-1))* g_electron * (self.t_electrons / self.t_rads)**0.5 * np.exp(-1 * atom-data.ionization_data.ionization_energy.ix[2,2] * beta_rad) * w * (zeta + w * (1 - zeta))
+
+        self.level_populations.ix[2].ix[2].ix[0].update(ground)
+
+        #Normalisation and updating ion populations
+
+        unnorm_total = self.level_populations.ix[2].sum()
+        normalised = self.level_populations.ix[2].mul(total/unnorm_total)
+        self.level_populations.ix[2].update(normalised)
+
+        self.ion_populations.ix[2].ix[0] = self.level_populations.ix[2].ix[0].sum()
+        self.ion_populations.ix[2].ix[1] = self.level_populations.ix[2].ix[1].sum()
+        self.ion_populations.ix[2].ix[2] = self.level_populations.ix[2].ix[2].ix[0]
+
+        return
