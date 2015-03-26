@@ -75,6 +75,9 @@ class PhiSahaLTE(ProcessingPlasmaProperty):
                      r' \Phi_{i, j} = g_e \times \frac{Z_{i, j+1}}{Z_{i, j}} '
                      r'e^{-\chi_{j\rightarrow j+1}/k_\textrm{B}T}$')
 
+    def __init__(self, plasma_parent):
+        super(PhiSahaLTE, self).__init__(plasma_parent)
+
     @staticmethod
     def calculate(g_electron, beta_rad, partition_function, ionization_data):
 
@@ -92,7 +95,7 @@ class PhiSahaLTE(ProcessingPlasmaProperty):
         return phis * phi_coefficient
 
 
-class RadiationFieldCorrection():
+class RadiationFieldCorrection(ProcessingPlasmaProperty):
     """
     Calculating radiation field correction factors according to Mazzali & Lucy 1993 (:cite:`1993A&A...279..447M`; henceforth ML93)
 
@@ -137,35 +140,41 @@ class RadiationFieldCorrection():
 
     """
 
-    def calculate(self, w, departure_coefficient=None, chi_0_species=(20, 2)):
-        #factor delta ML 1993
+    name = 'radfield_correction'
+
+    def __init__(self, plasma_parent, ws, atom_data, beta_rads, t_rads, t_electrons, beta_electrons):
+        super(RadiationFieldCorrection, self).__init__(plasma_parent)
+
+        self.ws = ws
+        self.beta_rads = beta_rads
+        self.t_rads = t_rads
+        self.t_electrons = t_electrons
+        self.beta_electrons = beta_electrons
+        self.ionization_data = atom_data.ionization_data
+
+    def calculate(self, departure_coefficient=None, chi_0_species=(20, 2)):
         if departure_coefficient is None:
             departure_coefficient = 1. / self.ws
 
-        ionization_data = self.atom_data.ionization_data
-
-        chi_0 = ionization_data.ionization_energy.ix[chi_0_species]
-        radiation_field_correction = -np.ones((len(ionization_data), len(self.beta_rads)))
-        less_than_chi_0 = (ionization_data.ionization_energy < chi_0).values
+        chi_0 = self.ionization_data.ionization_energy.ix[chi_0_species]
+        radiation_field_correction = -np.ones((len(self.ionization_data), len(self.beta_rads)))
+        less_than_chi_0 = (self.ionization_data.ionization_energy < chi_0).values
 
         factor_a =  (self.t_electrons / (departure_coefficient * self.ws * self.t_rads))
 
         radiation_field_correction[~less_than_chi_0] = factor_a * \
-                                     np.exp(np.outer(ionization_data.ionization_energy.values[~less_than_chi_0],
+                                     np.exp(np.outer(self.ionization_data.ionization_energy.values[~less_than_chi_0],
                                                      self.beta_rads - self.beta_electrons))
 
-
-
-
-        radiation_field_correction[less_than_chi_0] = 1 - np.exp(np.outer(ionization_data.ionization_energy.values
+        radiation_field_correction[less_than_chi_0] = 1 - np.exp(np.outer(self.ionization_data.ionization_energy.values
                                                                       [less_than_chi_0], self.beta_rads)
                                                                  - self.beta_rads * chi_0)
         radiation_field_correction[less_than_chi_0] += factor_a * np.exp(
-            np.outer(ionization_data.ionization_energy.values[less_than_chi_0], self.beta_rads) -
+            np.outer(self.ionization_data.ionization_energy.values[less_than_chi_0], self.beta_rads) -
              chi_0*self.beta_electrons)
 
         return pd.DataFrame(radiation_field_correction, columns=np.arange(len(self.t_rads)),
-                            index=ionization_data.index)
+                            index=self.ionization_data.index)
 
 class IonNumberDensity(ProcessingPlasmaProperty):
     """
