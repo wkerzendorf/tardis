@@ -42,9 +42,9 @@ class PhiSahaNebular(ProcessingPlasmaProperty):
     def calculate(self):
         logger.debug('Calculating Saha using Nebular approximation')
 
-        phis = self.calculate_saha_lte()
+        phis = PhiSahaLTE.calculate(g_electron, beta_rad, partition_function, ionization_data)
         if self.delta_treatment is None:
-            delta = self.calculate_radfield_correction().ix[phis.index]
+            delta = RadiationFieldCorrection.calculate(w, ionization_data, t_rad, beta_rad).ix[phis.index]
         else:
             delta = self.delta_treatment
 
@@ -92,7 +92,7 @@ class PhiSahaLTE(ProcessingPlasmaProperty):
         return phis * phi_coefficient
 
 
-class RadiationFieldCorrection():
+class RadiationFieldCorrection(ProcessingPlasmaProperty):
     """
     Calculating radiation field correction factors according to Mazzali & Lucy 1993 (:cite:`1993A&A...279..447M`; henceforth ML93)
 
@@ -137,34 +137,37 @@ class RadiationFieldCorrection():
 
     """
 
-    def calculate(self, w, departure_coefficient=None, chi_0_species=(20, 2)):
+    def calculate(self, w, departure_coefficient=None, chi_0_species=(20, 2), ionization_data, t_rad, beta_rad):
         #factor delta ML 1993
         if departure_coefficient is None:
-            departure_coefficient = 1. / self.ws
+            departure_coefficient = 1. / w
 
-        ionization_data = self.atom_data.ionization_data
+        # Couldn't find plasma properties for t_electron or beta_electron so I've added this for now.
+        link_t_rad_t_electron = 0.9
+        t_electron = t_rad * link_t_rad_t_electron
+        beta_electron = beta_rad / link_t_rad_t_electron
 
         chi_0 = ionization_data.ionization_energy.ix[chi_0_species]
-        radiation_field_correction = -np.ones((len(ionization_data), len(self.beta_rads)))
+        radiation_field_correction = -np.ones((len(ionization_data), len(beta_rad)))
         less_than_chi_0 = (ionization_data.ionization_energy < chi_0).values
 
-        factor_a =  (self.t_electrons / (departure_coefficient * self.ws * self.t_rads))
+        factor_a =  (t_electron / (departure_coefficient * w * t_rad))
 
         radiation_field_correction[~less_than_chi_0] = factor_a * \
                                      np.exp(np.outer(ionization_data.ionization_energy.values[~less_than_chi_0],
-                                                     self.beta_rads - self.beta_electrons))
+                                                     beta_rad - beta_electron))
 
 
 
 
         radiation_field_correction[less_than_chi_0] = 1 - np.exp(np.outer(ionization_data.ionization_energy.values
-                                                                      [less_than_chi_0], self.beta_rads)
-                                                                 - self.beta_rads * chi_0)
+                                                                      [less_than_chi_0], beta_rad)
+                                                                 - beta_rad * chi_0)
         radiation_field_correction[less_than_chi_0] += factor_a * np.exp(
-            np.outer(ionization_data.ionization_energy.values[less_than_chi_0], self.beta_rads) -
-             chi_0*self.beta_electrons)
+            np.outer(ionization_data.ionization_energy.values[less_than_chi_0], beta_rad) -
+             chi_0*beta_electron)
 
-        return pd.DataFrame(radiation_field_correction, columns=np.arange(len(self.t_rads)),
+        return pd.DataFrame(radiation_field_correction, columns=np.arange(len(t_rad)),
                             index=ionization_data.index)
 
 class IonNumberDensity(ProcessingPlasmaProperty):

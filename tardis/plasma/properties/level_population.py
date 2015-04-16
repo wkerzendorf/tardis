@@ -130,6 +130,7 @@ class LevelPopulationNLTE(ProcessingPlasmaProperty):
                 relative_level_populations = np.linalg.solve(rates_matrix[:, :, i], x)
                 self.level_populations[i].ix[species] = relative_level_populations * self.ion_populations[i].ix[species]
 
+'''
 #In Progress: Approximation to account for ionisation of helium by fast electron collisions. Boyle et al., 2015
 class HeliumLevelPopulationsNLTE(ProcessingPlasmaProperty):
 
@@ -177,3 +178,4 @@ class HeliumLevelPopulationsNLTE(ProcessingPlasmaProperty):
         self.ion_populations.ix[2].ix[2] = self.level_populations.ix[2].ix[2].ix[0]
 
         return
+'''
