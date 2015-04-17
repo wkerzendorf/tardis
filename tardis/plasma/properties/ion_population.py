@@ -39,31 +39,31 @@ class PhiSahaNebular(ProcessingPlasmaProperty):
 
     name = 'phi'
 
-    def calculate(self):
+    def calculate(g_electron, beta_rad, partition_function, atom_data, ionization_data, w, t_rad, beta_rad, delta_treatment=None, link_t_rad_t_electron=0.9, chi_0_species=None, departure_coefficient=None):
         logger.debug('Calculating Saha using Nebular approximation')
 
         phis = PhiSahaLTE.calculate(g_electron, beta_rad, partition_function, ionization_data)
-        if self.delta_treatment is None:
-            delta = RadiationFieldCorrection.calculate(w, ionization_data, t_rad, beta_rad).ix[phis.index]
+        if delta_treatment is None:
+            delta = RadiationFieldCorrection.calculate(w, departure_coefficient, chi_0_species, ionization_data, t_rad, beta_rad, link_t_rad_t_electron).ix[phis.index]
         else:
-            delta = self.delta_treatment
+            delta = delta_treatment
 
-        zeta_data = self.atom_data.zeta_data
+        zeta_data = atom_data.zeta_data
         try:
-            zeta = interpolate.interp1d(zeta_data.columns.values, zeta_data.ix[phis.index].values)(self.t_rads)
+            zeta = interpolate.interp1d(zeta_data.columns.values, zeta_data.ix[phis.index].values)(t_rad)
         except ValueError:
             raise ValueError('t_rads outside of zeta factor interpolation'
                              ' zeta_min={0:.2f} zeta_max={1:.2f} '
                              '- requested {2}'.format(
                 zeta_data.columns.values.min(), zeta_data.columns.values.max(),
-                self.t_rads))
+                t_rad))
         else:
             # fixing missing nan data
             # issue created - fix with warning some other day
             zeta[np.isnan(zeta)] = 1.0
-
-        phis *= self.ws * (delta * zeta + self.ws * (1 - zeta)) * \
-                (self.t_electrons / self.t_rads) ** .5
+	
+        phis *= w * (delta * zeta + w * (1 - zeta)) * \
+                (link_t_rad_t_electron) ** .5
 
         return phis
 
@@ -137,7 +137,7 @@ class RadiationFieldCorrection(ProcessingPlasmaProperty):
 
     """
 
-    def calculate(self, w, departure_coefficient=None, chi_0_species=(20, 2), ionization_data, t_rad, beta_rad):
+    def calculate(self, w, departure_coefficient=None, chi_0_species=(20, 2), ionization_data, t_rad, beta_rad, link_t_rad_t_electron=0.9):
         #factor delta ML 1993
         if departure_coefficient is None:
             departure_coefficient = 1. / w
