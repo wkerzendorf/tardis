@@ -108,4 +108,4 @@ class IonizationData(ProcessingPlasmaProperty):
         if self.value is not None:
             return self.value
         else:
-            return atomic_data.ionization_data
+            return atomic_data.ionization_data.ix[2]
