@@ -118,13 +118,19 @@ class TauSobolev(ProcessingPlasmaProperty):
 
         tau_sobolevs = (self.sobolev_coefficient * f_lu * wavelength *
                         time_explosion * n_lower * stimulated_emission_factor)
-
         return pd.DataFrame(tau_sobolevs, index=lines.index,
                             columns=np.array(level_number_density.columns))
 
 
 
 class BetaSobolev(ProcessingPlasmaProperty):
+
     name = 'beta_sobolev'
 
-    pass
+    def calculate(self, tau_sobolev):
+
+        self.beta_sobolevs = np.zeros_like(self.tau_sobolevs.values)
+
+        macro_atom.calculate_beta_sobolev(self.tau_sobolevs.values.ravel(order='F'), self.beta_sobolevs.ravel(order='F'))
+        
+        return

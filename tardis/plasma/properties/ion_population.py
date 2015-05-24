@@ -39,31 +39,31 @@ class PhiSahaNebular(ProcessingPlasmaProperty):
 
     name = 'phi'
 
-    def calculate(self):
+    def calculate(g_electron, beta_rad, partition_function, atom_data, ionization_data, w, t_rad, beta_rad, delta_treatment=None, link_t_rad_t_electron=0.9, chi_0_species=None, departure_coefficient=None):
         logger.debug('Calculating Saha using Nebular approximation')
 
-        phis = self.calculate_saha_lte()
-        if self.delta_treatment is None:
-            delta = self.calculate_radfield_correction().ix[phis.index]
+        phis = PhiSahaLTE.calculate(g_electron, beta_rad, partition_function, ionization_data)
+        if delta_treatment is None:
+            delta = RadiationFieldCorrection.calculate(w, departure_coefficient, chi_0_species, ionization_data, t_rad, beta_rad, link_t_rad_t_electron).ix[phis.index]
         else:
-            delta = self.delta_treatment
+            delta = delta_treatment
 
-        zeta_data = self.atom_data.zeta_data
+        zeta_data = atom_data.zeta_data
         try:
-            zeta = interpolate.interp1d(zeta_data.columns.values, zeta_data.ix[phis.index].values)(self.t_rads)
+            zeta = interpolate.interp1d(zeta_data.columns.values, zeta_data.ix[phis.index].values)(t_rad)
         except ValueError:
             raise ValueError('t_rads outside of zeta factor interpolation'
                              ' zeta_min={0:.2f} zeta_max={1:.2f} '
                              '- requested {2}'.format(
                 zeta_data.columns.values.min(), zeta_data.columns.values.max(),
-                self.t_rads))
+                t_rad))
         else:
             # fixing missing nan data
             # issue created - fix with warning some other day
             zeta[np.isnan(zeta)] = 1.0
-
-        phis *= self.ws * (delta * zeta + self.ws * (1 - zeta)) * \
-                (self.t_electrons / self.t_rads) ** .5
+	
+        phis *= w * (delta * zeta + w * (1 - zeta)) * \
+                (link_t_rad_t_electron) ** .5
 
         return phis
 
@@ -92,7 +92,7 @@ class PhiSahaLTE(ProcessingPlasmaProperty):
         return phis * phi_coefficient
 
 
-class RadiationFieldCorrection():
+class RadiationFieldCorrection(ProcessingPlasmaProperty):
     """
     Calculating radiation field correction factors according to Mazzali & Lucy 1993 (:cite:`1993A&A...279..447M`; henceforth ML93)
 
@@ -137,34 +137,37 @@ class RadiationFieldCorrection():
 
     """
 
-    def calculate(self, w, departure_coefficient=None, chi_0_species=(20, 2)):
+    def calculate(self, w, departure_coefficient=None, chi_0_species=(20, 2), ionization_data, t_rad, beta_rad, link_t_rad_t_electron=0.9):
         #factor delta ML 1993
         if departure_coefficient is None:
-            departure_coefficient = 1. / self.ws
+            departure_coefficient = 1. / w
 
-        ionization_data = self.atom_data.ionization_data
+        # Couldn't find plasma properties for t_electron or beta_electron so I've added this for now.
+        link_t_rad_t_electron = 0.9
+        t_electron = t_rad * link_t_rad_t_electron
+        beta_electron = beta_rad / link_t_rad_t_electron
 
         chi_0 = ionization_data.ionization_energy.ix[chi_0_species]
-        radiation_field_correction = -np.ones((len(ionization_data), len(self.beta_rads)))
+        radiation_field_correction = -np.ones((len(ionization_data), len(beta_rad)))
         less_than_chi_0 = (ionization_data.ionization_energy < chi_0).values
 
-        factor_a =  (self.t_electrons / (departure_coefficient * self.ws * self.t_rads))
+        factor_a =  (t_electron / (departure_coefficient * w * t_rad))
 
         radiation_field_correction[~less_than_chi_0] = factor_a * \
                                      np.exp(np.outer(ionization_data.ionization_energy.values[~less_than_chi_0],
-                                                     self.beta_rads - self.beta_electrons))
+                                                     beta_rad - beta_electron))
 
 
 
 
         radiation_field_correction[less_than_chi_0] = 1 - np.exp(np.outer(ionization_data.ionization_energy.values
-                                                                      [less_than_chi_0], self.beta_rads)
-                                                                 - self.beta_rads * chi_0)
+                                                                      [less_than_chi_0], beta_rad)
+                                                                 - beta_rad * chi_0)
         radiation_field_correction[less_than_chi_0] += factor_a * np.exp(
-            np.outer(ionization_data.ionization_energy.values[less_than_chi_0], self.beta_rads) -
-             chi_0*self.beta_electrons)
+            np.outer(ionization_data.ionization_energy.values[less_than_chi_0], beta_rad) -
+             chi_0*beta_electron)
 
-        return pd.DataFrame(radiation_field_correction, columns=np.arange(len(self.t_rads)),
+        return pd.DataFrame(radiation_field_correction, columns=np.arange(len(t_rad)),
                             index=ionization_data.index)
 
 class IonNumberDensity(ProcessingPlasmaProperty):

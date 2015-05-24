@@ -129,3 +129,5 @@ class LevelPopulationNLTE(ProcessingPlasmaProperty):
             for i in xrange(len(self.t_rads)):
                 relative_level_populations = np.linalg.solve(rates_matrix[:, :, i], x)
                 self.level_populations[i].ix[species] = relative_level_populations * self.ion_populations[i].ix[species]
+
+'''
