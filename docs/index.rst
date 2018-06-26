@@ -65,7 +65,9 @@ Developing Tardis
     workflow/development_workflow
 
 
-.. include:: changelog.rst
+.. toctree::
+
+    changelog.rst
 
 ==========
 References
