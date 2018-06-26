@@ -38,6 +38,7 @@ Using Tardis
 
     installation
     running
+    running_tests
     examples/index
     scripts/index
     credits

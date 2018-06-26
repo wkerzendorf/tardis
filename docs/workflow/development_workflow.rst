@@ -13,7 +13,6 @@ to the Astropy team for designing it.
 
     test_driven_workflow
     git_workflow
-    running_tests
 
 Advanced Topics
 ===============
@@ -21,3 +20,4 @@ Advanced Topics
 .. toctree::
 
     release_workflow.rst
+    integration_tests
