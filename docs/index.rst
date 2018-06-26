@@ -63,8 +63,9 @@ Developing Tardis
 
     issues
     workflow/development_workflow
-    runnints_tests
-    changelog
+
+
+.. include:: changelog.rst
 
 ==========
 References

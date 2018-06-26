@@ -1,15 +1,24 @@
 .. _development-workflow:
 
-=======================
+
+
+Preparation and Working with Git
+================================
+
+The first step is to setup up a python environment. We recommend to use
+Anaconda for this purpose and refer to our :doc:`Installation guide
+<../installation>` which covers this topic.
+
+
 Workflow for Developers
-=======================
+-----------------------
 
 In this document, we refer to the Tardis ``master`` branch as the *trunk*.
 
 .. _forking:
 
 Creating a fork
-===============
+---------------
 
 You need to do this only once for each package you want to contribute to. The
 instructions here are very similar to the instructions at
