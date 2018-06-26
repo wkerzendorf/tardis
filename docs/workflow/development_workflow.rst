@@ -20,4 +20,5 @@ Advanced Topics
 .. toctree::
 
     release_workflow.rst
+    update_reference_data
     integration_tests
