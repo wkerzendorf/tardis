@@ -39,6 +39,7 @@ Using Tardis
     installation
     running
     running_tests
+    configuration/index
     examples/index
     scripts/index
     credits

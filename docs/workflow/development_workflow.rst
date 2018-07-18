@@ -15,7 +15,7 @@ to the Astropy team for designing it.
     git_workflow
 
 Advanced Topics
-===============
+***************
 
 .. toctree::
 

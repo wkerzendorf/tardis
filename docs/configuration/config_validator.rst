@@ -74,3 +74,4 @@ or
 - My_config = ConfigurationValidator.from_yaml(default configuration file, user configuration file)
 To access the configuration for tardis use the method get_config 
 
+.. jsonschema:: base.yml#/plasma.yml

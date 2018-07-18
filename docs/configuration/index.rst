@@ -14,9 +14,11 @@ and pages provide more details concerning the TARDIS configuration process.
 Configuration Details
 =====================
 
-* :doc:`In depth description of config options <configuration_old>`
-* :doc:`Validation Process <config_validator>`
-* :doc:`Example Configuration with Default Values <configuration>`
+.. toctree::
+
+    configuration_old
+    config_validator
+    configuration
 
 
 .. warning::
