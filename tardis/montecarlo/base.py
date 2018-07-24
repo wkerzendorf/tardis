@@ -110,6 +110,11 @@ class MontecarloRunner(HDFWriterMixin):
                 'erg / s'
                 )
 
+        self._montecarlo_virtual_luminosity_std = u.Quantity(
+                np.zeros_like(self.spectrum_frequency.value),
+                'erg / s'
+                )
+
     @property
     def spectrum(self):
         return TARDISSpectrum(

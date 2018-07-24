@@ -84,6 +84,7 @@ cdef extern from "src/cmontecarlo.h":
         double spectrum_delta_nu
         double spectrum_end_nu
         double *spectrum_virt_nu
+        double *spectrum_virt_nu_std
         double sigma_thomson
         double inverse_sigma_thomson
         double inner_boundary_albedo
@@ -240,6 +241,8 @@ cdef initialize_storage_model(model, plasma, runner, storage_model_t *storage):
 
     storage.spectrum_virt_nu = <double*> PyArray_DATA(
         runner._montecarlo_virtual_luminosity.value)
+    storage.spectrum_virt_nu_std = <double*> PyArray_DATA(
+        runner._montecarlo_virtual_luminosity_std.value)
 
     storage.sigma_thomson = runner.sigma_thomson.cgs.value
     storage.inverse_sigma_thomson = 1.0 / storage.sigma_thomson
@@ -284,6 +287,7 @@ def montecarlo_radial1d(model, plasma, runner, int_type_t virtual_packet_flag=0,
     initialize_storage_model(model, plasma, runner, &storage)
 
     montecarlo_main_loop(&storage, virtual_packet_flag, nthreads, runner.seed)
+    runner.virt_packet_count = storage.virt_packet_count
     runner.virt_logging = LOG_VPACKETS
     if LOG_VPACKETS != 0:
         runner.virt_packet_nus = c_array_to_numpy(storage.virt_packet_nus, np.NPY_DOUBLE, storage.virt_packet_count)
