@@ -105,6 +105,8 @@ class MontecarloRunner(HDFWriterMixin):
                 no_of_packets, dtype=np.int64)
         self.last_interaction_in_nu = np.zeros(no_of_packets, dtype=np.float64)
 
+        # Generating the virtual spectrum arrays
+
         self._montecarlo_virtual_luminosity = u.Quantity(
                 np.zeros_like(self.spectrum_frequency.value),
                 'erg / s'
@@ -115,6 +117,10 @@ class MontecarloRunner(HDFWriterMixin):
                 'erg / s'
                 )
 
+        self._spectrum_virt_count = np.zeros_like(self.spectrum_frequency.value,
+                                               dtype=np.int64)
+        self._spectrum_virt_mean = np.zeros_like(self.spectrum_frequency.value)
+        self._spectrum_virt_m2 = np.zeros_like(self.spectrum_frequency.value)
     @property
     def spectrum(self):
         return TARDISSpectrum(

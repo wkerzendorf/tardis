@@ -665,8 +665,16 @@ montecarlo_one_packet (storage_model_t * storage, rpacket_t * packet,
                         floor ((rpacket_get_nu(&virt_packet) -
                                 storage->spectrum_start_nu) /
                                storage->spectrum_delta_nu);
+
                       double virt_packet_luminosity = rpacket_get_energy(&virt_packet) * weight;
                       storage->spectrum_virt_nu[virt_id_nu] += virt_packet_luminosity;
+
+                      // implementation of the Welford algorithm to calculate the running standard deviation
+                      storage->spectrum_virt_count[virt_id_nu] += 1;
+                      double delta = virt_packet_luminosity - storage->spectrum_virt_mean[virt_id_nu];
+                      storage->spectrum_virt_mean[virt_id_nu] += delta / storage->spectrum_virt_count[virt_id_nu];
+                      double delta2 = virt_packet_luminosity - storage->spectrum_virt_mean[virt_id_nu];
+                      storage->spectrum_virt_m2[virt_id_nu] += delta * delta2;
 
 
 

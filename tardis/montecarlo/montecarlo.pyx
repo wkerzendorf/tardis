@@ -85,6 +85,9 @@ cdef extern from "src/cmontecarlo.h":
         double spectrum_end_nu
         double *spectrum_virt_nu
         double *spectrum_virt_nu_std
+        int_type_t *spectrum_virt_count
+        double *spectrum_virt_mean
+        double *spectrum_virt_m2
         double sigma_thomson
         double inverse_sigma_thomson
         double inner_boundary_albedo
@@ -241,6 +244,13 @@ cdef initialize_storage_model(model, plasma, runner, storage_model_t *storage):
 
     storage.spectrum_virt_nu = <double*> PyArray_DATA(
         runner._montecarlo_virtual_luminosity.value)
+    storage.spectrum_virt_count = <int_type_t*> PyArray_DATA(
+        runner._spectrum_virt_count)
+    storage.spectrum_virt_mean = <double*> PyArray_DATA(
+        runner._spectrum_virt_mean)
+    storage.spectrum_virt_m2 = <double*> PyArray_DATA(
+        runner._spectrum_virt_m2)
+
     storage.spectrum_virt_nu_std = <double*> PyArray_DATA(
         runner._montecarlo_virtual_luminosity_std.value)
 

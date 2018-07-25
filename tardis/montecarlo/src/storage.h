@@ -60,6 +60,9 @@ typedef struct StorageModel
   double spectrum_virt_end_nu;
   double *spectrum_virt_nu;
   double *spectrum_virt_nu_std;
+  int64_t *spectrum_virt_count;
+  double *spectrum_virt_mean;
+  double *spectrum_virt_m2;
   double sigma_thomson;
   double inverse_sigma_thomson;
   double inner_boundary_albedo;
