@@ -240,7 +240,7 @@ class MontecarloRunner(HDFWriterMixin):
         variance, sample_variance = calculate_welford_final(
             self._spectrum_virt_count, self._spectrum_virt_m2)
 
-        self._spectrum_variance = variance
+        self._spectrum_variance = variance / self.time_of_simulation.value
 
     def legacy_return(self):
         return (self.output_nu, self.output_energy,
