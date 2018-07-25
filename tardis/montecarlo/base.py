@@ -16,6 +16,31 @@ import numpy as np
 
 logger = logging.getLogger(__name__)
 
+def calculate_welford_final(count, m2):
+    """
+    Calculating the final mean and variance using the formula provided by the
+    Welford algorithm.
+
+    Parameters
+    ----------
+    count : numpy.ndarray
+    m2 : numpy.ndarray
+
+    Returns
+    -------
+
+    variance: numpy.ndarray
+    sample_variance: numpy.ndarray
+
+    """
+
+
+    variance = m2 / count
+    sample_variance = m2 / (count - 1)
+    variance[count < 2] = np.nan
+    sample_variance[count < 2] = np.nan
+
+    return variance * count, sample_variance * count
 
 class MontecarloRunner(HDFWriterMixin):
     """
@@ -121,6 +146,8 @@ class MontecarloRunner(HDFWriterMixin):
                                                dtype=np.int64)
         self._spectrum_virt_mean = np.zeros_like(self.spectrum_frequency.value)
         self._spectrum_virt_m2 = np.zeros_like(self.spectrum_frequency.value)
+
+
     @property
     def spectrum(self):
         return TARDISSpectrum(
@@ -210,6 +237,10 @@ class MontecarloRunner(HDFWriterMixin):
                 self.Edotlu_estimator.flatten().reshape(
                     self.Edotlu_estimator.shape, order='F')
                 )
+        variance, sample_variance = calculate_welford_final(
+            self._spectrum_virt_count, self._spectrum_virt_m2)
+
+        self._spectrum_variance = variance
 
     def legacy_return(self):
         return (self.output_nu, self.output_energy,
