@@ -34,27 +34,11 @@ class Radial1DModel(HDFWriterMixin):
     dilution_factor : np.ndarray
         If None, the dilution_factor will be initialized with the geometric
         dilution factor.
-    #v_inner : astropy.units.Quantity
-    #v_middle : astropy.units.Quantity
-    #v_outer : astropy.units.Quantity
-    #r_inner : astropy.units.Quantity
-    #r_middle : astropy.units.Quantity
-    #r_outer : astropy.units.Quantity
-    #radius : astropy.units.Quantity
-    #volume : astropy.units.Quantity
-    #no_of_shells : int
-        The number of shells as formed by `v_boundary_inner` and
-        `v_boundary_outer`
-    #no_of_raw_shells : int
     v_boundary_inner : astropy.units.Quantity
     v_boundary_outer : astropy.units.Quantity
     raw_velocity : np.ndarray
         The complete array of the velocities, without being cut by
         `v_boundary_inner` and `v_boundary_outer`
-    #w : np.ndarray
-        Shortcut for `dilution_factor`
-    #t_rad : astropy.units.Quantity
-        Shortcut for `t_radiative`
 
     """
     hdf_properties = ['t_inner', 'w', 't_radiative', 'v_inner', 'v_outer', 'homologous_density']
@@ -140,18 +124,22 @@ class Radial1DModel(HDFWriterMixin):
 
     @property
     def radius(self):
+        """radius : astropy.units.Quantity"""
         return self.time_explosion * self.velocity
 
     @property
     def r_inner(self):
+        """r_inner : astropy.units.Quantity"""
         return self.time_explosion * self.v_inner
 
     @property
     def r_outer(self):
+        """r_outer : astropy.units.Quantity"""
         return self.time_explosion * self.v_outer
 
     @property
     def r_middle(self):
+        """r_middle : astropy.units.Quantity"""
         return 0.5 * self.r_inner + 0.5 * self.r_outer
 
     @property
@@ -165,14 +153,17 @@ class Radial1DModel(HDFWriterMixin):
 
     @property
     def v_inner(self):
+        """v_inner : astropy.units.Quantity"""
         return self.velocity[:-1]
 
     @property
     def v_outer(self):
+        """v_outer : astropy.units.Quantity"""
         return self.velocity[1:]
 
     @property
     def v_middle(self):
+        """v_middle : astropy.units.Quantity"""
         return 0.5 * self.v_inner + 0.5 * self.v_outer
 
     @property
@@ -199,14 +190,19 @@ class Radial1DModel(HDFWriterMixin):
 
     @property
     def volume(self):
+        """volume : astropy.units.Quantity"""
         return ((4. / 3) * np.pi * (self.r_outer ** 3 - self.r_inner ** 3)).cgs
 
     @property
     def no_of_shells(self):
+        """#no_of_shells : int
+            The number of shells as formed by `v_boundary_inner` and
+            `v_boundary_outer`"""
         return len(self.velocity) - 1
 
     @property
     def no_of_raw_shells(self):
+        """no_of_raw_shells : int"""
         return len(self.raw_velocity) - 1
 
     @property
