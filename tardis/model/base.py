@@ -25,7 +25,6 @@ class Radial1DModel(HDFWriterMixin):
         .. note:: To access the entire, "uncut", velocity array,
         use `raw_velocity`
     homologous_density : HomologousDensity
-    density : astropy.units.quantity.Quantity
     abundance : pd.DataFrame
     time_explosion : astropy.units.Quantity
         Time since explosion
@@ -35,26 +34,26 @@ class Radial1DModel(HDFWriterMixin):
     dilution_factor : np.ndarray
         If None, the dilution_factor will be initialized with the geometric
         dilution factor.
-    v_inner : astropy.units.Quantity
-    v_middle : astropy.units.Quantity
-    v_outer : astropy.units.Quantity
-    r_inner : astropy.units.Quantity
-    r_middle : astropy.units.Quantity
-    r_outer : astropy.units.Quantity
-    radius : astropy.units.Quantity
-    volume : astropy.units.Quantity
-    no_of_shells : int
+    #v_inner : astropy.units.Quantity
+    #v_middle : astropy.units.Quantity
+    #v_outer : astropy.units.Quantity
+    #r_inner : astropy.units.Quantity
+    #r_middle : astropy.units.Quantity
+    #r_outer : astropy.units.Quantity
+    #radius : astropy.units.Quantity
+    #volume : astropy.units.Quantity
+    #no_of_shells : int
         The number of shells as formed by `v_boundary_inner` and
         `v_boundary_outer`
-    no_of_raw_shells : int
+    #no_of_raw_shells : int
     v_boundary_inner : astropy.units.Quantity
     v_boundary_outer : astropy.units.Quantity
     raw_velocity : np.ndarray
         The complete array of the velocities, without being cut by
         `v_boundary_inner` and `v_boundary_outer`
-    w : np.ndarray
+    #w : np.ndarray
         Shortcut for `dilution_factor`
-    t_rad : astropy.units.Quantity
+    #t_rad : astropy.units.Quantity
         Shortcut for `t_radiative`
 
     """
@@ -178,6 +177,7 @@ class Radial1DModel(HDFWriterMixin):
 
     @property
     def density(self):
+        """density : astropy.units.quantity.Quantity"""
         density = self.homologous_density.calculate_density_at_time_of_simulation(self.time_explosion)
         return density[self.v_boundary_inner_index
                        :self.v_boundary_outer_index][1:]
