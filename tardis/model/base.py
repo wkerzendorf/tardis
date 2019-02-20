@@ -29,6 +29,7 @@ class Radial1DModel(HDFWriterMixin):
     time_explosion : astropy.units.Quantity
         Time since explosion
     t_inner : astropy.units.Quantity
+    luminosity_requested : astropy.units.quantity.Quantity
     t_radiative : astropy.units.Quantity
         Radiative temperature for the shells
     dilution_factor : np.ndarray
@@ -39,7 +40,7 @@ class Radial1DModel(HDFWriterMixin):
     raw_velocity : np.ndarray
         The complete array of the velocities, without being cut by
         `v_boundary_inner` and `v_boundary_outer`
-
+    electron_densities : astropy.units.quantity.Quantity
     """
     hdf_properties = ['t_inner', 'w', 't_radiative', 'v_inner', 'v_outer', 'homologous_density']
     hdf_name = 'model'
