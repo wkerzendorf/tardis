@@ -86,6 +86,9 @@ add_command_option('install', 'with-openmp', 'compile TARDIS with OpenMP',
                    is_bool=True, )
 add_command_option('build', 'with-openmp', 'compile TARDIS with OpenMP',
                    is_bool=True)
+add_command_option('build_ext', 'with-openmp', 'compile TARDIS with OpenMP',
+                   is_bool=True)
+
 add_command_option('develop', 'with-openmp', 'compile TARDIS with OpenMP',
                    is_bool=True)
 add_command_option('install', 'with-vpacket-logging', 'compile TARDIS with virtual packet logging',
