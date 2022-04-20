@@ -151,7 +151,7 @@ def convert_stella_to_csvy(fname, out_fname=None):
     )
     # velocity needed for future check against homology
     #velocity = v_interpolator(stella_model["r_outer"].values) * u.cm / u.s
-    time_explosion = stella_meta.time_explosion.values * u.day
+    time_explosion = stella_meta.time_explosion.values[0] * u.day
     homologous_velocity = (
         stella_model.r_outer.values * u.cm / (time_explosion)
     )
