@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.plasma.properties.j_blues &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link href="../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.plasma.properties.j_blues</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.plasma.properties.j_blues</h1><div class="highlight"><pre>
+<span></span>import numpy as np
+import pandas as pd
+from tardis import constants as const
+
+from tardis.plasma.properties.base import (
+    ProcessingPlasmaProperty,
+    DataFrameInput,
+)
+from tardis.util.base import intensity_black_body
+
+
+<div class="viewcode-block" id="JBluesBlackBody"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.j_blues.html#tardis.plasma.properties.j_blues.JBluesBlackBody">[docs]</a>class JBluesBlackBody(ProcessingPlasmaProperty):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    lte_j_blues : Pandas DataFrame, dtype float
+                  J_blue values as calculated in LTE.
+    &quot;&quot;&quot;
+
+    outputs = (&quot;j_blues&quot;,)
+    latex_name = &quot;J^{b}_{lu(LTE)}&quot;
+
+<div class="viewcode-block" id="JBluesBlackBody.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.j_blues.html#tardis.plasma.properties.j_blues.JBluesBlackBody.calculate">[docs]</a>    @staticmethod
+    def calculate(lines, nu, t_rad):
+        j_blues = intensity_black_body(nu.values[np.newaxis].T, t_rad)
+        j_blues = pd.DataFrame(
+            j_blues, index=lines.index, columns=np.arange(len(t_rad))
+        )
+        return j_blues</div></div>
+
+
+<div class="viewcode-block" id="JBluesDiluteBlackBody"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.j_blues.html#tardis.plasma.properties.j_blues.JBluesDiluteBlackBody">[docs]</a>class JBluesDiluteBlackBody(ProcessingPlasmaProperty):
+    outputs = (&quot;j_blues&quot;,)
+    latex_name = r&quot;J_{\textrm{blue}}&quot;
+
+<div class="viewcode-block" id="JBluesDiluteBlackBody.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.j_blues.html#tardis.plasma.properties.j_blues.JBluesDiluteBlackBody.calculate">[docs]</a>    @staticmethod
+    def calculate(lines, nu, t_rad, w):
+        j_blues = w * intensity_black_body(nu.values[np.newaxis].T, t_rad)
+        j_blues = pd.DataFrame(
+            j_blues, index=lines.index, columns=np.arange(len(t_rad))
+        )
+        return j_blues</div></div>
+
+
+<div class="viewcode-block" id="JBluesDetailed"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.j_blues.html#tardis.plasma.properties.j_blues.JBluesDetailed">[docs]</a>class JBluesDetailed(ProcessingPlasmaProperty):
+    outputs = (&quot;j_blues&quot;,)
+    latex_name = &quot;J_{\\textrm{blue}}&quot;
+
+    def __init__(self, plasma_parent, w_epsilon):
+        super(JBluesDetailed, self).__init__(plasma_parent)
+        self.w_epsilon = w_epsilon
+
+<div class="viewcode-block" id="JBluesDetailed.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.j_blues.html#tardis.plasma.properties.j_blues.JBluesDetailed.calculate">[docs]</a>    def calculate(
+        self, lines, nu, t_rad, w, j_blues_norm_factor, j_blue_estimator
+    ):
+        # Used for initialization
+        if len(j_blue_estimator) == 0:
+            return JBluesDiluteBlackBody.calculate(lines, nu, t_rad, w)
+        else:
+            j_blues = pd.DataFrame(
+                j_blue_estimator * j_blues_norm_factor.value,
+                index=lines.index,
+                columns=np.arange(len(t_rad)),
+            )
+
+            for i in range(len(t_rad)):
+                zero_j_blues = j_blues[i] == 0.0
+                j_blues[i][
+                    zero_j_blues
+                ] = self.w_epsilon * intensity_black_body(
+                    nu[zero_j_blues].values, t_rad[i]
+                )
+            return j_blues</div></div>
+
+
+<div class="viewcode-block" id="JBluesNormFactor"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.j_blues.html#tardis.plasma.properties.j_blues.JBluesNormFactor">[docs]</a>class JBluesNormFactor(ProcessingPlasmaProperty):
+
+    outputs = (&quot;j_blues_norm_factor&quot;,)
+    latex = (
+        r&quot;\frac{c time_\textrm{simulation}}}{4\pi&quot;
+        r&quot;time_\textrm{simulation} volume}&quot;
+    )
+
+<div class="viewcode-block" id="JBluesNormFactor.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.j_blues.html#tardis.plasma.properties.j_blues.JBluesNormFactor.calculate">[docs]</a>    @staticmethod
+    def calculate(time_explosion, time_simulation, volume):
+        return (
+            const.c.cgs
+            * time_explosion
+            / (4 * np.pi * time_simulation * volume)
+        )</div></div>
+
+
+<div class="viewcode-block" id="JBluesEstimator"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.j_blues.html#tardis.plasma.properties.j_blues.JBluesEstimator">[docs]</a>class JBluesEstimator(DataFrameInput):
+    outputs = (&quot;j_blue_estimator&quot;,)</div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

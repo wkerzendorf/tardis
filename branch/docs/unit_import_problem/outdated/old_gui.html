@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Old Graphical User Interface (Outdated) &mdash; tardis</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Parallel execution with OpenMP" href="openmp.html" />
+    <link rel="prev" title="Running TARDIS in the commandline" href="commandline.html" />
+    <link href="../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Outdated Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="commandline.html">Running TARDIS in the commandline</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Old Graphical User Interface (Outdated)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-instructions">Running Instructions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui-layout-and-features">GUI Layout and Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#shell-info">Shell Info</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#line-info">Line Info</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="openmp.html">Parallel execution with OpenMP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old_install.html">Outdated Installation FAQs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="init_trad_bug.html">Initial_t_rad Bug</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isotope_pd_subclass.html">Extending Pandas DataFrame Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hdf_writer.html">Example Usage of HDFWriter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrator.html">API example for the formal integral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_formal_integral.html">Spectral Synthesis with the Formal Integral Method</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Outdated Documentation</a> &raquo;</li>
+      <li>Old Graphical User Interface (Outdated)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/outdated/old_gui.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="old-graphical-user-interface-outdated">
+<h1>Old Graphical User Interface (Outdated)<a class="headerlink" href="#old-graphical-user-interface-outdated" title="Permalink to this headline">¶</a></h1>
+<p>TARDIS uses the <a class="reference external" href="http://www.riverbankcomputing.com/software/pyqt/download5">PyQt5 framework</a> for its cross-platform
+interface.</p>
+<p>This module can be imported inside IPython console or Jupyter Notebook. The console provides the event loop and the place
+to create/calculate the tardis model. So the module is basically a tool to visualize results.</p>
+<p><strong>To setup and run the GUI (under development) follow these steps:</strong></p>
+<p>The GUI can use one of two python bindings for qt, namely PyQt5
+and PySide2. You can choose which binding is used by setting the
+environment variable QT_API in your bash. Currently, the TARDIS team uses PyQT5.</p>
+<p><strong>1</strong>. Installing required packages</p>
+<p>PyQt is installed by default in the tardis enviroment (see installation).
+To use PySide2:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda activate tardis
+conda install pyside2 -c conda-forge --no-update-deps
+</pre></div>
+</div>
+<p><strong>2</strong>. Choosing between PySide2 and PyQt5</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1">#To choose PySide</span>
+<span class="nb">export</span> <span class="nv">QT_API</span><span class="o">=</span>pyside
+
+<span class="c1">#To choose PyQt - this is what the TARDIS team does</span>
+<span class="nb">export</span> <span class="nv">QT_API</span><span class="o">=</span>pyqt
+</pre></div>
+</div>
+<p><strong>3</strong>. An example of creating a model and GUI</p>
+<p>First, get the example file <a class="reference external" href="https://raw.githubusercontent.com/tardis-sn/tardis/master/docs/using/components/models/examples/tardis_example.yml">tardis_example.yml</a>.</p>
+<p>To download a copy of the atomic database (if you haven’t already), add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tardis.io.atom_data.util</span> <span class="kn">import</span> <span class="n">download_atom_data</span>
+<span class="n">download_atom_data</span><span class="p">(</span><span class="s1">&#39;kurucz_cd23_chianti_H_He&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To show the GUI from a Jupyter Notebook, use the following commands:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tardis</span> <span class="kn">import</span> <span class="n">run_tardis</span>
+<span class="kn">from</span> <span class="nn">tardis.gui</span> <span class="kn">import</span> <span class="n">interface</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">run_tardis</span><span class="p">(</span><span class="s1">&#39;tardis_example.yml&#39;</span><span class="p">,</span> <span class="s1">&#39;kurucz_cd23_chianti_H_He.h5&#39;</span><span class="p">)</span>
+
+<span class="n">interface</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">sim</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you just want to run from a configuration file and show the results, you can
+do that outside the Jupyter notebook. Navigate to the folder where you
+installed TARDIS, go to tardis/tardis/gui, and use the following command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python interface.py path-to-yaml-configuration-file path-to-atomic-data-file
+</pre></div>
+</div>
+<section id="running-instructions">
+<h2>Running Instructions<a class="headerlink" href="#running-instructions" title="Permalink to this headline">¶</a></h2>
+<p>Decide which Qt binding you want to use (PySide or PyQt) and
+accordingly set QT_API in shell:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export QT_API=pyside
+or:
+export QT_API=pyqt
+</pre></div>
+</div>
+<p>Start the IPython console with eventloop integration:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ipython
+</pre></div>
+</div>
+<p>Display your model:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from tardis import run_tardis
+mdl = run_tardis(&#39;tardis_example.yml&#39;,&#39;kurucz_cd23_chianti_H_He.h5&#39;)
+from tardis.gui import interface
+interface.show(mdl)
+</pre></div>
+</div>
+<p>(WIP) You can also run a configuration from the shell. To do this, first set
+QT_API in the shell. Next, navigate to the TARDIS installation folder and go to
+tardis/tardis/gui. Then use the command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python interface.py path-to-configuration-file path-to-atomic-data-file
+</pre></div>
+</div>
+</section>
+<section id="gui-layout-and-features">
+<h2>GUI Layout and Features<a class="headerlink" href="#gui-layout-and-features" title="Permalink to this headline">¶</a></h2>
+<p>When you launch the GUI, the first screen that you see will be something like the snapshot below.
+You can inspect the plot of shells on this window and use the toggle button to change between the
+plot of dilution factor and the radiation temperature in shells.</p>
+<a class="reference internal image-reference" href="../_images/OpeningScreen.png"><img alt="../_images/OpeningScreen.png" src="../_images/OpeningScreen.png" style="width: 900px;" /></a>
+<section id="shell-info">
+<h3>Shell Info<a class="headerlink" href="#shell-info" title="Permalink to this headline">¶</a></h3>
+<p>To see the abundances in a shell, double-click on the shell number in the table. You can follow a
+similar strategy in the tables that appear to bring up the ion and level populations for each shell.
+The snapshot below shows all the tables that you can bring up by successively clicking the horizontal
+table headers. This feature is not supported at the moment.</p>
+<a class="reference internal image-reference" href="../_images/ShellInfo.png"><img alt="../_images/ShellInfo.png" src="../_images/ShellInfo.png" style="width: 900px;" /></a>
+</section>
+<section id="line-info">
+<h3>Line Info<a class="headerlink" href="#line-info" title="Permalink to this headline">¶</a></h3>
+<p>If you switch to the spectrum tab, you can see the spectrum plot and a button to show line info.
+Once again, you can double-click the table headers to get further information. The snapshot below
+shows all the tables that you can bring up in this window. This feature is not supported at the moment.</p>
+<a class="reference internal image-reference" href="../_images/LineInfo.png"><img alt="../_images/LineInfo.png" src="../_images/LineInfo.png" style="width: 900px;" /></a>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="commandline.html" class="btn btn-neutral float-left" title="Running TARDIS in the commandline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="openmp.html" class="btn btn-neutral float-right" title="Parallel execution with OpenMP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

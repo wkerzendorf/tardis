@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.montecarlo.montecarlo_numba.r_packet_transport module &mdash; tardis</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="tardis.montecarlo.montecarlo_numba.single_packet_loop module" href="tardis.montecarlo.montecarlo_numba.single_packet_loop.html" />
+    <link rel="prev" title="tardis.montecarlo.montecarlo_numba.r_packet module" href="tardis.montecarlo.montecarlo_numba.r_packet.html" />
+    <link href="../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="tardis.html">tardis package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="tardis.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="tardis.grid.html">tardis.grid package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.io.html">tardis.io package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.model.html">tardis.model package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="tardis.montecarlo.html">tardis.montecarlo package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.plasma.html">tardis.plasma package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.scripts.html">tardis.scripts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.simulation.html">tardis.simulation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.stats.html">tardis.stats package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.util.html">tardis.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.visualization.html">tardis.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tardis.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tardis.html#module-tardis">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">tardis</a> &raquo;</li>
+          <li><a href="tardis.html">tardis package</a> &raquo;</li>
+          <li><a href="tardis.montecarlo.html">tardis.montecarlo package</a> &raquo;</li>
+          <li><a href="tardis.montecarlo.montecarlo_numba.html">tardis.montecarlo.montecarlo_numba package</a> &raquo;</li>
+      <li>tardis.montecarlo.montecarlo_numba.r_packet_transport module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/tardis.montecarlo.montecarlo_numba.r_packet_transport.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="module-tardis.montecarlo.montecarlo_numba.r_packet_transport">
+<span id="tardis-montecarlo-montecarlo-numba-r-packet-transport-module"></span><h1>tardis.montecarlo.montecarlo_numba.r_packet_transport module<a class="headerlink" href="#module-tardis.montecarlo.montecarlo_numba.r_packet_transport" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet_transport.move_packet_across_shell_boundary">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet_transport.</span></span><span class="sig-name descname"><span class="pre">move_packet_across_shell_boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_shell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_of_shells</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet_transport.html#move_packet_across_shell_boundary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet_transport.move_packet_across_shell_boundary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move packet across shell boundary - realizing if we are still in the simulation or have
+moved out through the inner boundary or outer boundary and updating packet
+status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>distance</strong><span class="classifier">float</span></dt><dd><p>distance to move to shell boundary</p>
+</dd>
+<dt><strong>delta_shell</strong><span class="classifier">int</span></dt><dd><p>is +1 if moving outward or -1 if moving inward</p>
+</dd>
+<dt><strong>no_of_shells</strong><span class="classifier">int</span></dt><dd><p>number of shells in TARDIS simulation</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet_transport.move_r_packet">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet_transport.</span></span><span class="sig-name descname"><span class="pre">move_r_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_estimator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet_transport.html#move_r_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet_transport.move_r_packet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move packet a distance and recalculate the new angle mu</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r_packet</strong><span class="classifier">tardis.montecarlo.montecarlo_numba.r_packet.RPacket</span></dt><dd><p>r_packet objects</p>
+</dd>
+<dt><strong>time_explosion</strong><span class="classifier">float</span></dt><dd><p>time since explosion in s</p>
+</dd>
+<dt><strong>numba_estimator</strong><span class="classifier">tardis.montecarlo.montecarlo_numba.numba_interface.NumbaEstimator</span></dt><dd><p>Estimators object</p>
+</dd>
+<dt><strong>distance</strong><span class="classifier">float</span></dt><dd><p>distance in cm</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet_transport.trace_packet">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet_transport.</span></span><span class="sig-name descname"><span class="pre">trace_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet_transport.html#trace_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet_transport.trace_packet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traces the RPacket through the ejecta and stops when an interaction happens (heart of the calculation)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r_packet</strong><span class="classifier">tardis.montecarlo.montecarlo_numba.r_packet.RPacket</span></dt><dd></dd>
+<dt><strong>numba_model</strong><span class="classifier">tardis.montecarlo.montecarlo_numba.numba_interface.NumbaModel</span></dt><dd></dd>
+<dt><strong>numba_plasma</strong><span class="classifier">tardis.montecarlo.montecarlo_numba.numba_interface.NumbaPlasma</span></dt><dd></dd>
+<dt><strong>estimators</strong><span class="classifier">tardis.montecarlo.montecarlo_numba.numba_interface.Estimators</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"></dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tardis.montecarlo.montecarlo_numba.r_packet.html" class="btn btn-neutral float-left" title="tardis.montecarlo.montecarlo_numba.r_packet module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tardis.montecarlo.montecarlo_numba.single_packet_loop.html" class="btn btn-neutral float-right" title="tardis.montecarlo.montecarlo_numba.single_packet_loop module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.montecarlo.montecarlo_numba.interaction &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link href="../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.montecarlo.montecarlo_numba.interaction</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.montecarlo.montecarlo_numba.interaction</h1><div class="highlight"><pre>
+<span></span>from numba import njit
+import numpy as np
+from tardis.montecarlo.montecarlo_numba import njit_dict, njit_dict_no_parallel
+from tardis.montecarlo.montecarlo_numba.numba_interface import (
+    LineInteractionType,
+)
+
+from tardis.montecarlo import (
+    montecarlo_configuration as montecarlo_configuration,
+)
+from tardis.montecarlo.montecarlo_numba.frame_transformations import (
+    get_doppler_factor,
+    get_inverse_doppler_factor,
+    angle_aberration_CMF_to_LF,
+)
+from tardis.montecarlo.montecarlo_numba.r_packet import (
+    InteractionType, PacketStatus
+)
+from tardis.montecarlo.montecarlo_numba.utils import get_random_mu
+from tardis.montecarlo.montecarlo_numba.macro_atom import (
+        macro_atom, MacroAtomTransitionType
+)
+from tardis import constants as const
+
+K_B = const.k_B.cgs.value
+H = const.h.cgs.value
+
+
+
+<div class="viewcode-block" id="determine_bf_macro_activation_idx"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.determine_bf_macro_activation_idx">[docs]</a>@njit(**njit_dict_no_parallel)
+def determine_bf_macro_activation_idx(numba_plasma,
+        nu, chi_bf_contributions, active_continua
+    ):
+    &quot;&quot;&quot;
+    Determine the macro atom activation level after bound-free absorption.
+
+    Parameters
+    ----------
+    nu : float
+        Comoving frequency of the r-packet.
+    chi_bf_contributions : numpy.ndarray, dtype float
+        Cumulative distribution of bound-free opacities at frequency
+        `nu`.
+    active_continua : numpy.ndarray, dtype int
+        Continuum ids for which absorption is possible for frequency `nu`.
+
+    Returns
+    -------
+    float
+        Macro atom activation idx.
+    &quot;&quot;&quot;
+    # Perform a MC experiment to determine the continuum for absorption
+    index = np.searchsorted(chi_bf_contributions, np.random.random())
+    continuum_id = active_continua[index]
+    
+
+    # Perform a MC experiment to determine whether thermal or
+    # ionization energy is created
+    nu_threshold = numba_plasma.photo_ion_nu_threshold_mins[continuum_id]
+    fraction_ionization = nu_threshold / nu
+    if (
+        np.random.random() &lt; fraction_ionization
+    ):  # Create ionization energy (i-packet)
+        destination_level_idx = numba_plasma.photo_ion_activation_idx[continuum_id]
+    else:  # Create thermal energy (k-packet)
+        destination_level_idx = numba_plasma.k_packet_idx
+    return destination_level_idx</div>
+
+<div class="viewcode-block" id="determine_continuum_macro_activation_idx"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.determine_continuum_macro_activation_idx">[docs]</a>@njit(**njit_dict_no_parallel)
+def determine_continuum_macro_activation_idx(numba_plasma,
+    nu, chi_bf, chi_ff, chi_bf_contributions, active_continua
+    ):
+    &quot;&quot;&quot;
+    Determine the macro atom activation level after a continuum absorption.
+
+    Parameters
+    ----------
+    nu : float
+        Comoving frequency of the r-packet.
+    chi_bf : numpy.ndarray, dtype float
+        Bound-free opacity.
+    chi_bf : numpy.ndarray, dtype float
+        Free-free opacity.
+    chi_bf_contributions : numpy.ndarray, dtype float
+        Cumulative distribution of bound-free opacities at frequency
+        `nu`.
+    active_continua : numpy.ndarray, dtype int
+        Continuum ids for which absorption is possible for frequency `nu`.
+
+    Returns
+    -------
+    float
+        Macro atom activation idx.
+    &quot;&quot;&quot;
+    fraction_bf = chi_bf / (chi_bf + chi_ff)
+    # TODO: In principle, we can also decide here whether a Thomson
+    # scattering event happens and need one less RNG call.
+    if np.random.random() &lt; fraction_bf:  # Bound-free absorption
+        destination_level_idx = determine_bf_macro_activation_idx(
+            numba_plasma, nu, chi_bf_contributions, active_continua
+        )
+    else:  # Free-free absorption (i.e. k-packet creation)
+        destination_level_idx = numba_plasma.k_packet_idx
+    return destination_level_idx</div>
+
+
+<div class="viewcode-block" id="sample_nu_free_free"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.sample_nu_free_free">[docs]</a>@njit(**njit_dict_no_parallel)
+def sample_nu_free_free(numba_plasma, shell):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    nu_ff_sampler : float
+        Frequency of the free-free emission process
+
+    &quot;&quot;&quot;
+    T = numba_plasma.t_electrons[shell]
+    zrand = np.random.random()
+    return -K_B * T / H * np.log(zrand)</div>
+
+<div class="viewcode-block" id="sample_nu_free_bound"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.sample_nu_free_bound">[docs]</a>@njit(**njit_dict_no_parallel)
+def sample_nu_free_bound(numba_plasma, shell, continuum_id):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    nu_fb_sampler : float
+        Frequency of the free-bounds emission process
+    &quot;&quot;&quot;
+
+    start = numba_plasma.photo_ion_block_references[continuum_id]
+    end = numba_plasma.photo_ion_block_references[continuum_id + 1]
+    phot_nus_block = numba_plasma.phot_nus[start:end]
+    em = numba_plasma.emissivities[start:end, shell]
+
+    zrand = np.random.random()
+    idx = np.searchsorted(em, zrand, side=&quot;right&quot;)
+
+    return phot_nus_block[idx] - (em[idx] - zrand) / (
+        em[idx] - em[idx - 1]
+    ) * (phot_nus_block[idx] - phot_nus_block[idx - 1])</div>
+
+<div class="viewcode-block" id="scatter"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.scatter">[docs]</a>@njit(**njit_dict_no_parallel)
+def scatter(r_packet, time_explosion):
+
+    old_doppler_factor = get_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )
+    comov_nu = r_packet.nu * old_doppler_factor
+    comov_energy = r_packet.energy * old_doppler_factor
+    r_packet.mu = get_random_mu()
+    inverse_new_doppler_factor = get_inverse_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )
+
+    r_packet.energy = comov_energy * inverse_new_doppler_factor
+ 
+    return comov_nu, inverse_new_doppler_factor</div>
+
+<div class="viewcode-block" id="continuum_event"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.continuum_event">[docs]</a>@njit(**njit_dict_no_parallel)
+def continuum_event(r_packet, time_explosion, numba_plasma, 
+    chi_bf_tot, chi_ff, chi_bf_contributions, current_continua):
+    &quot;&quot;&quot;
+    continuum event handler - activate the macroatom and run the handler
+
+    Parameters
+    ----------
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    time_explosion : float
+    numba_plasma : tardis.montecarlo.montecarlo_numba.numba_interface.NumbaPlasma
+    continuum : tardis.montecarlo.montecarlo_numba.numba_interface.Continuum
+    &quot;&quot;&quot;
+    old_doppler_factor = get_doppler_factor(
+            r_packet.r, 
+            r_packet.mu, 
+            time_explosion
+            )
+
+    r_packet.mu = get_random_mu()
+    inverse_doppler_factor = get_inverse_doppler_factor(
+            r_packet.r, 
+            r_packet.mu, 
+            time_explosion
+            )
+    comov_energy = r_packet.energy * old_doppler_factor
+    comov_nu = r_packet.nu * old_doppler_factor # make sure frequency should be updated
+    r_packet.energy = comov_energy * inverse_doppler_factor
+    r_packet.nu = comov_nu * inverse_doppler_factor
+
+    destination_level_idx = determine_continuum_macro_activation_idx(
+            numba_plasma, comov_nu, chi_bf_tot, chi_ff, 
+            chi_bf_contributions, current_continua)
+
+    macro_atom_event(destination_level_idx, 
+            r_packet, time_explosion,
+            numba_plasma)</div>
+
+<div class="viewcode-block" id="macro_atom_event"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.macro_atom_event">[docs]</a>@njit(**njit_dict_no_parallel)
+def macro_atom_event(destination_level_idx, 
+    r_packet, time_explosion, numba_plasma):
+    &quot;&quot;&quot;
+    Macroatom event handler - run the macroatom and handle the result
+
+    Parameters
+    ----------
+    destination_level_idx : int
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    time_explosion : float
+    numba_plasma : tardis.montecarlo.montecarlo_numba.numba_interface.NumbaPlasma
+    &quot;&quot;&quot;
+    
+    transition_id, transition_type = macro_atom(
+                destination_level_idx, 
+                r_packet.current_shell_id, 
+                numba_plasma
+                )
+
+    if (montecarlo_configuration.CONTINUUM_PROCESSES_ENABLED and 
+            transition_type == MacroAtomTransitionType.FF_EMISSION):
+        free_free_emission(
+                r_packet, 
+                time_explosion, 
+                numba_plasma
+                )
+    
+    elif (montecarlo_configuration.CONTINUUM_PROCESSES_ENABLED and 
+            transition_type == MacroAtomTransitionType.BF_EMISSION):
+        bound_free_emission(
+                r_packet, 
+                time_explosion, 
+                numba_plasma, 
+                transition_id
+                )
+    elif (montecarlo_configuration.CONTINUUM_PROCESSES_ENABLED and 
+            transition_type == MacroAtomTransitionType.BF_COOLING):
+        bf_cooling(r_packet, time_explosion, numba_plasma)
+    
+    elif (montecarlo_configuration.CONTINUUM_PROCESSES_ENABLED and 
+            transition_type == MacroAtomTransitionType.ADIABATIC_COOLING):
+        adiabatic_cooling(r_packet)
+
+    elif transition_type == MacroAtomTransitionType.BB_EMISSION:
+        line_emission(
+                r_packet, 
+                transition_id,
+                time_explosion,
+                numba_plasma
+                )
+    else:
+        raise Exception(&quot;No Interaction Found!&quot;)</div>
+
+
+<div class="viewcode-block" id="bf_cooling"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.bf_cooling">[docs]</a>@njit(**njit_dict_no_parallel)
+def bf_cooling(r_packet, time_explosion, numba_plasma):
+    &quot;&quot;&quot;
+    Bound-Free Cooling - Determine and run bf emission from cooling
+
+    Parameters
+    ----------
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    time_explosion : float
+    numba_plasma : tardis.montecarlo.montecarlo_numba.numba_interface.NumbaPlasma
+    &quot;&quot;&quot;
+    
+    fb_cooling_prob = numba_plasma.p_fb_deactivation[:, 
+            r_packet.current_shell_id]
+    p = fb_cooling_prob[0]
+    i = 0
+    zrand = np.random.random()
+    while p &lt;= zrand: # Can&#39;t search-sorted this because it&#39;s not cumulative
+        i += 1
+        p += fb_cooling_prob[i]
+    continuum_idx = i
+    bound_free_emission(
+            r_packet,
+            time_explosion,
+            numba_plasma,
+            continuum_idx
+            )</div>
+
+<div class="viewcode-block" id="adiabatic_cooling"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.adiabatic_cooling">[docs]</a>@njit(**njit_dict_no_parallel)
+def adiabatic_cooling(r_packet):
+    &quot;&quot;&quot;
+    Adiabatic cooling - equivalent to destruction of the packet
+
+    Parameters
+    ----------
+    r_packet: tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    &quot;&quot;&quot;
+
+    r_packet.status = PacketStatus.ADIABATIC_COOLING</div>
+
+<div class="viewcode-block" id="get_current_line_id"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.get_current_line_id">[docs]</a>@njit(**njit_dict_no_parallel)
+def get_current_line_id(nu, line_list):
+    &quot;&quot;&quot;
+    Get the line id corresponding to a frequency nu in a line list
+
+    Parameters
+    ----------
+    nu : float
+    line_list : np.ndarray
+    &quot;&quot;&quot;
+
+    # Note: Since this reverses the array,
+    # it may be faster to just write our own reverse-binary-search
+
+    reverse_line_list = line_list[::-1]
+    number_of_lines = len(line_list)
+    line_id = number_of_lines - np.searchsorted(reverse_line_list, nu)
+    return line_id</div>
+
+
+<div class="viewcode-block" id="free_free_emission"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.free_free_emission">[docs]</a>@njit(**njit_dict_no_parallel)
+def free_free_emission(r_packet, time_explosion, numba_plasma):
+    &quot;&quot;&quot;
+    Free-Free emission - set the frequency from electron-ion interaction
+
+    Parameters
+    ----------
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    time_explosion : float
+    numba_plasma : tardis.montecarlo.montecarlo_numba.numba_interface.NumbaPlasma
+    &quot;&quot;&quot;
+ 
+    inverse_doppler_factor = get_inverse_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )
+    comov_nu = sample_nu_free_free(numba_plasma, r_packet.current_shell_id)
+    r_packet.nu = comov_nu * inverse_doppler_factor
+    current_line_id = get_current_line_id(
+            comov_nu,
+            numba_plasma.line_list_nu
+            ) 
+    r_packet.next_line_id = current_line_id 
+    
+    if montecarlo_configuration.full_relativity:
+        r_packet.mu = angle_aberration_CMF_to_LF(
+            r_packet, time_explosion, r_packet.mu
+        )</div>
+
+<div class="viewcode-block" id="bound_free_emission"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.bound_free_emission">[docs]</a>@njit(**njit_dict_no_parallel)
+def bound_free_emission(r_packet, time_explosion, numba_plasma, continuum_id):
+    &quot;&quot;&quot;
+    Bound-Free emission - set the frequency from photo-ionization
+
+    Parameters
+    ----------
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    time_explosion : float
+    numba_plasma : tardis.montecarlo.montecarlo_numba.numba_interface.NumbaPlasma
+    continuum_id : int
+    &quot;&quot;&quot;
+ 
+    inverse_doppler_factor = get_inverse_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )
+
+    comov_nu = sample_nu_free_bound(numba_plasma,
+            r_packet.current_shell_id, 
+            continuum_id)
+    r_packet.nu = comov_nu * inverse_doppler_factor
+    current_line_id = get_current_line_id(
+            comov_nu, 
+            numba_plasma.line_list_nu
+            )
+    r_packet.next_line_id = current_line_id
+
+    if montecarlo_configuration.full_relativity:
+        r_packet.mu = angle_aberration_CMF_to_LF(
+            r_packet, time_explosion, r_packet.mu
+        )</div>
+
+
+<div class="viewcode-block" id="thomson_scatter"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.thomson_scatter">[docs]</a>@njit(**njit_dict_no_parallel)
+def thomson_scatter(r_packet, time_explosion):
+    &quot;&quot;&quot;
+    Thomson scattering — no longer line scattering
+    \n1) get the doppler factor at that position with the old angle
+    \n2) convert the current energy and nu into the comoving frame with the old mu
+    \n3) Scatter and draw new mu - update mu
+    \n4) Transform the comoving energy and nu back using the new mu
+
+    Parameters
+    ----------
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    time_explosion : float
+        time since explosion in seconds
+    &quot;&quot;&quot;
+    
+    old_doppler_factor = get_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )
+    comov_nu = r_packet.nu * old_doppler_factor
+    comov_energy = r_packet.energy * old_doppler_factor
+    r_packet.mu = get_random_mu()
+    inverse_new_doppler_factor = get_inverse_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )
+
+    r_packet.nu = comov_nu * inverse_new_doppler_factor
+    r_packet.energy = comov_energy * inverse_new_doppler_factor
+    if montecarlo_configuration.full_relativity:
+        r_packet.mu = angle_aberration_CMF_to_LF(
+            r_packet, time_explosion, r_packet.mu
+        )
+    temp_doppler_factor = get_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )</div>
+
+
+<div class="viewcode-block" id="line_scatter"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.line_scatter">[docs]</a>@njit(**njit_dict_no_parallel)
+def line_scatter(r_packet, time_explosion, 
+        line_interaction_type, numba_plasma):
+    &quot;&quot;&quot;
+    Line scatter function that handles the scattering itself, including new angle drawn, and calculating nu out using macro atom
+
+    Parameters
+    ----------
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    time_explosion : float
+    line_interaction_type : enum
+    numba_plasma : tardis.montecarlo.montecarlo_numba.numba_interface.NumbaPlasma
+    &quot;&quot;&quot;
+
+    old_doppler_factor = get_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )
+    r_packet.mu = get_random_mu()
+
+    inverse_new_doppler_factor = get_inverse_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )
+
+    comov_energy = r_packet.energy * old_doppler_factor
+    r_packet.energy = comov_energy * inverse_new_doppler_factor
+
+    if line_interaction_type == LineInteractionType.SCATTER:
+        line_emission(
+            r_packet, r_packet.next_line_id, time_explosion, numba_plasma
+        )
+    else:  # includes both macro atom and downbranch - encoded in the transition probabilities
+        comov_nu = r_packet.nu * old_doppler_factor # Is this necessary?
+        r_packet.nu = comov_nu * inverse_new_doppler_factor 
+        activation_level_id = numba_plasma.line2macro_level_upper[
+            r_packet.next_line_id
+        ]
+        macro_atom_event(activation_level_id, r_packet, 
+                time_explosion, numba_plasma)</div>
+
+<div class="viewcode-block" id="line_emission"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.interaction.html#tardis.montecarlo.montecarlo_numba.interaction.line_emission">[docs]</a>@njit(**njit_dict_no_parallel)
+def line_emission(r_packet, emission_line_id, time_explosion, 
+        numba_plasma):
+    &quot;&quot;&quot;
+    Sets the frequency of the RPacket properly given the emission channel
+
+    Parameters
+    ----------
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    emission_line_id : int
+    time_explosion : float
+    numba_plasma : tardis.montecarlo.montecarlo_numba.numba_interface.NumbaPlasma
+    &quot;&quot;&quot;
+    
+    r_packet.last_line_interaction_out_id = emission_line_id
+
+    if emission_line_id != r_packet.next_line_id:
+        pass
+    inverse_doppler_factor = get_inverse_doppler_factor(
+        r_packet.r, r_packet.mu, time_explosion
+    )
+    r_packet.nu = (
+        numba_plasma.line_list_nu[emission_line_id] * inverse_doppler_factor
+    )
+    r_packet.next_line_id = emission_line_id + 1
+    nu_line = numba_plasma.line_list_nu[emission_line_id]
+
+    if montecarlo_configuration.full_relativity:
+        r_packet.mu = angle_aberration_CMF_to_LF(
+            r_packet, time_explosion, r_packet.mu
+        )</div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

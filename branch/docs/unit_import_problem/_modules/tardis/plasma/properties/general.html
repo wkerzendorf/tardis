@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.plasma.properties.general &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link href="../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.plasma.properties.general</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.plasma.properties.general</h1><div class="highlight"><pre>
+<span></span>import logging
+
+import numpy as np
+import pandas as pd
+from astropy import units as u
+from tardis import constants as const
+
+from tardis.plasma.properties.base import ProcessingPlasmaProperty
+
+logger = logging.getLogger(__name__)
+
+__all__ = [
+    &quot;BetaRadiation&quot;,
+    &quot;GElectron&quot;,
+    &quot;NumberDensity&quot;,
+    &quot;SelectedAtoms&quot;,
+    &quot;ElectronTemperature&quot;,
+    &quot;BetaElectron&quot;,
+    &quot;LuminosityInner&quot;,
+    &quot;TimeSimulation&quot;,
+    &quot;ThermalGElectron&quot;,
+]
+
+
+<div class="viewcode-block" id="BetaRadiation"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.BetaRadiation">[docs]</a>class BetaRadiation(ProcessingPlasmaProperty):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    beta_rad : Numpy Array, dtype float
+    &quot;&quot;&quot;
+
+    outputs = (&quot;beta_rad&quot;,)
+    latex_name = (r&quot;\beta_{\textrm{rad}}&quot;,)
+    latex_formula = (r&quot;\dfrac{1}{k_{B} T_{\textrm{rad}}}&quot;,)
+
+    def __init__(self, plasma_parent):
+        super(BetaRadiation, self).__init__(plasma_parent)
+        self.k_B_cgs = const.k_B.cgs.value
+
+<div class="viewcode-block" id="BetaRadiation.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.BetaRadiation.calculate">[docs]</a>    def calculate(self, t_rad):
+        return 1 / (self.k_B_cgs * t_rad)</div></div>
+
+
+<div class="viewcode-block" id="GElectron"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.GElectron">[docs]</a>class GElectron(ProcessingPlasmaProperty):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    g_electron : Numpy Array, dtype float
+    &quot;&quot;&quot;
+
+    outputs = (&quot;g_electron&quot;,)
+    latex_name = (r&quot;g_{\textrm{electron}}&quot;,)
+    latex_formula = (
+        r&quot;\Big(\dfrac{2\pi m_{e}/\beta_{\textrm{rad}}}{h^2}\Big)^{3/2}&quot;,
+    )
+
+<div class="viewcode-block" id="GElectron.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.GElectron.calculate">[docs]</a>    def calculate(self, beta_rad):
+        return (
+            (2 * np.pi * const.m_e.cgs.value / beta_rad)
+            / (const.h.cgs.value ** 2)
+        ) ** 1.5</div></div>
+
+
+<div class="viewcode-block" id="ThermalGElectron"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.ThermalGElectron">[docs]</a>class ThermalGElectron(GElectron):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    thermal_g_electron : Numpy Array, dtype float
+    &quot;&quot;&quot;
+
+    outputs = (&quot;thermal_g_electron&quot;,)
+    latex_name = (r&quot;g_{\textrm{electron_thermal}}&quot;,)
+    latex_formula = (
+        r&quot;\Big(\dfrac{2\pi m_{e}/\beta_{\textrm{electron}}}{h^2}\Big)^{3/2}&quot;,
+    )
+
+<div class="viewcode-block" id="ThermalGElectron.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.ThermalGElectron.calculate">[docs]</a>    def calculate(self, beta_electron):
+        return super(ThermalGElectron, self).calculate(beta_electron)</div></div>
+
+
+<div class="viewcode-block" id="NumberDensity"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.NumberDensity">[docs]</a>class NumberDensity(ProcessingPlasmaProperty):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    number_density : Pandas DataFrame, dtype float
+                     Indexed by atomic number, columns corresponding to zones
+    &quot;&quot;&quot;
+
+    outputs = (&quot;number_density&quot;,)
+    latex_name = (&quot;N_{i}&quot;,)
+
+<div class="viewcode-block" id="NumberDensity.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.NumberDensity.calculate">[docs]</a>    @staticmethod
+    def calculate(atomic_mass, abundance, density):
+        number_densities = abundance * density
+        return number_densities.div(atomic_mass.loc[abundance.index], axis=0)</div></div>
+
+
+<div class="viewcode-block" id="SelectedAtoms"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.SelectedAtoms">[docs]</a>class SelectedAtoms(ProcessingPlasmaProperty):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    selected_atoms : Pandas Int64Index, dtype int
+                     Atomic numbers of elements required for particular simulation
+    &quot;&quot;&quot;
+
+    outputs = (&quot;selected_atoms&quot;,)
+
+<div class="viewcode-block" id="SelectedAtoms.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.SelectedAtoms.calculate">[docs]</a>    def calculate(self, abundance):
+        return abundance.index</div></div>
+
+
+<div class="viewcode-block" id="ElectronTemperature"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.ElectronTemperature">[docs]</a>class ElectronTemperature(ProcessingPlasmaProperty):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    t_electron : Numpy Array, dtype float
+    &quot;&quot;&quot;
+
+    outputs = (&quot;t_electrons&quot;,)
+    latex_name = (r&quot;T_{\textrm{electron}}&quot;,)
+    latex_formula = (r&quot;\textrm{const.}\times T_{\textrm{rad}}&quot;,)
+
+<div class="viewcode-block" id="ElectronTemperature.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.ElectronTemperature.calculate">[docs]</a>    def calculate(self, t_rad, link_t_rad_t_electron):
+        return t_rad * link_t_rad_t_electron</div></div>
+
+
+<div class="viewcode-block" id="BetaElectron"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.BetaElectron">[docs]</a>class BetaElectron(ProcessingPlasmaProperty):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    beta_electron : Numpy Array, dtype float
+    &quot;&quot;&quot;
+
+    outputs = (&quot;beta_electron&quot;,)
+    latex_name = (r&quot;\beta_{\textrm{electron}}&quot;,)
+    latex_formula = (r&quot;\frac{1}{K_{B} T_{\textrm{electron}}}&quot;,)
+
+    def __init__(self, plasma_parent):
+        super(BetaElectron, self).__init__(plasma_parent)
+        self.k_B_cgs = const.k_B.cgs.value
+
+<div class="viewcode-block" id="BetaElectron.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.BetaElectron.calculate">[docs]</a>    def calculate(self, t_electrons):
+        return 1 / (self.k_B_cgs * t_electrons)</div></div>
+
+
+<div class="viewcode-block" id="LuminosityInner"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.LuminosityInner">[docs]</a>class LuminosityInner(ProcessingPlasmaProperty):
+    outputs = (&quot;luminosity_inner&quot;,)
+
+<div class="viewcode-block" id="LuminosityInner.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.LuminosityInner.calculate">[docs]</a>    @staticmethod
+    def calculate(r_inner, t_inner):
+        return (
+            4 * np.pi * const.sigma_sb.cgs * r_inner[0] ** 2 * t_inner ** 4
+        ).to(&quot;erg/s&quot;)</div></div>
+
+
+<div class="viewcode-block" id="TimeSimulation"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.TimeSimulation">[docs]</a>class TimeSimulation(ProcessingPlasmaProperty):
+    outputs = (&quot;time_simulation&quot;,)
+
+<div class="viewcode-block" id="TimeSimulation.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.general.html#tardis.plasma.properties.general.TimeSimulation.calculate">[docs]</a>    @staticmethod
+    def calculate(luminosity_inner):
+        return 1.0 * u.erg / luminosity_inner</div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

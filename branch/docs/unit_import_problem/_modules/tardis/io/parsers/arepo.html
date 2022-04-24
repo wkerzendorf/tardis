@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.io.parsers.arepo &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link href="../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.io.parsers.arepo</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.io.parsers.arepo</h1><div class="highlight"><pre>
+<span></span>import os
+import sys
+import argparse
+import warnings
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from scipy import stats
+
+
+<div class="viewcode-block" id="ArepoSnapshot"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.ArepoSnapshot">[docs]</a>class ArepoSnapshot:
+    def __init__(
+        self,
+        filename,
+        species,
+        speciesfile,
+        alpha=0.0,
+        beta=0.0,
+        gamma=0.0,
+        boxsize=1e12,
+        resolution=512,
+        numthreads=4,
+    ):
+        &quot;&quot;&quot;
+        Loads relevant data for conversion from Arepo snapshot to a
+        csvy-model. Requires arepo-snap-util to be installed.
+        The snapshot is mapped onto a Cartesian grid before further
+        processing is done.
+
+        Parameters
+        ----------
+        filename : str
+            Path to file to be converted.
+        species : list of str
+            Names of the species to be exported. Have to be the
+            same as in the species-file of the Arepo simulation
+        speciesfile : str
+            File specifying the species used in the Arepo
+            simulation.
+        alpha : float
+            Euler angle alpha for rotation of the desired line-
+            of-sight to the x-axis. Only usable with snapshots.
+            Default: 0.0
+        beta : float
+            Euler angle beta for rotation of the desired line-
+            of-sight to the x-axis. Only usable with snapshots.
+            Default: 0.0
+        gamma : float
+            Euler angle gamma for rotation of the desired line-
+            of-sight to the x-axis. Only usable with snapshots.
+            Default: 0.0
+        boxsize : float
+            Size of the box (in cm) from which data is mapped
+            to a Cartesian grid. Only usable with snapshots.
+            Default: 1e12
+        resolution : int
+            Resolution of the Cartesian grid. Only usable
+            with snapshots. Default: 512
+        numthreads : int
+            Number of threads with which Cartesian mapping
+            is done. Default: 4
+        &quot;&quot;&quot;
+
+        try:
+            import gadget_snap
+            import calcGrid
+        except ModuleNotFoundError:
+            raise ImportError(
+                &quot;Please make sure you have arepo-snap-util installed if you want to directly import Arepo snapshots.&quot;
+            )
+
+        self.species = species
+        species_full = np.genfromtxt(speciesfile, skip_header=1, dtype=str).T[0]
+        self.spec_ind = []
+        for spec in self.species:
+            self.spec_ind.append(np.where(species_full == spec)[0][0])
+
+        self.spec_ind = np.array(self.spec_ind)
+
+        self.s = gadget_snap.gadget_snapshot(
+            filename,
+            hdf5=True,
+            quiet=True,
+            lazy_load=True,
+        )
+
+        rz_yaw = np.array(
+            [
+                [np.cos(alpha), -np.sin(alpha), 0],
+                [np.sin(alpha), np.cos(alpha), 0],
+                [0, 0, 1],
+            ]
+        )
+        ry_pitch = np.array(
+            [
+                [np.cos(beta), 0, np.sin(beta)],
+                [0, 1, 0],
+                [-np.sin(beta), 0, np.cos(beta)],
+            ]
+        )
+        rx_roll = np.array(
+            [
+                [1, 0, 0],
+                [0, np.cos(gamma), -np.sin(gamma)],
+                [0, np.sin(gamma), np.cos(gamma)],
+            ]
+        )
+        # R = RzRyRx
+        rotmat = np.dot(rz_yaw, np.dot(ry_pitch, rx_roll))
+
+        self.s.rotateto(rotmat[0], dir2=rotmat[1], dir3=rotmat[2])
+
+        self.time = self.s.time
+
+        self.pos = np.array(
+            self.s.mapOnCartGrid(
+                &quot;pos&quot;,
+                box=[boxsize, boxsize, boxsize],
+                center=self.s.centerofmass(),
+                res=resolution,
+                numthreads=numthreads,
+            )
+        )
+        for i in range(3):
+            self.pos[i] -= self.s.centerofmass()[i]
+
+        self.rho = np.array(
+            self.s.mapOnCartGrid(
+                &quot;rho&quot;,
+                box=[boxsize, boxsize, boxsize],
+                center=self.s.centerofmass(),
+                res=resolution,
+                numthreads=numthreads,
+            )
+        )
+
+        self.vel = np.array(
+            self.s.mapOnCartGrid(
+                &quot;vel&quot;,
+                box=[boxsize, boxsize, boxsize],
+                center=self.s.centerofmass(),
+                res=resolution,
+                numthreads=numthreads,
+            )
+        )
+
+        self.nuc_dict = {}
+
+        for i, spec in enumerate(self.species):
+            self.nuc_dict[spec] = np.array(
+                self.nucMapOnCartGrid(
+                    self.s,
+                    spec,
+                    self.spec_ind[i],
+                    box=[boxsize, boxsize, boxsize],
+                    res=resolution,
+                    center=self.s.centerofmass(),
+                    numthreads=numthreads,
+                )
+            )
+
+<div class="viewcode-block" id="ArepoSnapshot.nucMapOnCartGrid"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.ArepoSnapshot.nucMapOnCartGrid">[docs]</a>    def nucMapOnCartGrid(
+        self,
+        snapshot,
+        species,
+        ind,
+        box,
+        res=512,
+        numthreads=1,
+        value=&quot;xnuc&quot;,
+        center=False,
+        saveas=False,
+        use_only_cells=None,
+    ):
+        &quot;&quot;&quot;
+        Helper funciton to extract nuclear composition from snapshots
+        &quot;&quot;&quot;
+
+        try:
+            import pylab
+            import calcGrid
+        except ModuleNotFoundError:
+            raise ImportError(
+                &quot;Please make sure you have arepo-snap-util installed if you want to directly import Arepo snapshots.&quot;
+            )
+        if type(center) == list:
+            center = pylab.array(center)
+        elif type(center) != np.ndarray:
+            center = snapshot.center
+
+        if type(box) == list:
+            box = pylab.array(box)
+        elif type(box) != np.ndarray:
+            box = np.array(
+                [snapshot.boxsize, snapshot.boxsize, snapshot.boxsize]
+            )
+
+        if type(res) == list:
+            res = pylab.array(res)
+        elif type(res) != np.ndarray:
+            res = np.array([res] * 3)
+
+        if use_only_cells is None:
+            use_only_cells = np.arange(snapshot.nparticlesall[0], dtype=&quot;int32&quot;)
+
+        pos = snapshot.pos[use_only_cells, :].astype(&quot;float64&quot;)
+        px = np.abs(pos[:, 0] - center[0])
+        py = np.abs(pos[:, 1] - center[1])
+        pz = np.abs(pos[:, 2] - center[2])
+
+        (pp,) = np.where(
+            (px &lt; 0.5 * box[0]) &amp; (py &lt; 0.5 * box[1]) &amp; (pz &lt; 0.5 * box[2])
+        )
+        print(&quot;Selected %d of %d particles.&quot; % (pp.size, snapshot.npart))
+
+        posdata = pos[pp]
+        valdata = snapshot.data[value][use_only_cells, ind][pp].astype(
+            &quot;float64&quot;
+        )
+
+        if valdata.ndim == 1:
+            data = calcGrid.calcASlice(
+                posdata,
+                valdata,
+                nx=res[0],
+                ny=res[1],
+                nz=res[2],
+                boxx=box[0],
+                boxy=box[1],
+                boxz=box[2],
+                centerx=center[0],
+                centery=center[1],
+                centerz=center[2],
+                grid3D=True,
+                numthreads=numthreads,
+            )
+            grid = data[&quot;grid&quot;]
+        else:
+            # We are going to generate ndim 3D grids and stack them together
+            # in a grid of shape (valdata.shape[1],res,res,res)
+            grid = []
+            for dim in range(valdata.shape[1]):
+                data = calcGrid.calcASlice(
+                    posdata,
+                    valdata[:, dim],
+                    nx=res[0],
+                    ny=res[1],
+                    nz=res[2],
+                    boxx=box[0],
+                    boxy=box[1],
+                    boxz=box[2],
+                    centerx=center[0],
+                    centery=center[1],
+                    centerz=center[2],
+                    grid3D=True,
+                    numthreads=numthreads,
+                )
+                grid.append(data[&quot;grid&quot;])
+            grid = np.stack([subgrid for subgrid in grid])
+        if saveas:
+            grid.tofile(saveas)
+
+        return grid</div>
+
+<div class="viewcode-block" id="ArepoSnapshot.get_grids"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.ArepoSnapshot.get_grids">[docs]</a>    def get_grids(self):
+        &quot;&quot;&quot;
+        Returns all relevant data to create Profile objects
+        &quot;&quot;&quot;
+        return self.pos, self.vel, self.rho, self.nuc_dict, self.time</div></div>
+
+
+<div class="viewcode-block" id="Profile"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.Profile">[docs]</a>class Profile:
+    &quot;&quot;&quot;
+    Parent class of all Profiles. Contains general function,
+    e.g. for plotting and export.
+    &quot;&quot;&quot;
+
+    def __init__(self, pos, vel, rho, xnuc, time):
+        &quot;&quot;&quot;
+        Parameters
+        ----------
+        pos : list of float
+            Meshgrid of positions in center of mass frames in
+            Cartesian coordinates
+        vel : list of float
+            Meshgrid of velocities/ velocity vectors
+        rho : list of float
+            Meshgrid of density
+        xnuc : dict
+            Dictonary containing all the nuclear fraction
+            meshgrids of the relevant species.
+        time : float
+            Time of the data
+
+        &quot;&quot;&quot;
+
+        self.pos = pos
+        self.vel = vel
+        self.rho = rho
+        self.xnuc = xnuc
+        self.time = time
+
+        self.species = list(self.xnuc.keys())
+
+        # Empty values to be filled with the create_profile function
+        self.pos_prof_p = None
+        self.pos_prof_n = None
+
+        self.vel_prof_p = None
+        self.vel_prof_n = None
+
+        self.rho_prof_p = None
+        self.rho_prof_n = None
+
+        self.xnuc_prof_p = {}
+        self.xnuc_prof_n = {}
+
+<div class="viewcode-block" id="Profile.plot_profile"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.Profile.plot_profile">[docs]</a>    def plot_profile(self, save=None, dpi=600, **kwargs):
+        &quot;&quot;&quot;
+        Plots profile, both in the positive and negative direction.
+
+        Parameters
+        ----------
+        save : str
+            Path under which the figure is to be saved. Default: None
+        dpi : int
+            Dpi of the saved figure
+        **kwargs : keywords passable to matplotlib.pyplot.plot()
+
+        Returns
+        -------
+        fig : matplotlib figure object
+        &quot;&quot;&quot;
+
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=[9.8, 9.6])
+
+        # Positive direction plots
+        ax1.plot(
+            self.pos_prof_p,
+            self.rho_prof_p / max(self.rho_prof_p),
+            label=&quot;Density&quot;,
+            **kwargs,
+        )
+        ax1.plot(
+            self.pos_prof_p,
+            self.vel_prof_p / max(self.vel_prof_p),
+            label=&quot;Velocity&quot;,
+            **kwargs,
+        )
+        for spec in self.species:
+            ax1.plot(
+                self.pos_prof_p,
+                self.xnuc_prof_p[spec],
+                label=spec.capitalize(),
+                **kwargs,
+            )
+
+        ax1.grid()
+        ax1.set_ylabel(&quot;Profile (arb. unit)&quot;)
+        ax1.set_title(&quot;Profiles along the positive axis&quot;)
+
+        # Positive direction plots
+        ax2.plot(
+            self.pos_prof_n,
+            self.rho_prof_n / max(self.rho_prof_n),
+            label=&quot;Density&quot;,
+            **kwargs,
+        )
+        ax2.plot(
+            self.pos_prof_n,
+            self.vel_prof_n / max(self.vel_prof_n),
+            label=&quot;Velocity&quot;,
+            **kwargs,
+        )
+        for spec in self.species:
+            ax2.plot(
+                self.pos_prof_n,
+                self.xnuc_prof_n[spec],
+                label=spec.capitalize(),
+                **kwargs,
+            )
+
+        ax2.grid()
+        ax2.set_ylabel(&quot;Profile (arb. unit)&quot;)
+        ax2.set_xlabel(&quot;Radial position (cm)&quot;)  # TODO astropy unit support
+        ax2.set_title(&quot;Profiles along the positive axis&quot;)
+
+        # Some styling
+        fig.tight_layout()
+
+        handles, labels = ax1.get_legend_handles_labels()
+        lgd = ax1.legend(
+            handles,
+            labels,
+            loc=&quot;upper left&quot;,
+            bbox_to_anchor=(1.05, 1.05),
+            title=&quot;Time = {:.2f} s&quot;.format(self.time),
+        )
+        if save is not None:
+            plt.savefig(
+                save,
+                bbox_inches=&quot;tight&quot;,
+                dpi=dpi,
+            )
+
+        return fig</div>
+
+<div class="viewcode-block" id="Profile.rebin"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.Profile.rebin">[docs]</a>    def rebin(self, nshells, statistic=&quot;mean&quot;):
+        &quot;&quot;&quot;
+        Rebins the data to nshells. Uses the scipy.stats.binned_statistic
+        to bin the data. The standard deviation of each bin can be obtained
+        by passing the statistics=&quot;std&quot; keyword.
+
+        Parameters
+        ----------
+        nshells : int
+            Number of bins of new data.
+        statistic : str
+            Scipy keyword for scipy.stats.binned_statistic. Default: mean
+
+        Returns
+        -------
+        self : Profile object
+
+        &quot;&quot;&quot;
+
+        self.vel_prof_p, bins_p = stats.binned_statistic(
+            self.pos_prof_p,
+            self.vel_prof_p,
+            statistic=statistic,
+            bins=nshells,
+        )[:2]
+        self.vel_prof_n, bins_n = stats.binned_statistic(
+            self.pos_prof_n,
+            self.vel_prof_n,
+            statistic=statistic,
+            bins=nshells,
+        )[:2]
+
+        self.rho_prof_p = stats.binned_statistic(
+            self.pos_prof_p,
+            self.rho_prof_p,
+            statistic=statistic,
+            bins=nshells,
+        )[0]
+        self.rho_prof_n = stats.binned_statistic(
+            self.pos_prof_n,
+            self.rho_prof_n,
+            statistic=statistic,
+            bins=nshells,
+        )[0]
+
+        for spec in self.species:
+            self.xnuc_prof_p[spec] = stats.binned_statistic(
+                self.pos_prof_p,
+                self.xnuc_prof_p[spec],
+                statistic=statistic,
+                bins=nshells,
+            )[0]
+            self.xnuc_prof_n[spec] = stats.binned_statistic(
+                self.pos_prof_n,
+                self.xnuc_prof_n[spec],
+                statistic=statistic,
+                bins=nshells,
+            )[0]
+
+        self.pos_prof_p = np.array(
+            [(bins_p[i] + bins_p[i + 1]) / 2 for i in range(len(bins_p) - 1)]
+        )
+        self.pos_prof_n = np.array(
+            [(bins_n[i] + bins_n[i + 1]) / 2 for i in range(len(bins_n) - 1)]
+        )
+
+        return self</div>
+
+<div class="viewcode-block" id="Profile.export"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.Profile.export">[docs]</a>    def export(
+        self,
+        nshells,
+        filename,
+        direction=&quot;pos&quot;,
+        statistic=&quot;mean&quot;,
+        overwrite=False,
+    ):
+        &quot;&quot;&quot;
+        Function to export a profile as csvy file. Either the
+        positive or negative direction can be exported. By default
+        does not overwrite existing files, saves to &lt;filename&gt;_&lt;number&gt;.csvy
+        file instead.
+
+        Parameters
+        ----------
+        nshells : int
+            Number of shells to be exported.
+        filename : str
+            Name of the exported file
+        direction : str
+            Specifies if either the positive or negative
+            direction is to be exported. Available
+            options: [&#39;pos&#39;, &#39;neg&#39;]. Default: pos
+        statistic : str
+            Scipy keyword for scipy.stats.binned_statistic. If
+            statistic=None, data is not rebinned. Default: &quot;mean&quot;
+        overwrite: bool
+            If true, will overwrite if a file of the same name exists.
+            By default False.
+
+        Returns
+        -------
+        filename : str
+            Name of the actual saved file
+        &quot;&quot;&quot;
+
+        # Find a free filename
+        if filename.endswith(&quot;.csvy&quot;):
+            filename = filename.replace(&quot;.csvy&quot;, &quot;&quot;)
+
+        if os.path.exists(&quot;%s.csvy&quot; % filename) and not overwrite:
+            i = 0
+            while os.path.exists(&quot;%s_%s.csvy&quot; % (filename, i)):
+                i += 1
+            filename = &quot;%s_%s.csvy&quot; % (filename, i)
+        else:
+            filename = &quot;%s.csvy&quot; % filename
+
+        with open(filename, &quot;w&quot;) as f:
+            # WRITE HEADER
+            f.write(
+                &quot;&quot;.join(
+                    [
+                        &quot;---\n&quot;,
+                        &quot;name: csvy_full\n&quot;,
+                        &quot;model_density_time_0: {:g} day\n&quot;.format(
+                            self.time / (3600 * 24)
+                        ),  # TODO astropy units
+                        &quot;model_isotope_time_0: {:g} day\n&quot;.format(
+                            self.time / (3600 / 24)
+                        ),  # TODO astropy units
+                        &quot;description: Config file for TARDIS from Arepo snapshot.\n&quot;,
+                        &quot;tardis_model_config_version: v1.0\n&quot;,
+                        &quot;datatype:\n&quot;,
+                        &quot;  fields:\n&quot;,
+                        &quot;    -  name: velocity\n&quot;,
+                        &quot;       unit: cm/s\n&quot;,
+                        &quot;       desc: velocities of shell outer bounderies.\n&quot;,
+                        &quot;    -  name: density\n&quot;,
+                        &quot;       unit: g/cm^3\n&quot;,
+                        &quot;       desc: density of shell.\n&quot;,
+                    ]
+                )
+            )
+
+            for spec in self.species:
+                f.write(
+                    &quot;&quot;.join(
+                        [
+                            &quot;    -  name: %s\n&quot; % spec.capitalize(),
+                            &quot;       desc: fractional %s abundance.\n&quot;
+                            % spec.capitalize(),
+                        ]
+                    )
+                )
+
+            f.write(
+                &quot;&quot;.join(
+                    [
+                        &quot;\n&quot;,
+                        &quot;---\n&quot;,
+                    ]
+                )
+            )
+
+            # WRITE DATA
+            datastring = [&quot;velocity,&quot;, &quot;density,&quot;]
+            for spec in self.species[:-1]:
+                datastring.append(&quot;%s,&quot; % spec.capitalize())
+            datastring.append(&quot;%s&quot; % self.species[-1].capitalize())
+            f.write(&quot;&quot;.join(datastring))
+
+            # Rebin data to nshells
+            if statistic is not None:
+                self.rebin(nshells, statistic=statistic)
+
+            if direction == &quot;pos&quot;:
+                exp = [
+                    self.vel_prof_p,
+                    self.rho_prof_p,
+                ]
+                for spec in self.xnuc_prof_p:
+                    exp.append(self.xnuc_prof_p[spec])
+            elif direction == &quot;neg&quot;:
+                exp = [
+                    self.vel_prof_n,
+                    self.rho_prof_n,
+                ]
+                for spec in self.xnuc_prof_n:
+                    exp.append(self.xnuc_prof_n[spec])
+            else:
+                raise ValueError(&quot;Unrecognized option for keyword &#39;direction&#39;&quot;)
+
+            inds = np.linspace(0, len(exp[0]) - 1, num=nshells, dtype=int)
+
+            for i in inds:
+                f.write(&quot;\n&quot;)
+                for ii in range(len(exp) - 1):
+                    f.write(&quot;%g,&quot; % exp[ii][i])
+                f.write(&quot;%g&quot; % exp[-1][i])
+
+        return filename</div>
+
+<div class="viewcode-block" id="Profile.get_profiles"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.Profile.get_profiles">[docs]</a>    def get_profiles(self):
+        &quot;&quot;&quot;Returns all profiles for manual post_processing etc.&quot;&quot;&quot;
+        return (
+            self.pos_prof_p,
+            self.pos_prof_n,
+            self.vel_prof_p,
+            self.vel_prof_n,
+            self.rho_prof_p,
+            self.rho_prof_n,
+            self.xnuc_prof_p,
+            self.xnuc_prof_n,
+        )</div></div>
+
+
+<div class="viewcode-block" id="LineProfile"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.LineProfile">[docs]</a>class LineProfile(Profile):
+    &quot;&quot;&quot;
+    Class for profiles extrected along a line, i.e. the x-axis.
+    Extends Profile.
+    &quot;&quot;&quot;
+
+<div class="viewcode-block" id="LineProfile.create_profile"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.LineProfile.create_profile">[docs]</a>    def create_profile(
+        self,
+        inner_radius=None,
+        outer_radius=None,
+        show_plot=True,
+        save_plot=None,
+        plot_dpi=600,
+    ):
+        &quot;&quot;&quot;
+        Creates a profile along the x-axis
+
+        Parameters
+        ----------
+        inner_radius : float
+            Inner radius where the profiles will be cut off. Default: None
+        outer_radius : float
+            Outer radius where the profiles will be cut off. Default: None
+        show_plot : bool
+            Specifies if a plot is to be shown after the creation of the
+            profile. Default: True
+        save_plot : str
+            Location where the plot is being saved. Default: None
+        plot_dpi : int
+            Dpi of the saved plot. Default: 600
+
+        Returns
+        -------
+        profile : LineProfile object
+
+        &quot;&quot;&quot;
+
+        midpoint = int(np.ceil(len(self.rho) / 2))
+
+        # Extract radialprofiles
+        pos_p = np.sqrt(
+            (self.pos[0, midpoint, midpoint:, midpoint]) ** 2
+            + (self.pos[1, midpoint, midpoint:, midpoint]) ** 2
+            + (self.pos[2, midpoint, midpoint:, midpoint]) ** 2
+        )
+        pos_n = np.sqrt(
+            self.pos[0, midpoint, :midpoint, midpoint] ** 2
+            + self.pos[1, midpoint, :midpoint, midpoint] ** 2
+            + self.pos[2, midpoint, :midpoint, midpoint] ** 2
+        )
+
+        vel_p = np.sqrt(
+            self.vel[0, midpoint, midpoint:, midpoint] ** 2
+            + self.vel[1, midpoint, midpoint:, midpoint] ** 2
+            + self.vel[2, midpoint, midpoint:, midpoint] ** 2
+        )
+        vel_n = np.sqrt(
+            self.vel[0, midpoint, :midpoint, midpoint] ** 2
+            + self.vel[1, midpoint, :midpoint, midpoint] ** 2
+            + self.vel[2, midpoint, :midpoint, midpoint] ** 2
+        )
+
+        rho_p = self.rho[midpoint, midpoint:, midpoint]
+        rho_n = self.rho[midpoint, :midpoint, midpoint]
+
+        spec_p = {}
+        spec_n = {}
+
+        for spec in self.species:
+            spec_p[spec] = self.xnuc[spec][midpoint, midpoint:, midpoint]
+            spec_n[spec] = self.xnuc[spec][midpoint, :midpoint, midpoint]
+
+        self.pos_prof_p = np.sort(pos_p)
+        self.pos_prof_n = np.sort(pos_n)
+
+        if outer_radius is None:
+            maxradius_p = max(self.pos_prof_p)
+            maxradius_n = max(self.pos_prof_n)
+        else:
+            maxradius_p = outer_radius
+            maxradius_n = outer_radius
+
+        if inner_radius is None:
+            minradius_p = min(self.pos_prof_p)
+            minradius_n = min(self.pos_prof_n)
+        else:
+            minradius_p = inner_radius
+            minradius_n = inner_radius
+
+        mask_p = np.logical_and(
+            self.pos_prof_p &gt;= minradius_p, self.pos_prof_p &lt;= maxradius_p
+        )
+        mask_n = np.logical_and(
+            self.pos_prof_n &gt;= minradius_n, self.pos_prof_n &lt;= maxradius_n
+        )
+
+        if not mask_p.any() or not mask_n.any():
+            raise ValueError(&quot;No points left between inner and outer radius.&quot;)
+
+        self.rho_prof_p = np.array(
+            [x for _, x in sorted(zip(pos_p, rho_p), key=lambda pair: pair[0])]
+        )[mask_p]
+        self.rho_prof_n = np.array(
+            [x for _, x in sorted(zip(pos_n, rho_n), key=lambda pair: pair[0])]
+        )[mask_n]
+
+        self.vel_prof_p = np.array(
+            [x for _, x in sorted(zip(pos_p, vel_p), key=lambda pair: pair[0])]
+        )[mask_p]
+        self.vel_prof_n = np.array(
+            [x for _, x in sorted(zip(pos_n, vel_n), key=lambda pair: pair[0])]
+        )[mask_n]
+
+        for spec in self.species:
+            self.xnuc_prof_p[spec] = np.array(
+                [
+                    x
+                    for _, x in sorted(
+                        zip(pos_p, spec_p[spec]), key=lambda pair: pair[0]
+                    )
+                ]
+            )[mask_p]
+            self.xnuc_prof_n[spec] = np.array(
+                [
+                    x
+                    for _, x in sorted(
+                        zip(pos_n, spec_n[spec]), key=lambda pair: pair[0]
+                    )
+                ]
+            )[mask_n]
+
+        self.pos_prof_p = self.pos_prof_p[mask_p]
+        self.pos_prof_n = self.pos_prof_n[mask_n]
+
+        if show_plot:
+            self.plot_profile(save=save_plot, dpi=plot_dpi)
+
+        return self</div></div>
+
+
+<div class="viewcode-block" id="ConeProfile"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.ConeProfile">[docs]</a>class ConeProfile(Profile):
+    &quot;&quot;&quot;
+    Class for profiles extracted inside a cone around the x-axis.
+    Extends Profile.
+    &quot;&quot;&quot;
+
+<div class="viewcode-block" id="ConeProfile.create_profile"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.ConeProfile.create_profile">[docs]</a>    def create_profile(
+        self,
+        opening_angle=20.0,
+        inner_radius=None,
+        outer_radius=None,
+        show_plot=True,
+        save_plot=None,
+        plot_dpi=600,
+    ):
+        &quot;&quot;&quot;
+        Creates a profile along the x-axis without any averaging
+
+        Parameters
+        ----------
+        opening_angle : float
+            Opening angle (in degrees) of the cone from which the
+            data is extracted. Refers to the total opening angle, not
+            the angle with respect to the x axis. Default: 20.0
+        inner_radius : float
+            Inner radius where the profiles will be cut off. Default: None
+        outer_radius : float
+            Outer radius where the profiles will be cut off. Default: None
+        show_plot : bool
+            Specifies if a plot is to be shown after the creation of the
+            profile. Default: True
+        save_plot : str
+            Location where the plot is being saved. Default: None
+        plot_dpi : int
+            Dpi of the saved plot. Default: 600
+
+        Returns
+        -------
+        profile : LineProfile object
+
+        &quot;&quot;&quot;
+
+        # Convert Cartesian coordinates into cylindrical coordinates
+        # P(x,y,z) -&gt; P(x,r,theta)
+        cyl = np.array(
+            [
+                self.pos[0],
+                np.sqrt(self.pos[1] ** 2 + self.pos[2] ** 2),
+                np.arctan(self.pos[2] / self.pos[1]),
+            ]
+        )
+
+        # Get maximum allowed r of points to still be in cone
+        dist = np.tan(opening_angle / 2) * np.abs(cyl[0])
+
+        # Create masks
+        cmask_p = np.logical_and(cyl[0] &gt; 0, cyl[1] &lt;= dist)
+        cmask_n = np.logical_and(cyl[0] &lt; 0, cyl[1] &lt;= dist)
+
+        # Apply mask to data
+        pos_p = np.sqrt(
+            (self.pos[0][cmask_p]) ** 2
+            + (self.pos[1][cmask_p]) ** 2
+            + (self.pos[2][cmask_p]) ** 2
+        )
+        pos_n = np.sqrt(
+            self.pos[0][cmask_n] ** 2
+            + self.pos[1][cmask_n] ** 2
+            + self.pos[2][cmask_n] ** 2
+        )
+
+        vel_p = np.sqrt(
+            self.vel[0][cmask_p] ** 2
+            + self.vel[1][cmask_p] ** 2
+            + self.vel[2][cmask_p] ** 2
+        )
+        vel_n = np.sqrt(
+            self.vel[0][cmask_n] ** 2
+            + self.vel[1][cmask_n] ** 2
+            + self.vel[2][cmask_n] ** 2
+        )
+
+        rho_p = self.rho[cmask_p]
+        rho_n = self.rho[cmask_n]
+
+        spec_p = {}
+        spec_n = {}
+
+        for spec in self.species:
+            spec_p[spec] = self.xnuc[spec][cmask_p]
+            spec_n[spec] = self.xnuc[spec][cmask_n]
+
+        self.pos_prof_p = np.sort(pos_p)
+        self.pos_prof_n = np.sort(pos_n)
+
+        if outer_radius is None:
+            maxradius_p = max(self.pos_prof_p)
+            maxradius_n = max(self.pos_prof_n)
+        else:
+            maxradius_p = outer_radius
+            maxradius_n = outer_radius
+
+        if inner_radius is None:
+            minradius_p = min(self.pos_prof_p)
+            minradius_n = min(self.pos_prof_n)
+        else:
+            minradius_p = inner_radius
+            minradius_n = inner_radius
+
+        mask_p = np.logical_and(
+            self.pos_prof_p &gt;= minradius_p, self.pos_prof_p &lt;= maxradius_p
+        )
+        mask_n = np.logical_and(
+            self.pos_prof_n &gt;= minradius_n, self.pos_prof_n &lt;= maxradius_n
+        )
+
+        if not mask_p.any() or not mask_n.any():
+            raise ValueError(&quot;No points left between inner and outer radius.&quot;)
+
+        self.rho_prof_p = np.array(
+            [x for _, x in sorted(zip(pos_p, rho_p), key=lambda pair: pair[0])]
+        )[mask_p]
+        self.rho_prof_n = np.array(
+            [x for _, x in sorted(zip(pos_n, rho_n), key=lambda pair: pair[0])]
+        )[mask_n]
+
+        self.vel_prof_p = np.array(
+            [x for _, x in sorted(zip(pos_p, vel_p), key=lambda pair: pair[0])]
+        )[mask_p]
+        self.vel_prof_n = np.array(
+            [x for _, x in sorted(zip(pos_n, vel_n), key=lambda pair: pair[0])]
+        )[mask_n]
+
+        for spec in self.species:
+            self.xnuc_prof_p[spec] = np.array(
+                [
+                    x
+                    for _, x in sorted(
+                        zip(pos_p, spec_p[spec]), key=lambda pair: pair[0]
+                    )
+                ]
+            )[mask_p]
+            self.xnuc_prof_n[spec] = np.array(
+                [
+                    x
+                    for _, x in sorted(
+                        zip(pos_n, spec_n[spec]), key=lambda pair: pair[0]
+                    )
+                ]
+            )[mask_n]
+
+        self.pos_prof_p = self.pos_prof_p[mask_p]
+        self.pos_prof_n = self.pos_prof_n[mask_n]
+
+        if show_plot:
+            self.plot_profile(save=save_plot, dpi=plot_dpi)
+
+        return self</div></div>
+
+
+<div class="viewcode-block" id="FullProfile"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.FullProfile">[docs]</a>class FullProfile(Profile):
+    &quot;&quot;&quot;
+    Class for profiles extracted from the full snapshot,
+    i.e. angle averaged profiles.
+    Extends Profile.
+    &quot;&quot;&quot;
+
+<div class="viewcode-block" id="FullProfile.create_profile"><a class="viewcode-back" href="../../../../api/tardis.io.parsers.arepo.html#tardis.io.parsers.arepo.FullProfile.create_profile">[docs]</a>    def create_profile(
+        self,
+        inner_radius=None,
+        outer_radius=None,
+        show_plot=True,
+        save_plot=None,
+        plot_dpi=600,
+    ):
+        &quot;&quot;&quot;
+        Creates a profile from the full snapshot. Positive and negative
+        direction are identical.
+
+        Parameters
+        ----------
+        inner_radius : float
+            Inner radius where the profiles will be cut off. Default: None
+        outer_radius : float
+            Outer radius where the profiles will be cut off. Default: None
+        show_plot : bool
+            Specifies if a plot is to be shown after the creation of the
+            profile. Default: True
+        save_plot : str
+            Location where the plot is being saved. Default: None
+        plot_dpi : int
+            Dpi of the saved plot. Default: 600
+
+        Returns
+        -------
+        profile : LineProfile object
+
+        &quot;&quot;&quot;
+
+        pos_p = np.sqrt(
+            (self.pos[0]) ** 2 + (self.pos[1]) ** 2 + (self.pos[2]) ** 2
+        ).flatten()
+        pos_n = np.sqrt(
+            self.pos[0] ** 2 + self.pos[1] ** 2 + self.pos[2] ** 2
+        ).flatten()
+
+        vel_p = np.sqrt(
+            self.vel[0] ** 2 + self.vel[1] ** 2 + self.vel[2] ** 2
+        ).flatten()
+        vel_n = np.sqrt(
+            self.vel[0] ** 2 + self.vel[1] ** 2 + self.vel[2] ** 2
+        ).flatten()
+
+        rho_p = self.rho.flatten()
+        rho_n = self.rho.flatten()
+
+        spec_p = {}
+        spec_n = {}
+
+        for spec in self.species:
+            spec_p[spec] = self.xnuc[spec].flatten()
+            spec_n[spec] = self.xnuc[spec].flatten()
+
+        self.pos_prof_p = np.sort(pos_p)
+        self.pos_prof_n = np.sort(pos_n)
+
+        if outer_radius is None:
+            maxradius_p = max(self.pos_prof_p)
+            maxradius_n = max(self.pos_prof_n)
+        else:
+            maxradius_p = outer_radius
+            maxradius_n = outer_radius
+
+        if inner_radius is None:
+            minradius_p = min(self.pos_prof_p)
+            minradius_n = min(self.pos_prof_n)
+        else:
+            minradius_p = inner_radius
+            minradius_n = inner_radius
+
+        mask_p = np.logical_and(
+            self.pos_prof_p &gt;= minradius_p, self.pos_prof_p &lt;= maxradius_p
+        )
+        mask_n = np.logical_and(
+            self.pos_prof_n &gt;= minradius_n, self.pos_prof_n &lt;= maxradius_n
+        )
+
+        if not mask_p.any() or not mask_n.any():
+            raise ValueError(&quot;No points left between inner and outer radius.&quot;)
+
+        self.rho_prof_p = np.array(
+            [x for _, x in sorted(zip(pos_p, rho_p), key=lambda pair: pair[0])]
+        )[mask_p]
+        self.rho_prof_n = np.array(
+            [x for _, x in sorted(zip(pos_n, rho_n), key=lambda pair: pair[0])]
+        )[mask_n]
+
+        self.vel_prof_p = np.array(
+            [x for _, x in sorted(zip(pos_p, vel_p), key=lambda pair: pair[0])]
+        )[mask_p]
+        self.vel_prof_n = np.array(
+            [x for _, x in sorted(zip(pos_n, vel_n), key=lambda pair: pair[0])]
+        )[mask_n]
+
+        for spec in self.species:
+            self.xnuc_prof_p[spec] = np.array(
+                [
+                    x
+                    for _, x in sorted(
+                        zip(pos_p, spec_p[spec]), key=lambda pair: pair[0]
+                    )
+                ]
+            )[mask_p]
+            self.xnuc_prof_n[spec] = np.array(
+                [
+                    x
+                    for _, x in sorted(
+                        zip(pos_n, spec_n[spec]), key=lambda pair: pair[0]
+                    )
+                ]
+            )[mask_n]
+
+        self.pos_prof_p = self.pos_prof_p[mask_p]
+        self.pos_prof_n = self.pos_prof_n[mask_n]
+
+        if show_plot:
+            self.plot_profile(save=save_plot, dpi=plot_dpi)
+
+        return self</div></div>
+
+
+if __name__ == &quot;__main__&quot;:
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        &quot;snapshot&quot;,
+        help=&quot;Snapshot file for which to create velocity profile plot&quot;,
+    )
+    parser.add_argument(
+        &quot;save&quot;,
+        help=&quot;Filename of exported .csvy file&quot;,
+    )
+    parser.add_argument(
+        &quot;-a&quot;,
+        &quot;--alpha&quot;,
+        help=&quot;Euler angle alpha for rotation of desired direction to x-axis. Default: 0&quot;,
+        type=float,
+        default=0.0,
+    )
+    parser.add_argument(
+        &quot;-b&quot;,
+        &quot;--beta&quot;,
+        help=&quot;Euler angle beta for rotation of desired direction to x-axis. Default: 0&quot;,
+        type=float,
+        default=0.0,
+    )
+    parser.add_argument(
+        &quot;-g&quot;,
+        &quot;--gamma&quot;,
+        help=&quot;Euler angle gamma for rotation of desired direction to x-axis. Default: 0&quot;,
+        type=float,
+        default=0.0,
+    )
+    parser.add_argument(
+        &quot;-o&quot;,
+        &quot;--opening_angle&quot;,
+        help=&quot;Opening angle of the cone from which profile is extracted. Default 20.0&quot;,
+        type=float,
+        default=20.0,
+    )
+    parser.add_argument(
+        &quot;-n&quot;,
+        &quot;--nshells&quot;,
+        help=&quot;Number of shells to create. Default: 10&quot;,
+        type=int,
+        default=10,
+    )
+    parser.add_argument(
+        &quot;-x&quot;,
+        &quot;--boxsize&quot;,
+        help=&quot;Size of the box (in cm) from which data is extracted. Default: 1e12&quot;,
+        type=float,
+        default=1e12,
+    )
+    parser.add_argument(
+        &quot;-e&quot;,
+        &quot;--elements&quot;,
+        help=&quot;List of species to be included. Default: ni56&quot;,
+        default=&quot;ni56&quot;,
+        nargs=&quot;+&quot;,
+    )
+    parser.add_argument(
+        &quot;--eosspecies&quot;,
+        help=&quot;Species file including all the species used in the production of the composition file. Default: species55.txt&quot;,
+        default=&quot;species55.txt&quot;,
+    )
+    parser.add_argument(
+        &quot;--outer_radius&quot;,
+        help=&quot;Outer radius to which to build profile.&quot;,
+        type=float,
+    )
+    parser.add_argument(
+        &quot;--inner_radius&quot;,
+        help=&quot;Inner radius to which to build profile.&quot;,
+        type=float,
+    )
+    parser.add_argument(
+        &quot;--profile&quot;,
+        help=&quot;How to build profile. Available options: [line, cone, full]. Default: cone&quot;,
+        default=&quot;cone&quot;,
+        choices=[&quot;line&quot;, &quot;cone&quot;, &quot;full&quot;],
+    )
+    parser.add_argument(
+        &quot;--resolution&quot;,
+        help=&quot;Resolution of Cartesian grid extracted from snapshot. Default: 512&quot;,
+        type=int,
+        default=512,
+    )
+    parser.add_argument(
+        &quot;--numthreads&quot;,
+        help=&quot;Number of threads used in snapshot tree walk. Default: 4&quot;,
+        type=int,
+        default=4,
+    )
+    parser.add_argument(&quot;--save_plot&quot;, help=&quot;File name of saved plot.&quot;)
+    parser.add_argument(
+        &quot;--dpi&quot;, help=&quot;Dpi of saved plot. Default: 600&quot;, type=int, default=600
+    )
+    parser.add_argument(
+        &quot;--plot_rebinned&quot;, help=&quot;File name of plot after rebinning&quot;
+    )
+
+    args = parser.parse_args()
+
+    snapshot = ArepoSnapshot(
+        args.snapshot,
+        args.elements,
+        args.eosspecies,
+        alpha=args.alpha,
+        beta=args.beta,
+        gamma=args.gamma,
+        boxsize=args.boxsize,
+        resolution=args.resolution,
+        numthreads=args.numthreads,
+    )
+
+    pos, vel, rho, xnuc, time = snapshot.get_grids()
+
+    if args.profile == &quot;line&quot;:
+        profile = LineProfile(pos, vel, rho, xnuc, time)
+    elif args.profile == &quot;cone&quot;:
+        profile = ConeProfile(pos, vel, rho, xnuc, time)
+    elif args.profile == &quot;full&quot;:
+        profile = FullProfile(pos, vel, rho, xnuc, time)
+
+    if args.profile == &quot;cone&quot;:
+        profile.create_profile(
+            opening_angle=args.opening_angle,
+            inner_radius=args.inner_radius,
+            outer_radius=args.outer_radius,
+            save_plot=args.save_plot,
+            plot_dpi=args.dpi,
+        )
+    else:
+        profile.create_profile(
+            inner_radius=args.inner_radius,
+            outer_radius=args.outer_radius,
+            save_plot=args.save_plot,
+            plot_dpi=args.dpi,
+        )
+
+    profile.export(args.nshells, args.save)
+
+    if args.plot_rebinned:
+        profile.plot_profile(save=args.plot_rebinned, dpi=args.dpi)
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

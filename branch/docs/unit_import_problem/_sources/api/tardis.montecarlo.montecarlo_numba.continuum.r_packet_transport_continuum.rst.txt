@@ -1,0 +1,7 @@
+tardis.montecarlo.montecarlo\_numba.continuum.r\_packet\_transport\_continuum module
+====================================================================================
+
+.. automodule:: tardis.montecarlo.montecarlo_numba.continuum.r_packet_transport_continuum
+   :members:
+   :undoc-members:
+   :show-inheritance:

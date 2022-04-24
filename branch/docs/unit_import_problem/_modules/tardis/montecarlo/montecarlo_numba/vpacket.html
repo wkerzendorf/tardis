@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.montecarlo.montecarlo_numba.vpacket &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link href="../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.montecarlo.montecarlo_numba.vpacket</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.montecarlo.montecarlo_numba.vpacket</h1><div class="highlight"><pre>
+<span></span>import math
+
+import numpy as np
+from numba import float64, int64
+from numba import njit
+from numba.experimental import jitclass
+
+from tardis.montecarlo.montecarlo_numba import njit_dict_no_parallel
+from tardis.montecarlo import (
+    montecarlo_configuration as montecarlo_configuration,
+)
+
+from tardis.montecarlo.montecarlo_numba.r_packet import (
+    PacketStatus,
+)
+from tardis.montecarlo.montecarlo_numba.r_packet_transport import \
+    move_packet_across_shell_boundary
+
+from tardis.montecarlo.montecarlo_numba.calculate_distances import (
+    calculate_distance_boundary,
+    calculate_distance_line,
+)
+
+from tardis.montecarlo.montecarlo_numba.frame_transformations import (
+    get_doppler_factor,
+    angle_aberration_LF_to_CMF,
+    angle_aberration_CMF_to_LF,
+)
+
+from tardis.montecarlo.montecarlo_numba.numba_config import SIGMA_THOMSON
+
+vpacket_spec = [
+    (&quot;r&quot;, float64),
+    (&quot;mu&quot;, float64),
+    (&quot;nu&quot;, float64),
+    (&quot;energy&quot;, float64),
+    (&quot;next_line_id&quot;, int64),
+    (&quot;current_shell_id&quot;, int64),
+    (&quot;status&quot;, int64),
+    (&quot;index&quot;, int64),
+]
+
+
+@jitclass(vpacket_spec)
+class VPacket(object):
+    def __init__(
+        self,
+        r,
+        mu,
+        nu,
+        energy,
+        current_shell_id,
+        next_line_id,
+        index=0,
+    ):
+        self.r = r
+        self.mu = mu
+        self.nu = nu
+        self.energy = energy
+        self.current_shell_id = current_shell_id
+        self.next_line_id = next_line_id
+        self.status = PacketStatus.IN_PROCESS
+        self.index = index
+
+
+<div class="viewcode-block" id="trace_vpacket_within_shell"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.vpacket.html#tardis.montecarlo.montecarlo_numba.vpacket.trace_vpacket_within_shell">[docs]</a>@njit(**njit_dict_no_parallel)
+def trace_vpacket_within_shell(v_packet, numba_model, numba_plasma):
+    &quot;&quot;&quot;
+    Trace VPacket within one shell (relatively simple operation)
+    &quot;&quot;&quot;
+    r_inner = numba_model.r_inner[v_packet.current_shell_id]
+    r_outer = numba_model.r_outer[v_packet.current_shell_id]
+
+    distance_boundary, delta_shell = calculate_distance_boundary(
+        v_packet.r, v_packet.mu, r_inner, r_outer
+    )
+    # defining start for line interaction
+    start_line_id = v_packet.next_line_id
+
+    # e scattering initialization
+
+    cur_electron_density = numba_plasma.electron_density[
+        v_packet.current_shell_id
+    ]
+    chi_e = cur_electron_density * SIGMA_THOMSON
+    
+    # Calculating doppler factor
+    doppler_factor = get_doppler_factor(
+        v_packet.r, v_packet.mu, numba_model.time_explosion
+    )
+    comov_nu = v_packet.nu * doppler_factor
+
+    chi_continuum = chi_e
+
+    tau_continuum = chi_continuum * distance_boundary
+    tau_trace_combined = tau_continuum
+    
+    
+    cur_line_id = start_line_id
+
+    for cur_line_id in range(start_line_id, len(numba_plasma.line_list_nu)):
+        # if tau_trace_combined &gt; 10: ### FIXME ?????
+        #    break
+
+        nu_line = numba_plasma.line_list_nu[cur_line_id]
+        # TODO: Check if this is what the C code does
+
+        tau_trace_line = numba_plasma.tau_sobolev[
+            cur_line_id, v_packet.current_shell_id
+        ]
+
+        is_last_line = cur_line_id == len(numba_plasma.line_list_nu) - 1
+
+        distance_trace_line = calculate_distance_line(
+            v_packet,
+            comov_nu,
+            is_last_line,
+            nu_line,
+            numba_model.time_explosion,
+        )
+
+        if distance_boundary &lt;= distance_trace_line:
+            break
+
+        tau_trace_combined += tau_trace_line
+
+    else:
+        if cur_line_id == (len(numba_plasma.line_list_nu) - 1):
+            cur_line_id += 1
+    v_packet.next_line_id = cur_line_id
+
+    return tau_trace_combined, distance_boundary, delta_shell</div>
+
+
+<div class="viewcode-block" id="trace_vpacket"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.vpacket.html#tardis.montecarlo.montecarlo_numba.vpacket.trace_vpacket">[docs]</a>@njit(**njit_dict_no_parallel)
+def trace_vpacket(v_packet, numba_model, numba_plasma):
+    &quot;&quot;&quot;
+    Trace single vpacket.
+    Parameters
+    ----------
+    v_packet
+    numba_model
+    numba_plasma
+
+    Returns
+    -------
+
+    &quot;&quot;&quot;
+
+    tau_trace_combined = 0.0
+    while True:
+        (
+            tau_trace_combined_shell,
+            distance_boundary,
+            delta_shell,
+        ) = trace_vpacket_within_shell(v_packet, numba_model, numba_plasma)
+        tau_trace_combined += tau_trace_combined_shell
+
+        move_packet_across_shell_boundary(
+            v_packet, delta_shell, len(numba_model.r_inner)
+        )
+
+        if tau_trace_combined &gt; montecarlo_configuration.tau_russian:
+            event_random = np.random.random()
+            if event_random &gt; montecarlo_configuration.survival_probability:
+                v_packet.energy = 0.0
+                v_packet.status = PacketStatus.EMITTED
+            else:
+                v_packet.energy = (
+                    v_packet.energy
+                    / montecarlo_configuration.survival_probability
+                    * math.exp(-tau_trace_combined)
+                )
+                tau_trace_combined = 0.0
+
+        # Moving the v_packet
+        new_r = math.sqrt(
+            v_packet.r * v_packet.r
+            + distance_boundary * distance_boundary
+            + 2.0 * v_packet.r * distance_boundary * v_packet.mu
+        )
+        v_packet.mu = (v_packet.mu * v_packet.r + distance_boundary) / new_r
+        v_packet.r = new_r
+
+        if v_packet.status == PacketStatus.EMITTED:
+            break
+    return tau_trace_combined</div>
+
+
+<div class="viewcode-block" id="trace_vpacket_volley"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.vpacket.html#tardis.montecarlo.montecarlo_numba.vpacket.trace_vpacket_volley">[docs]</a>@njit(**njit_dict_no_parallel)
+def trace_vpacket_volley(
+    r_packet, vpacket_collection, numba_model, numba_plasma
+):
+    &quot;&quot;&quot;
+    Shoot a volley of vpackets (the vpacket collection specifies how many)
+    from the current position of the rpacket.
+
+    Parameters
+    ----------
+    r_packet : [type]
+        [description]
+    vpacket_collection : [type]
+        [description]
+    numba_model : [type]
+        [description]
+    numba_plasma : [type]
+        [description]
+    &quot;&quot;&quot;
+
+    if (r_packet.nu &lt; vpacket_collection.v_packet_spawn_start_frequency) or (
+        r_packet.nu &gt; vpacket_collection.v_packet_spawn_end_frequency
+    ):
+
+        return
+
+    no_of_vpackets = vpacket_collection.number_of_vpackets
+    if no_of_vpackets == 0:
+        return
+
+    ### TODO theoretical check for r_packet nu within vpackets bins - is done somewhere else I think
+    if r_packet.r &gt; numba_model.r_inner[0]:  # not on inner_boundary
+        r_inner_over_r = numba_model.r_inner[0] / r_packet.r
+        mu_min = -math.sqrt(1 - r_inner_over_r * r_inner_over_r)
+        v_packet_on_inner_boundary = False
+        if montecarlo_configuration.full_relativity:
+            mu_min = angle_aberration_LF_to_CMF(
+                r_packet, numba_model.time_explosion, mu_min
+            )
+    else:
+        v_packet_on_inner_boundary = True
+        mu_min = 0.0
+
+    mu_bin = (1.0 - mu_min) / no_of_vpackets
+    r_packet_doppler_factor = get_doppler_factor(
+        r_packet.r, r_packet.mu, numba_model.time_explosion
+    )
+    for i in range(no_of_vpackets):
+        v_packet_mu = mu_min + i * mu_bin + np.random.random() * mu_bin
+
+        if v_packet_on_inner_boundary:  # The weights are described in K&amp;S 2014
+            weight = 2 * v_packet_mu / no_of_vpackets
+        else:
+            weight = (1 - mu_min) / (2 * no_of_vpackets)
+
+        # C code: next line, angle_aberration_CMF_to_LF( &amp; virt_packet, storage);
+        if montecarlo_configuration.full_relativity:
+            v_packet_mu = angle_aberration_CMF_to_LF(
+                r_packet, numba_model.time_explosion, v_packet_mu
+            )
+        v_packet_doppler_factor = get_doppler_factor(
+            r_packet.r, v_packet_mu, numba_model.time_explosion
+        )
+
+        # transform between r_packet mu and v_packet_mu
+
+        doppler_factor_ratio = r_packet_doppler_factor / v_packet_doppler_factor
+
+        v_packet_nu = r_packet.nu * doppler_factor_ratio
+        v_packet_energy = r_packet.energy * weight * doppler_factor_ratio
+
+        # TODO: Make sure we have a new continuum object for each vpacket
+        #comov_nu = v_packet_nu * v_packet_doppler_factor
+        #continuum.calculate(comov_nu, r_packet.current_shell_id)
+
+        v_packet = VPacket(
+            r_packet.r,
+            v_packet_mu,
+            v_packet_nu,
+            v_packet_energy,
+            r_packet.current_shell_id,
+            r_packet.next_line_id,
+            i,
+        )
+
+        tau_vpacket = trace_vpacket(v_packet, numba_model, numba_plasma)
+
+        v_packet.energy *= math.exp(-tau_vpacket)
+
+        vpacket_collection.set_properties(
+            v_packet.nu,
+            v_packet.energy,
+            v_packet_mu,
+            r_packet.r,
+            r_packet.last_interaction_in_nu,
+            r_packet.last_interaction_type,
+            r_packet.last_line_interaction_in_id,
+            r_packet.last_line_interaction_out_id,
+        )</div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

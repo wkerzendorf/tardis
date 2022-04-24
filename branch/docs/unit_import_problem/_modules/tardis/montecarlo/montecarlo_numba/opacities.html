@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.montecarlo.montecarlo_numba.opacities &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link href="../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.montecarlo.montecarlo_numba.opacities</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.montecarlo.montecarlo_numba.opacities</h1><div class="highlight"><pre>
+<span></span>from numba import njit
+import numpy as np
+
+from tardis.montecarlo.montecarlo_numba import (
+    njit_dict_no_parallel,
+)
+
+from tardis.montecarlo.montecarlo_numba.numba_config import (
+    SIGMA_THOMSON,
+)
+
+from tardis import constants as const
+
+H = const.h.cgs.value
+M_E = const.m_e.cgs.value
+K_B = const.k_B.cgs.value
+E = const.e.esu.value
+C = const.c.cgs.value
+
+FF_OPAC_CONST = (
+    (2 * np.pi / (3 * M_E * K_B)) ** 0.5 * 4 * E ** 6 / (3 * M_E * H * C)
+)  # See Eq. 6.1.8 in http://personal.psu.edu/rbc3/A534/lec6.pdf
+
+
+<div class="viewcode-block" id="chi_electron_calculator"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.opacities.html#tardis.montecarlo.montecarlo_numba.opacities.chi_electron_calculator">[docs]</a>@njit(**njit_dict_no_parallel)
+def chi_electron_calculator(numba_plasma, nu, shell):
+    &quot;&quot;&quot;
+    Calculate chi for Thomson scattering
+
+    Parameters
+    ----------
+    numba_plasma : NumbaPlasma
+    nu : float
+        Comoving frequency of the r-packet.
+    shell : int
+        Shell of current r_packet
+
+    Returns
+    -------
+    numpy.ndarray, dtype int
+        Continuum ids for which absorption is possible for frequency `nu`.
+    &quot;&quot;&quot;
+    return numba_plasma.electron_density[shell] * SIGMA_THOMSON</div>
+
+<div class="viewcode-block" id="calculate_tau_electron"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.opacities.html#tardis.montecarlo.montecarlo_numba.opacities.calculate_tau_electron">[docs]</a>@njit(**njit_dict_no_parallel)
+def calculate_tau_electron(electron_density, distance):
+    &quot;&quot;&quot;
+    Calculate tau for Thomson scattering
+
+    Parameters
+    ----------
+    electron_density : float
+    distance : float
+
+    Returns
+    -------
+    tau_electron : float
+        tau for thomson scattering
+    &quot;&quot;&quot;
+    return electron_density * SIGMA_THOMSON * distance</div>
+
+<div class="viewcode-block" id="get_current_bound_free_continua"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.opacities.html#tardis.montecarlo.montecarlo_numba.opacities.get_current_bound_free_continua">[docs]</a>@njit(**njit_dict_no_parallel)
+def get_current_bound_free_continua(numba_plasma, nu):
+    &quot;&quot;&quot;
+    Determine bound-free continua for which absorption is possible.
+
+    Parameters
+    ----------
+    numba_plasma : NumbaPlasma
+    nu : float
+        Comoving frequency of the r-packet.
+
+    Returns
+    -------
+    numpy.ndarray, dtype int
+        Continuum ids for which absorption is possible for frequency `nu`.
+    &quot;&quot;&quot;
+    nu_mins = numba_plasma.photo_ion_nu_threshold_mins
+    nu_maxs = numba_plasma.photo_ion_nu_threshold_maxs
+    current_continua = np.where(
+        np.logical_and(nu &gt;= nu_mins, nu &lt;= nu_maxs)
+            )[0]
+    return current_continua</div>
+
+<div class="viewcode-block" id="chi_bf_interpolator"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.opacities.html#tardis.montecarlo.montecarlo_numba.opacities.chi_bf_interpolator">[docs]</a>@njit(**njit_dict_no_parallel)
+def chi_bf_interpolator(numba_plasma, nu, shell):
+    &quot;&quot;&quot;
+    Interpolate the bound-free opacity.
+
+    This function interpolates the tabulated bound-free opacities
+    and cross-sections to new frequency values `nu`.
+
+    Parameters
+    ----------
+    numba_plasma : NumbaPlasma
+    nu : float, dtype float
+        Comoving frequency of the r-packet.
+    shell : int, dtype float
+        Current computational shell.
+
+    Returns
+    -------
+    chi_bf_tot : float
+        Total bound-free opacity at frequency `nu`.
+    chi_bf_contributions : numpy.ndarray, dtype float
+        Cumulative distribution function of the contributions of the
+        individual bound free continua to the total bound-free opacity.
+    current_continua : numpy.ndarray, dtype int
+        Continuum ids for which absorption is possible for frequency `nu`.
+    x_sect_bfs : numpy.ndarray, dtype float
+        Photoionization cross-sections of all bound-free continua for
+        which absorption is possible for frequency `nu`.
+    &quot;&quot;&quot;
+    
+    current_continua = get_current_bound_free_continua(numba_plasma, nu)
+    chi_bfs = np.zeros(len(current_continua))
+    x_sect_bfs = np.zeros(len(current_continua))
+    for i, continuum_id in enumerate(current_continua):
+        start = numba_plasma.photo_ion_block_references[continuum_id]
+        end = numba_plasma.photo_ion_block_references[continuum_id + 1]
+        phot_nus_continuum = numba_plasma.phot_nus[start:end]
+        nu_idx = np.searchsorted(phot_nus_continuum, nu)
+        interval = phot_nus_continuum[nu_idx] - phot_nus_continuum[nu_idx-1]
+        high_weight = (nu - phot_nus_continuum[nu_idx-1])
+        low_weight = (phot_nus_continuum[nu_idx] - nu)
+        chi_bfs_continuum = numba_plasma.chi_bf[start:end, shell]
+        chi_bfs[i] = (chi_bfs_continuum[nu_idx]*high_weight + chi_bfs_continuum[nu_idx-1]*low_weight)/interval
+        x_sect_bfs_continuum = numba_plasma.x_sect[start:end]
+        x_sect_bfs[i] = (x_sect_bfs_continuum[nu_idx]*high_weight + x_sect_bfs_continuum[nu_idx-1]*low_weight)/interval
+
+    chi_bf_contributions = chi_bfs.cumsum()
+    
+    # If we are outside the range of frequencies
+    # for which we have photo-ionization cross sections
+    # we will have no local continuua and therefore
+    # no bound-free interactions can occur
+    # so we set the bound free opacity to zero
+    if len(current_continua) == 0:
+        chi_bf_tot = 0.0
+    else:
+        chi_bf_tot = chi_bf_contributions[-1]
+        chi_bf_contributions /= chi_bf_tot
+
+    return (
+        chi_bf_tot,
+        chi_bf_contributions,
+        current_continua,
+        x_sect_bfs,
+    )</div>
+
+<div class="viewcode-block" id="chi_ff_calculator"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.opacities.html#tardis.montecarlo.montecarlo_numba.opacities.chi_ff_calculator">[docs]</a>@njit(**njit_dict_no_parallel)
+def chi_ff_calculator(numba_plasma, nu, shell):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    numba_plasma : NumbaPlasma
+    nu : float64
+        Comoving frequency of the r_packet
+    shell : int64
+        Current shell id of the r_packet
+
+    Returns
+    -------
+        chi_ff : float64
+            Free Free opacity
+    &quot;&quot;&quot;
+    chi_ff = (
+        FF_OPAC_CONST
+        * numba_plasma.ff_opacity_factor[shell]
+        / nu ** 3
+        * (1 - np.exp(-H * nu / (K_B * numba_plasma.t_electrons[shell])))
+    )
+    return chi_ff</div>
+
+<div class="viewcode-block" id="chi_continuum_calculator"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.opacities.html#tardis.montecarlo.montecarlo_numba.opacities.chi_continuum_calculator">[docs]</a>@njit(**njit_dict_no_parallel)
+def chi_continuum_calculator(numba_plasma, nu, shell):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    numba_plasma : NumbaPlasma
+    nu : float64
+        Comoving frequency of the r_packet
+    shell : int64
+        Current shell id of the r_packet
+
+    Returns
+    -------
+        
+    chi_bf_tot : float
+        Total bound-free opacity at frequency `nu`.
+    chi_bf_contributions : numpy.ndarray, dtype float
+        Cumulative distribution function of the contributions of the
+        individual bound free continua to the total bound-free opacity.
+    current_continua : numpy.ndarray, dtype int
+        Continuum ids for which absorption is possible for frequency `nu`.
+    x_sect_bfs : numpy.ndarray, dtype float
+        Photoionization cross-sections of all bound-free continua for
+        which absorption is possible for frequency `nu`.
+    chi_ff : float64
+            Free Free opacity at frequency `nu`
+    &quot;&quot;&quot;
+    (
+        chi_bf_tot,
+        chi_bf_contributions,
+        current_continua,
+        x_sect_bfs,
+    ) = chi_bf_interpolator(numba_plasma, nu, shell)
+    chi_ff = chi_ff_calculator(numba_plasma, nu, shell)
+    return (
+        chi_bf_tot,
+        chi_bf_contributions,
+        current_continua,
+        x_sect_bfs,
+        chi_ff,
+    )</div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

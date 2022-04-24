@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.model.base &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link href="../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.model.base</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.model.base</h1><div class="highlight"><pre>
+<span></span>import os
+import logging
+import numpy as np
+import pandas as pd
+from astropy import units as u
+from tardis import constants
+
+from tardis.util.base import quantity_linspace, is_valid_nuclide_or_elem
+from tardis.io.parsers.csvy import load_csvy
+from tardis.io.model_reader import (
+    read_density_file,
+    read_abundances_file,
+    read_uniform_abundances,
+    parse_csv_abundances,
+)
+from tardis.io.config_validator import validate_dict
+from tardis.io.config_reader import Configuration
+from tardis.io.util import HDFWriterMixin
+from tardis.io.decay import IsotopeAbundances
+from tardis.model.density import HomologousDensity
+
+logger = logging.getLogger(__name__)
+
+
+<div class="viewcode-block" id="ModelState"><a class="viewcode-back" href="../../../api/tardis.model.base.html#tardis.model.base.ModelState">[docs]</a>class ModelState:
+    &quot;&quot;&quot;
+    Store Model State Information.
+
+    Parameters
+    ----------
+    v_inner : astropy.units.quantity.Quantity
+    v_outer : astropy.units.quantity.Quantity
+    r_inner : astropy.units.quantity.Quantity
+    r_outer : astropy.units.quantity.Quantity
+    density : astropy.units.quantity.Quantity
+    time_explosion : astropy.units.quantity.Quantity
+
+    Attributes
+    ----------
+    geometry : pd.DataFrame
+        DataFrame storing `v_inner`, `v_outer`, `r_inner` and `r_outer`.
+    geometry_units : dict
+        Units of arrays stored in the `geometry` dataframe.
+    &quot;&quot;&quot;
+
+    def __init__(
+        self, v_inner, v_outer, r_inner, r_outer, time_explosion, density
+    ):
+        self.time_explosion = time_explosion
+        self.density = density
+        self.geometry = pd.DataFrame(
+            {
+                &quot;v_inner&quot;: v_inner.value,
+                &quot;r_inner&quot;: r_inner.value,
+                &quot;v_outer&quot;: v_outer.value,
+                &quot;r_outer&quot;: r_outer.value,
+            }
+        )
+        self.geometry_units = {
+            &quot;v_inner&quot;: v_inner.unit,
+            &quot;r_inner&quot;: r_inner.unit,
+            &quot;v_outer&quot;: v_outer.unit,
+            &quot;r_outer&quot;: r_outer.unit,
+        }
+
+    @property
+    def v_inner(self):
+        &quot;&quot;&quot;Inner boundary velocity.&quot;&quot;&quot;
+        return self.geometry.v_inner.values * self.geometry_units[&quot;v_inner&quot;]
+
+    @property
+    def r_inner(self):
+        &quot;&quot;&quot;Inner radius of model shells.&quot;&quot;&quot;
+        return self.geometry.r_inner.values * self.geometry_units[&quot;r_inner&quot;]
+
+    @property
+    def v_outer(self):
+        &quot;&quot;&quot;Outer boundary velocity.&quot;&quot;&quot;
+        return self.geometry.v_outer.values * self.geometry_units[&quot;v_outer&quot;]
+
+    @property
+    def r_outer(self):
+        &quot;&quot;&quot;Outer radius of model shells.&quot;&quot;&quot;
+        return self.geometry.r_outer.values * self.geometry_units[&quot;r_outer&quot;]</div>
+
+
+<div class="viewcode-block" id="Radial1DModel"><a class="viewcode-back" href="../../../api/tardis.model.base.html#tardis.model.base.Radial1DModel">[docs]</a>class Radial1DModel(HDFWriterMixin):
+    &quot;&quot;&quot;
+    An object that hold information about the individual shells.
+
+    Parameters
+    ----------
+    velocity : np.ndarray
+        An array with n+1 (for n shells) velocities &quot;cut&quot; to the provided
+        boundaries
+
+        .. note:: To access the entire, &quot;uncut&quot;, velocity array, use `raw_velocity`
+    homologous_density : HomologousDensity
+    abundance : pd.DataFrame
+    time_explosion : astropy.units.Quantity
+        Time since explosion
+    t_inner : astropy.units.Quantity
+    luminosity_requested : astropy.units.quantity.Quantity
+    t_radiative : astropy.units.Quantity
+        Radiative temperature for the shells
+    dilution_factor : np.ndarray
+        If None, the dilution_factor will be initialized with the geometric
+        dilution factor.
+    v_boundary_inner : astropy.units.Quantity
+    v_boundary_outer : astropy.units.Quantity
+    raw_velocity : np.ndarray
+        The complete array of the velocities, without being cut by
+        `v_boundary_inner` and `v_boundary_outer`
+    electron_densities : astropy.units.quantity.Quantity
+
+    Attributes
+    ----------
+    w : numpy.ndarray
+        Shortcut for `dilution_factor`
+    t_rad : astropy.units.quantity.Quantity
+        Shortcut for `t_radiative`
+    radius : astropy.units.quantity.Quantity
+    r_inner : astropy.units.quantity.Quantity
+    r_outer : astropy.units.quantity.Quantity
+    r_middle : astropy.units.quantity.Quantity
+    v_inner : astropy.units.quantity.Quantity
+    v_outer : astropy.units.quantity.Quantity
+    v_middle : astropy.units.quantity.Quantity
+    density : astropy.units.quantity.Quantity
+    volume : astropy.units.quantity.Quantity
+    no_of_shells : int
+        The number of shells as formed by `v_boundary_inner` and
+        `v_boundary_outer`
+    no_of_raw_shells : int
+    &quot;&quot;&quot;
+
+    hdf_properties = [
+        &quot;t_inner&quot;,
+        &quot;w&quot;,
+        &quot;t_radiative&quot;,
+        &quot;v_inner&quot;,
+        &quot;v_outer&quot;,
+        &quot;homologous_density&quot;,
+        &quot;r_inner&quot;,
+    ]
+    hdf_name = &quot;model&quot;
+
+    def __init__(
+        self,
+        velocity,
+        homologous_density,
+        abundance,
+        isotope_abundance,
+        time_explosion,
+        t_inner,
+        luminosity_requested=None,
+        t_radiative=None,
+        dilution_factor=None,
+        v_boundary_inner=None,
+        v_boundary_outer=None,
+        electron_densities=None,
+    ):
+        self._v_boundary_inner = None
+        self._v_boundary_outer = None
+        self._velocity = None
+        self.raw_velocity = velocity
+        self.v_boundary_inner = v_boundary_inner
+        self.v_boundary_outer = v_boundary_outer
+        self.homologous_density = homologous_density
+        self._abundance = abundance
+        self.time_explosion = time_explosion
+        self._electron_densities = electron_densities
+        v_outer = self.velocity[1:]
+        v_inner = self.velocity[:-1]
+        density = (
+            self.homologous_density.calculate_density_at_time_of_simulation(
+                self.time_explosion
+            )[self.v_boundary_inner_index + 1 : self.v_boundary_outer_index + 1]
+        )
+        self.model_state = ModelState(
+            v_inner=v_inner,
+            v_outer=v_outer,
+            r_inner=self.time_explosion * v_inner,
+            r_outer=self.time_explosion * v_outer,
+            time_explosion=self.time_explosion,
+            density=density,
+        )
+        self.raw_abundance = self._abundance
+        self.raw_isotope_abundance = isotope_abundance
+
+        if t_inner is None:
+            if luminosity_requested is not None:
+                self.t_inner = (
+                    (
+                        luminosity_requested
+                        / (
+                            4
+                            * np.pi
+                            * self.r_inner[0] ** 2
+                            * constants.sigma_sb
+                        )
+                    )
+                    ** 0.25
+                ).to(&quot;K&quot;)
+            else:
+                raise ValueError(
+                    &quot;Both t_inner and luminosity_requested cannot &quot; &quot;be None.&quot;
+                )
+        else:
+            self.t_inner = t_inner
+
+        if t_radiative is None:
+            lambda_wien_inner = constants.b_wien / self.t_inner
+            self._t_radiative = constants.b_wien / (
+                lambda_wien_inner
+                * (1 + (self.v_middle - self.v_boundary_inner) / constants.c)
+            )
+        else:
+            # self._t_radiative = t_radiative[self.v_boundary_inner_index + 1:self.v_boundary_outer_index]
+            self._t_radiative = t_radiative
+
+        if dilution_factor is None:
+            self._dilution_factor = 0.5 * (
+                1
+                - np.sqrt(
+                    1 - (self.r_inner[0] ** 2 / self.r_middle**2).to(1).value
+                )
+            )
+        else:
+            # self.dilution_factor = dilution_factor[self.v_boundary_inner_index + 1:self.v_boundary_outer_index]
+            self._dilution_factor = dilution_factor
+
+    @property
+    def w(self):
+        return self.dilution_factor
+
+    @w.setter
+    def w(self, value):
+        self.dilution_factor = value
+
+    @property
+    def t_rad(self):
+        return self.t_radiative
+
+    @t_rad.setter
+    def t_rad(self, value):
+        self.t_radiative = value
+
+    @property
+    def dilution_factor(self):
+        if len(self._dilution_factor) == self.no_of_shells:
+            return self._dilution_factor
+
+        #        if self.v_boundary_inner in self.raw_velocity:
+        #            v_inner_ind = np.argwhere(self.raw_velocity == self.v_boundary_inner)[0][0]
+        #        else:
+        #            v_inner_ind = np.searchsorted(self.raw_velocity, self.v_boundary_inner) - 1
+        #        if self.v_boundary_outer in self.raw_velocity:
+        #            v_outer_ind = np.argwhere(self.raw_velocity == self.v_boundary_outer)[0][0]
+        #        else:
+        #            v_outer_ind = np.searchsorted(self.raw_velocity, self.v_boundary_outer)
+
+        return self._dilution_factor[
+            self.v_boundary_inner_index + 1 : self.v_boundary_outer_index + 1
+        ]
+
+    @dilution_factor.setter
+    def dilution_factor(self, value):
+        if len(value) == len(self._dilution_factor):
+            self._dilution_factor = value
+        elif len(value) == self.no_of_shells:
+            #            if self.v_boundary_inner in self.raw_velocity:
+            #                v_inner_ind = np.argwhere(self.raw_velocity == self.v_boundary_inner)[0][0]
+            #            else:
+            #                v_inner_ind = np.searchsorted(self.raw_velocity, self.v_boundary_inner) - 1
+            #            if self.v_boundary_outer in self.raw_velocity:
+            #                v_outer_ind = np.argwhere(self.raw_velocity == self.v_boundary_outer)[0][0]
+            #            else:
+            #                v_outer_ind = np.searchsorted(self.raw_velocity, self.v_boundary_outer)
+            #            assert v_outer_ind - v_inner_ind == self.no_of_shells, &quot;trad shape different from number of shells&quot;
+            self._dilution_factor[
+                self.v_boundary_inner_index
+                + 1 : self.v_boundary_outer_index
+                + 1
+            ] = value
+        else:
+            raise ValueError(
+                &quot;Trying to set dilution_factor for unmatching number&quot;
+                &quot;of shells.&quot;
+            )
+
+    @property
+    def t_radiative(self):
+        if len(self._t_radiative) == self.no_of_shells:
+            return self._t_radiative
+
+        #        if self.v_boundary_inner in self.raw_velocity:
+        #            v_inner_ind = np.argwhere(self.raw_velocity == self.v_boundary_inner)[0][0]
+        #        else:
+        #            v_inner_ind = np.searchsorted(self.raw_velocity, self.v_boundary_inner) - 1
+        #        if self.v_boundary_outer in self.raw_velocity:
+        #            v_outer_ind = np.argwhere(self.raw_velocity == self.v_boundary_outer)[0][0]
+        #        else:
+        #            v_outer_ind = np.searchsorted(self.raw_velocity, self.v_boundary_outer)
+
+        return self._t_radiative[
+            self.v_boundary_inner_index + 1 : self.v_boundary_outer_index + 1
+        ]
+
+    @t_radiative.setter
+    def t_radiative(self, value):
+        if len(value) == len(self._t_radiative):
+            self._t_radiative = value
+        elif len(value) == self.no_of_shells:
+            #            if self.v_boundary_inner in self.raw_velocity:
+            #                v_inner_ind = np.argwhere(self.raw_velocity == self.v_boundary_inner)[0][0]
+            #            else:
+            #                v_inner_ind = np.searchsorted(self.raw_velocity, self.v_boundary_inner) - 1
+            #            if self.v_boundary_outer in self.raw_velocity:
+            #                v_outer_ind = np.argwhere(self.raw_velocity == self.v_boundary_outer)[0][0]
+            #            else:
+            #                v_outer_ind = np.searchsorted(self.raw_velocity, self.v_boundary_outer)
+            #            assert v_outer_ind - v_inner_ind == self.no_of_shells, &quot;trad shape different from number of shells&quot;
+            self._t_radiative[
+                self.v_boundary_inner_index
+                + 1 : self.v_boundary_outer_index
+                + 1
+            ] = value
+        else:
+            raise ValueError(
+                &quot;Trying to set t_radiative for unmatching number&quot; &quot;of shells.&quot;
+            )
+
+    @property
+    def radius(self):
+        return self.time_explosion * self.velocity
+
+    @property
+    def r_inner(self):
+        return self.model_state.r_inner
+
+    @property
+    def r_outer(self):
+        return self.model_state.r_outer
+
+    @property
+    def r_middle(self):
+        return 0.5 * self.r_inner + 0.5 * self.r_outer
+
+    @property
+    def velocity(self):
+
+        if self._velocity is None:
+            self._velocity = self.raw_velocity[
+                self.v_boundary_inner_index : self.v_boundary_outer_index + 1
+            ]
+            self._velocity[0] = self.v_boundary_inner
+            self._velocity[-1] = self.v_boundary_outer
+        return self._velocity
+
+    @property
+    def v_inner(self):
+        return self.model_state.v_inner
+
+    @property
+    def v_outer(self):
+        return self.model_state.v_outer
+
+    @property
+    def v_middle(self):
+        return 0.5 * self.v_inner + 0.5 * self.v_outer
+
+    @property
+    def density(self):
+        return self.model_state.density
+
+    @property
+    def abundance(self):
+        if not self.raw_isotope_abundance.empty:
+            self._abundance = self.raw_isotope_abundance.decay(
+                self.time_explosion
+            ).merge(self.raw_abundance)
+        abundance = self._abundance.loc[
+            :, self.v_boundary_inner_index : self.v_boundary_outer_index - 1
+        ]
+        abundance.columns = range(len(abundance.columns))
+        return abundance
+
+    @property
+    def volume(self):
+        return ((4.0 / 3) * np.pi * (self.r_outer**3 - self.r_inner**3)).cgs
+
+    @property
+    def no_of_shells(self):
+        return len(self.velocity) - 1
+
+    @property
+    def no_of_raw_shells(self):
+        return len(self.raw_velocity) - 1
+
+    @property
+    def v_boundary_inner(self):
+        if self._v_boundary_inner is None:
+            return self.raw_velocity[0]
+        if self._v_boundary_inner &lt; 0 * u.km / u.s:
+            return self.raw_velocity[0]
+        return self._v_boundary_inner
+
+    @v_boundary_inner.setter
+    def v_boundary_inner(self, value):
+        if value is not None:
+            if value &gt; 0 * u.km / u.s:
+                value = u.Quantity(value, self.v_boundary_inner.unit)
+                if value &gt; self.v_boundary_outer:
+                    raise ValueError(
+                        f&quot;v_boundary_inner ({value}) must not be higher than &quot;
+                        f&quot;v_boundary_outer ({self.v_boundary_outer}).&quot;
+                    )
+                if value &gt; self.raw_velocity[-1]:
+                    raise ValueError(
+                        f&quot;v_boundary_inner ({value}) is outside of the model range ({self.raw_velocity[-1]}).&quot;
+                    )
+                if value &lt; self.raw_velocity[0]:
+                    raise ValueError(
+                        f&quot;v_boundary_inner ({value}) is lower than the lowest shell ({self.raw_velocity[0]}) in the model.&quot;
+                    )
+        self._v_boundary_inner = value
+        # Invalidate the cached cut-down velocity array
+        self._velocity = None
+
+    @property
+    def v_boundary_outer(self):
+        if self._v_boundary_outer is None:
+            return self.raw_velocity[-1]
+        if self._v_boundary_outer &lt; 0 * u.km / u.s:
+            return self.raw_velocity[-1]
+        return self._v_boundary_outer
+
+    @v_boundary_outer.setter
+    def v_boundary_outer(self, value):
+        if value is not None:
+            if value &gt; 0 * u.km / u.s:
+                value = u.Quantity(value, self.v_boundary_outer.unit)
+                if value &lt; self.v_boundary_inner:
+                    raise ValueError(
+                        f&quot;v_boundary_outer ({value}) must not be smaller than v_boundary_inner ({self.v_boundary_inner}).&quot;
+                    )
+                if value &lt; self.raw_velocity[0]:
+                    raise ValueError(
+                        f&quot;v_boundary_outer ({value}) is outside of the model range ({self.raw_velocity[0]}).&quot;
+                    )
+                if value &gt; self.raw_velocity[-1]:
+                    raise ValueError(
+                        f&quot;v_boundary_outer ({value}) is larger than the largest shell in the model ({self.raw_velocity[-1]}).&quot;
+                    )
+        self._v_boundary_outer = value
+        # Invalidate the cached cut-down velocity array
+        self._velocity = None
+
+    @property
+    def v_boundary_inner_index(self):
+        if self.v_boundary_inner in self.raw_velocity:
+            v_inner_ind = np.argwhere(
+                self.raw_velocity == self.v_boundary_inner
+            )[0][0]
+        else:
+            v_inner_ind = (
+                np.searchsorted(self.raw_velocity, self.v_boundary_inner) - 1
+            )
+        return v_inner_ind
+
+    @property
+    def v_boundary_outer_index(self):
+        if self.v_boundary_outer in self.raw_velocity:
+            v_outer_ind = np.argwhere(
+                self.raw_velocity == self.v_boundary_outer
+            )[0][0]
+        else:
+            v_outer_ind = np.searchsorted(
+                self.raw_velocity, self.v_boundary_outer
+            )
+        return v_outer_ind
+
+    #    @property
+    #    def v_boundary_inner_index(self):
+    #        if self.v_boundary_inner &lt;= self.raw_velocity[0]:
+    #            return 0
+    #        else:
+    #            idx = max(0,
+    #                      self.raw_velocity.searchsorted(self.v_boundary_inner) - 1)
+    #            # check for zero volume of designated first cell
+    #            if np.isclose(self.v_boundary_inner, self.raw_velocity[idx + 1],
+    #                          atol=1e-8 * u.km / u.s) and (self.v_boundary_inner &lt;=
+    #                                                           self.raw_velocity[idx + 1]):
+    #                idx += 1
+    #            return idx
+    #
+    #    @property
+    #    def v_boundary_outer_index(self):
+    #        if self.v_boundary_outer &gt;= self.raw_velocity[-1]:
+    #            return None
+    #        return self.raw_velocity.searchsorted(self.v_boundary_outer) + 1
+
+<div class="viewcode-block" id="Radial1DModel.from_config"><a class="viewcode-back" href="../../../api/tardis.model.base.html#tardis.model.base.Radial1DModel.from_config">[docs]</a>    @classmethod
+    def from_config(cls, config):
+        &quot;&quot;&quot;
+        Create a new Radial1DModel instance from a Configuration object.
+
+        Parameters
+        ----------
+        config : tardis.io.config_reader.Configuration
+
+        Returns
+        -------
+        Radial1DModel
+        &quot;&quot;&quot;
+        time_explosion = config.supernova.time_explosion.cgs
+
+        structure = config.model.structure
+        electron_densities = None
+        temperature = None
+        if structure.type == &quot;specific&quot;:
+            velocity = quantity_linspace(
+                structure.velocity.start,
+                structure.velocity.stop,
+                structure.velocity.num + 1,
+            ).cgs
+            homologous_density = HomologousDensity.from_config(config)
+        elif structure.type == &quot;file&quot;:
+            if os.path.isabs(structure.filename):
+                structure_fname = structure.filename
+            else:
+                structure_fname = os.path.join(
+                    config.config_dirname, structure.filename
+                )
+
+            (
+                time_0,
+                velocity,
+                density_0,
+                electron_densities,
+                temperature,
+            ) = read_density_file(structure_fname, structure.filetype)
+            density_0 = density_0.insert(0, 0)
+            homologous_density = HomologousDensity(density_0, time_0)
+        else:
+            raise NotImplementedError
+        # Note: This is the number of shells *without* taking in mind the
+        #       v boundaries.
+        no_of_shells = len(velocity) - 1
+
+        if temperature:
+            t_radiative = temperature
+        elif config.plasma.initial_t_rad &gt; 0 * u.K:
+            t_radiative = (
+                np.ones(no_of_shells + 1) * config.plasma.initial_t_rad
+            )
+        else:
+            t_radiative = None
+
+        if config.plasma.initial_t_inner &lt; 0.0 * u.K:
+            luminosity_requested = config.supernova.luminosity_requested
+            t_inner = None
+        else:
+            luminosity_requested = None
+            t_inner = config.plasma.initial_t_inner
+
+        abundances_section = config.model.abundances
+        isotope_abundance = pd.DataFrame()
+
+        if abundances_section.type == &quot;uniform&quot;:
+            abundance, isotope_abundance = read_uniform_abundances(
+                abundances_section, no_of_shells
+            )
+
+        elif abundances_section.type == &quot;file&quot;:
+            if os.path.isabs(abundances_section.filename):
+                abundances_fname = abundances_section.filename
+            else:
+                abundances_fname = os.path.join(
+                    config.config_dirname, abundances_section.filename
+                )
+
+            index, abundance, isotope_abundance = read_abundances_file(
+                abundances_fname, abundances_section.filetype
+            )
+
+        abundance = abundance.replace(np.nan, 0.0)
+        abundance = abundance[abundance.sum(axis=1) &gt; 0]
+
+        norm_factor = abundance.sum(axis=0) + isotope_abundance.sum(axis=0)
+
+        if np.any(np.abs(norm_factor - 1) &gt; 1e-12):
+            logger.warning(
+                &quot;Abundances have not been normalized to 1.&quot; &quot; - normalizing&quot;
+            )
+            abundance /= norm_factor
+            isotope_abundance /= norm_factor
+
+        isotope_abundance = IsotopeAbundances(isotope_abundance)
+
+        return cls(
+            velocity=velocity,
+            homologous_density=homologous_density,
+            abundance=abundance,
+            isotope_abundance=isotope_abundance,
+            time_explosion=time_explosion,
+            t_radiative=t_radiative,
+            t_inner=t_inner,
+            luminosity_requested=luminosity_requested,
+            dilution_factor=None,
+            v_boundary_inner=structure.get(&quot;v_inner_boundary&quot;, None),
+            v_boundary_outer=structure.get(&quot;v_outer_boundary&quot;, None),
+            electron_densities=electron_densities,
+        )</div>
+
+<div class="viewcode-block" id="Radial1DModel.from_csvy"><a class="viewcode-back" href="../../../api/tardis.model.base.html#tardis.model.base.Radial1DModel.from_csvy">[docs]</a>    @classmethod
+    def from_csvy(cls, config):
+        &quot;&quot;&quot;
+        Create a new Radial1DModel instance from a Configuration object.
+
+        Parameters
+        ----------
+        config : tardis.io.config_reader.Configuration
+
+        Returns
+        -------
+        Radial1DModel
+        &quot;&quot;&quot;
+        CSVY_SUPPORTED_COLUMNS = {
+            &quot;velocity&quot;,
+            &quot;density&quot;,
+            &quot;t_rad&quot;,
+            &quot;dilution_factor&quot;,
+        }
+
+        if os.path.isabs(config.csvy_model):
+            csvy_model_fname = config.csvy_model
+        else:
+            csvy_model_fname = os.path.join(
+                config.config_dirname, config.csvy_model
+            )
+        csvy_model_config, csvy_model_data = load_csvy(csvy_model_fname)
+        base_dir = os.path.abspath(os.path.dirname(__file__))
+        schema_dir = os.path.join(base_dir, &quot;..&quot;, &quot;io&quot;, &quot;schemas&quot;)
+        csvy_schema_file = os.path.join(schema_dir, &quot;csvy_model.yml&quot;)
+        csvy_model_config = Configuration(
+            validate_dict(csvy_model_config, schemapath=csvy_schema_file)
+        )
+
+        if hasattr(csvy_model_data, &quot;columns&quot;):
+            abund_names = set(
+                [
+                    name
+                    for name in csvy_model_data.columns
+                    if is_valid_nuclide_or_elem(name)
+                ]
+            )
+            unsupported_columns = (
+                set(csvy_model_data.columns)
+                - abund_names
+                - CSVY_SUPPORTED_COLUMNS
+            )
+
+            field_names = set(
+                [field[&quot;name&quot;] for field in csvy_model_config.datatype.fields]
+            )
+            assert (
+                set(csvy_model_data.columns) - field_names == set()
+            ), &quot;CSVY columns exist without field descriptions&quot;
+            assert (
+                field_names - set(csvy_model_data.columns) == set()
+            ), &quot;CSVY field descriptions exist without corresponding csv data&quot;
+            if unsupported_columns != set():
+                logger.warning(
+                    &quot;The following columns are &quot;
+                    &quot;specified in the csvy model file,&quot;
+                    f&quot; but are IGNORED by TARDIS: {str(unsupported_columns)}&quot;
+                )
+
+        time_explosion = config.supernova.time_explosion.cgs
+
+        electron_densities = None
+        temperature = None
+
+        # if hasattr(csvy_model_config, &#39;v_inner_boundary&#39;):
+        #    v_boundary_inner = csvy_model_config.v_inner_boundary
+        # else:
+        #    v_boundary_inner = None
+
+        # if hasattr(csvy_model_config, &#39;v_outer_boundary&#39;):
+        #    v_boundary_outer = csvy_model_config.v_outer_boundary
+        # else:
+        #    v_boundary_outer = None
+
+        if hasattr(config, &quot;model&quot;):
+            if hasattr(config.model, &quot;v_inner_boundary&quot;):
+                v_boundary_inner = config.model.v_inner_boundary
+            else:
+                v_boundary_inner = None
+
+            if hasattr(config.model, &quot;v_outer_boundary&quot;):
+                v_boundary_outer = config.model.v_outer_boundary
+            else:
+                v_boundary_outer = None
+        else:
+            v_boundary_inner = None
+            v_boundary_outer = None
+
+        if hasattr(csvy_model_config, &quot;velocity&quot;):
+            velocity = quantity_linspace(
+                csvy_model_config.velocity.start,
+                csvy_model_config.velocity.stop,
+                csvy_model_config.velocity.num + 1,
+            ).cgs
+        else:
+            velocity_field_index = [
+                field[&quot;name&quot;] for field in csvy_model_config.datatype.fields
+            ].index(&quot;velocity&quot;)
+            velocity_unit = u.Unit(
+                csvy_model_config.datatype.fields[velocity_field_index][&quot;unit&quot;]
+            )
+            velocity = csvy_model_data[&quot;velocity&quot;].values * velocity_unit
+            velocity = velocity.to(&quot;cm/s&quot;)
+
+        if hasattr(csvy_model_config, &quot;density&quot;):
+            homologous_density = HomologousDensity.from_csvy(
+                config, csvy_model_config
+            )
+        else:
+            time_0 = csvy_model_config.model_density_time_0
+            density_field_index = [
+                field[&quot;name&quot;] for field in csvy_model_config.datatype.fields
+            ].index(&quot;density&quot;)
+            density_unit = u.Unit(
+                csvy_model_config.datatype.fields[density_field_index][&quot;unit&quot;]
+            )
+            density_0 = csvy_model_data[&quot;density&quot;].values * density_unit
+            density_0 = density_0.to(&quot;g/cm^3&quot;)[1:]
+            density_0 = density_0.insert(0, 0)
+            homologous_density = HomologousDensity(density_0, time_0)
+
+        no_of_shells = len(velocity) - 1
+
+        # TODO -- implement t_radiative
+        # t_radiative = None
+        if temperature:
+            t_radiative = temperature
+        elif hasattr(csvy_model_data, &quot;columns&quot;):
+            if &quot;t_rad&quot; in csvy_model_data.columns:
+                t_rad_field_index = [
+                    field[&quot;name&quot;] for field in csvy_model_config.datatype.fields
+                ].index(&quot;t_rad&quot;)
+                t_rad_unit = u.Unit(
+                    csvy_model_config.datatype.fields[t_rad_field_index][&quot;unit&quot;]
+                )
+                t_radiative = (
+                    csvy_model_data[&quot;t_rad&quot;].iloc[0:].values * t_rad_unit
+                )
+            else:
+                t_radiative = None
+
+        dilution_factor = None
+        if hasattr(csvy_model_data, &quot;columns&quot;):
+            if &quot;dilution_factor&quot; in csvy_model_data.columns:
+                dilution_factor = (
+                    csvy_model_data[&quot;dilution_factor&quot;].iloc[0:].to_numpy()
+                )
+
+        elif config.plasma.initial_t_rad &gt; 0 * u.K:
+            t_radiative = np.ones(no_of_shells) * config.plasma.initial_t_rad
+        else:
+            t_radiative = None
+
+        if config.plasma.initial_t_inner &lt; 0.0 * u.K:
+            luminosity_requested = config.supernova.luminosity_requested
+            t_inner = None
+        else:
+            luminosity_requested = None
+            t_inner = config.plasma.initial_t_inner
+
+        if hasattr(csvy_model_config, &quot;abundance&quot;):
+            abundances_section = csvy_model_config.abundance
+            abundance, isotope_abundance = read_uniform_abundances(
+                abundances_section, no_of_shells
+            )
+        else:
+            index, abundance, isotope_abundance = parse_csv_abundances(
+                csvy_model_data
+            )
+            abundance = abundance.loc[:, 1:]
+            abundance.columns = np.arange(abundance.shape[1])
+            isotope_abundance = isotope_abundance.loc[:, 1:]
+            isotope_abundance.columns = np.arange(isotope_abundance.shape[1])
+
+        abundance = abundance.replace(np.nan, 0.0)
+        abundance = abundance[abundance.sum(axis=1) &gt; 0]
+        isotope_abundance = isotope_abundance.replace(np.nan, 0.0)
+        isotope_abundance = isotope_abundance[isotope_abundance.sum(axis=1) &gt; 0]
+        norm_factor = abundance.sum(axis=0) + isotope_abundance.sum(axis=0)
+
+        if np.any(np.abs(norm_factor - 1) &gt; 1e-12):
+            logger.warning(
+                &quot;Abundances have not been normalized to 1.&quot; &quot; - normalizing&quot;
+            )
+            abundance /= norm_factor
+            isotope_abundance /= norm_factor
+
+        # isotope_abundance = IsotopeAbundances(isotope_abundance)
+        isotope_abundance = IsotopeAbundances(
+            isotope_abundance, time_0=csvy_model_config.model_isotope_time_0
+        )
+        # isotope_abundance.time_0 = csvy_model_config.model_isotope_time_0
+
+        return cls(
+            velocity=velocity,
+            homologous_density=homologous_density,
+            abundance=abundance,
+            isotope_abundance=isotope_abundance,
+            time_explosion=time_explosion,
+            t_radiative=t_radiative,
+            t_inner=t_inner,
+            luminosity_requested=luminosity_requested,
+            dilution_factor=dilution_factor,
+            v_boundary_inner=v_boundary_inner,
+            v_boundary_outer=v_boundary_outer,
+            electron_densities=electron_densities,
+        )</div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

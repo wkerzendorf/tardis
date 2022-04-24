@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.montecarlo.montecarlo_numba.continuum.r_packet_transport_continuum &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link href="../../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.montecarlo.montecarlo_numba.continuum.r_packet_transport_continuum</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.montecarlo.montecarlo_numba.continuum.r_packet_transport_continuum</h1><div class="highlight"><pre>
+<span></span>import numpy as np
+from numba import njit
+
+from tardis.montecarlo import montecarlo_configuration
+from tardis.montecarlo.montecarlo_numba import njit_dict_no_parallel
+from tardis.montecarlo.montecarlo_numba.calculate_distances import \
+    calculate_distance_boundary, \
+    calculate_distance_line
+from tardis.montecarlo.montecarlo_numba.estimators import \
+    update_line_estimators
+from tardis.montecarlo.montecarlo_numba.frame_transformations import \
+    get_doppler_factor
+
+from tardis.montecarlo.montecarlo_numba.r_packet import InteractionType
+
+<div class="viewcode-block" id="trace_packet_continuum"><a class="viewcode-back" href="../../../../../api/tardis.montecarlo.montecarlo_numba.continuum.r_packet_transport_continuum.html#tardis.montecarlo.montecarlo_numba.continuum.r_packet_transport_continuum.trace_packet_continuum">[docs]</a>@njit(**njit_dict_no_parallel)
+def trace_packet_continuum(
+        r_packet,
+        numba_model,
+        numba_plasma,
+        estimators,
+        chi_continuum,
+        escat_prob
+):
+    &quot;&quot;&quot;
+    Traces the RPacket through the ejecta and stops when an interaction happens (heart of the calculation)
+
+    Parameters
+    ----------
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    numba_model : tardis.montecarlo.montecarlo_numba.numba_interface.NumbaModel
+    numba_plasma : tardis.montecarlo.montecarlo_numba.numba_interface.NumbaPlasma
+    estimators : tardis.montecarlo.montecarlo_numba.numba_interface.Estimators
+
+    Returns
+    -------
+    &quot;&quot;&quot;
+
+    r_inner = numba_model.r_inner[r_packet.current_shell_id]
+    r_outer = numba_model.r_outer[r_packet.current_shell_id]
+
+    (
+        distance_boundary,
+        delta_shell,
+    ) = calculate_distance_boundary(r_packet.r, 
+        r_packet.mu, 
+        r_inner, 
+        r_outer
+    )
+
+    # defining start for line interaction
+    start_line_id = r_packet.next_line_id
+
+    # defining taus
+    tau_event = -np.log(np.random.random())
+    tau_trace_line_combined = 0.0
+
+    # Calculating doppler factor
+    doppler_factor = get_doppler_factor(
+        r_packet.r, r_packet.mu, numba_model.time_explosion
+    )
+    comov_nu = r_packet.nu * doppler_factor
+
+    distance_continuum = tau_event / chi_continuum
+    cur_line_id = start_line_id  # initializing varibale for Numba
+    # - do not remove
+    last_line_id = len(numba_plasma.line_list_nu) - 1
+    for cur_line_id in range(start_line_id, len(numba_plasma.line_list_nu)):
+
+        # Going through the lines
+        nu_line = numba_plasma.line_list_nu[cur_line_id]
+
+        # Getting the tau for the next line
+        tau_trace_line = numba_plasma.tau_sobolev[
+            cur_line_id, r_packet.current_shell_id
+        ]
+
+        # Adding it to the tau_trace_line_combined
+        tau_trace_line_combined += tau_trace_line
+
+        # Calculating the distance until the current photons co-moving nu
+        # redshifts to the line frequency
+        is_last_line = cur_line_id == last_line_id
+
+        distance_trace = calculate_distance_line(
+            r_packet,
+            comov_nu,
+            is_last_line,
+            nu_line,
+            numba_model.time_explosion,
+        )
+
+        # calculating the tau continuum of how far the trace has progressed
+        tau_trace_continuum = chi_continuum * distance_trace
+
+        # calculating the trace
+        tau_trace_combined = tau_trace_line_combined + tau_trace_continuum
+
+        distance = min(distance_trace, distance_boundary, distance_continuum)
+
+        if distance_trace != 0:
+
+            if distance == distance_boundary:
+                interaction_type = InteractionType.BOUNDARY  # BOUNDARY
+                r_packet.next_line_id = cur_line_id
+                break
+            elif distance == distance_continuum:
+                if not montecarlo_configuration.CONTINUUM_PROCESSES_ENABLED:
+                    interaction_type = InteractionType.ESCATTERING
+                else:
+                    zrand = np.random.random()
+                    if zrand &lt; escat_prob:
+                        interaction_type = InteractionType.ESCATTERING
+                    else:
+                        interaction_type = InteractionType.CONTINUUM_PROCESS
+                r_packet.next_line_id = cur_line_id
+                break
+
+        # Updating the J_b_lu and E_dot_lu
+        # This means we are still looking for line interaction and have not
+        # been kicked out of the path by boundary or electron interaction
+
+        update_line_estimators(
+            estimators,
+            r_packet,
+            cur_line_id,
+            distance_trace,
+            numba_model.time_explosion,
+        )
+
+        if (
+            tau_trace_combined &gt; tau_event
+            and not montecarlo_configuration.disable_line_scattering
+        ):
+            interaction_type = InteractionType.LINE  # Line
+            r_packet.last_interaction_in_nu = r_packet.nu
+            r_packet.last_line_interaction_in_id = cur_line_id
+            r_packet.next_line_id = cur_line_id
+            distance = distance_trace
+            break
+
+        # Recalculating distance_continuum using tau_event -
+        # tau_trace_line_combined
+        # I don&#39;t think this needs to be updated
+        # since tau_event is already the result of the integral
+        # from the initial line
+        distance_continuum = (tau_event - tau_trace_line_combined) / (
+            chi_continuum
+        )
+
+    else:  # Executed when no break occurs in the for loop
+        # We are beyond the line list now and the only next thing is to see
+        # if we are interacting with the boundary or electron scattering
+        if cur_line_id == (len(numba_plasma.line_list_nu) - 1):
+            # Treatment for last line
+            cur_line_id += 1
+        if distance_continuum &lt; distance_boundary:
+            distance = distance_continuum
+            if not montecarlo_configuration.CONTINUUM_PROCESSES_ENABLED:
+                interaction_type = InteractionType.ESCATTERING
+            else:
+                zrand = np.random.random()
+                if zrand &lt; escat_prob:
+                    interaction_type = InteractionType.ESCATTERING
+                else:
+                    interaction_type = InteractionType.CONTINUUM_PROCESS
+        else:
+            distance = distance_boundary
+            interaction_type = InteractionType.BOUNDARY
+
+    return distance, interaction_type, delta_shell</div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

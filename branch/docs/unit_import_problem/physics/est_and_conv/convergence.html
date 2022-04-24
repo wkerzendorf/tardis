@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convergence &mdash; tardis</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Spectrum Generation" href="../spectrum/index.html" />
+    <link rel="prev" title="Volume-Based Estimators" href="estimators.html" />
+    <link href="../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Estimators and Convergence</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="estimators.html">Volume-Based Estimators</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Convergence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#t-rad-and-w">T_rad and W</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#t-inner">T_inner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#convergence-information">Convergence Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#convergence-criteria">Convergence Criteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-convergence">Custom Convergence</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Estimators and Convergence</a> &raquo;</li>
+      <li>Convergence</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/physics/est_and_conv/convergence.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="convergence">
+<span id="id1"></span><h1>Convergence<a class="headerlink" href="#convergence" title="Permalink to this headline">¶</a></h1>
+<p>As explained in <a class="reference internal" href="estimators.html"><span class="doc">Volume-Based Estimators</span></a>, after each iteration the values for radiative temperature and dilution factor are updated by calling the <code class="docutils literal notranslate"><span class="pre">advance_state</span></code> method on a <code class="docutils literal notranslate"><span class="pre">Simulation</span></code> object. The goal of this is to eventually have the radiative temperature and dilution factor converge to a single value so that the steady-state plasma state can be determined. To ensure that the simulation converges, TARDIS employs additional convergence strategies. Currently, only one convergence strategy is available: damped convergence. This will be described in the following sections.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unless otherwise noted, all user-supplied quantities mentioned on this page are supplied in the <a class="reference internal" href="../../io/configuration/components/montecarlo.html#conv-config"><span class="std std-ref">convergence section of the Monte Carlo configuration</span></a>, which will be referenced as the convergence configuration.</p>
+</div>
+<section id="t-rad-and-w">
+<h2>T_rad and W<a class="headerlink" href="#t-rad-and-w" title="Permalink to this headline">¶</a></h2>
+<p>As discussed <a class="reference internal" href="estimators.html"><span class="doc">here</span></a>, TARDIS uses estimators to calculate estimated radiative temperatures (<span class="math notranslate nohighlight">\(T_\mathrm{rad}\)</span>) and dilution factors (<span class="math notranslate nohighlight">\(W\)</span>) in each cell. While TARDIS can then update the plasma state using the estimated values, there is a good chance that these estimated values would “overshoot” the true value we want to converge to (for example, if the current value of the dilution factor in some cell the dilution factor is .4, and the true steady-state value TARDIS wants to find is .45, there is a good chance that the estimated value will be greater than .45). This could make the simulation take longer to converge or, at worst, make it so the simulation does not converge at all. To account for this, users can set (in the convergence configuration) a “damping constant” for both the radiative temperature (<span class="math notranslate nohighlight">\(d_{T_\mathrm{rad}}\)</span>) and the dilution factor (<span class="math notranslate nohighlight">\(d_W\)</span>). When <code class="docutils literal notranslate"><span class="pre">advance_state</span></code> is called, these quantities update as follows:</p>
+<div class="math notranslate nohighlight">
+\[T_\mathrm{rad\ updated} = T_\mathrm{rad\ current} + d_{T_\mathrm{rad}}(T_\mathrm{rad\ estimated}-T_\mathrm{rad\ current})\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[W_\mathrm{updated} = W_\mathrm{current} + d_W(W_\mathrm{estimated}-W_\mathrm{current}).\]</div>
+<p>This means, for example, if the damping constant is .5, the updated value is halfway between the current value and the estimated value. If the damping constant is .7, the updated value is 70% of the way between the current value and the estimated value, and so on. <strong>If the damping constant is 1, then the updated value is exactly the estimated value, and if the damping constant is zero, the value stays the same throughout the simulation and is not updated.</strong></p>
+</section>
+<section id="t-inner">
+<h2>T_inner<a class="headerlink" href="#t-inner" title="Permalink to this headline">¶</a></h2>
+<p>The temperature of the inner boundary, <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span>, plays a unique role in the simulation, as it is the primary determiner of the output luminosity. This is because the the luminosity of the inner boundary is proportional to <span class="math notranslate nohighlight">\(T_\mathrm{inner}^4\)</span> (see <a class="reference internal" href="../montecarlo/initialization.html"><span class="doc">Energy Packet Initialization</span></a>). Thus, <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> is updated throughout the simulation in order to match the output luminosity to the requested luminosity specified in the <a class="reference internal" href="../../io/configuration/components/supernova.html"><span class="doc">supernova configuration</span></a> between the bounds specified in the supernova configuration. However, there is not necessarily a quartic relationship between <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> and the output luminosity, as changing <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> also changes the frequency distribution of the initialized packets (once again see <a class="reference internal" href="../montecarlo/initialization.html"><span class="doc">Energy Packet Initialization</span></a>). This then affects the light-matter interactions, affecting which packets make it to the outer boundary, which also affects the output luminosity. Because of this, there is not an exact way to estimate <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span>. To do this estimation, we use</p>
+<div class="math notranslate nohighlight">
+\[T_\mathrm{inner\ estimated} = T_\mathrm{inner\ current} * \left(\frac{L_\mathrm{output}}{L_\mathrm{requested}}\right)^{\mathrm{t\_inner\_update\_exponent}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(L_\mathrm{output}\)</span> is the output luminosity calculated by adding up the luminosity of each packet (see <a class="reference internal" href="../spectrum/basic.html"><span class="doc">Basic Spectrum Generation</span></a>) between the bounds specified in the <a class="reference internal" href="../../io/configuration/components/supernova.html"><span class="doc">supernova configuration</span></a>, <span class="math notranslate nohighlight">\(L_\mathrm{requested}\)</span> is the luminosity requested also in the supernova configuration (requested between those bounds previously mentioned), and <code class="docutils literal notranslate"><span class="pre">t_inner_update_exponent</span></code> is provided by the user in the convergence configuration. Note that what we are doing is “correcting” the previous value of the inner temperature by a factor of <span class="math notranslate nohighlight">\(\left(\frac{L_\mathrm{output}}{L_\mathrm{requested}}\right)^{\mathrm{t\_inner\_update\_exponent}}\)</span>. Note that if <span class="math notranslate nohighlight">\(\frac{L_\mathrm{output}}{L_\mathrm{requested}}\)</span> is greater than 1, we want to lower <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> as the output luminosity is too high, and vice versa if the ratio is less than 1. Thus <code class="docutils literal notranslate"><span class="pre">t_inner_update_exponent</span></code> should be negative. Naively one might set <code class="docutils literal notranslate"><span class="pre">t_inner_update_exponent=-0.25</span></code>, however as a default TARDIS uses <code class="docutils literal notranslate"><span class="pre">t_inner_update_exponent=-0.5</span></code> as -0.25 may undershoot the correct <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> because of its previously mentioned effects on the initial frequency distribution.</p>
+<p>After calculating the estimated <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span>, the quantity is updated using damped convergence with its own damping constant (once again set in the convergence configuration):</p>
+<div class="math notranslate nohighlight">
+\[T_\mathrm{inner\ updated} = T_\mathrm{inner\ current} + d_{T_\mathrm{inner}}(T_\mathrm{inner\ estimated}-T_\mathrm{inner\ current}).\]</div>
+<p>Once again, If the damping constant is 1, then the updated value is exactly the estimated value, and if the damping constant is zero, the value stays the same throughout the simulation and is not updated.</p>
+<p>Additionally, because of the vast impact of <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> on the simulation, one may want to update it less frequently – i.e. allow <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(T_\mathrm{rad}\)</span> to reach a steady-state value for a particular <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> before updating <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span>. To do this, in the convergence configuration we set <code class="docutils literal notranslate"><span class="pre">lock_t_inner_cycles</span></code>, which is the number of iterations to wait before updating <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span>. It is set to 1 by default, meaning <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> would be updated every iteration.</p>
+</section>
+<section id="convergence-information">
+<h2>Convergence Information<a class="headerlink" href="#convergence-information" title="Permalink to this headline">¶</a></h2>
+<p>During the simulation, information about the how <span class="math notranslate nohighlight">\(T_\mathrm{rad}\)</span>, <span class="math notranslate nohighlight">\(W\)</span>, and <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> are updated as well as a comparison of the total output luminosity and the requested luminosity are logged at the INFO level (see <a class="reference internal" href="../../io/optional/logging_configuration.html"><span class="doc">Configuring the Logging Output for TARDIS</span></a>) to give users a better idea of how the convergence process is working.</p>
+<p>In addition, TARDIS allows for the displaying of convergence plots, which allows users to visualize the convergence process for <span class="math notranslate nohighlight">\(T_\mathrm{rad}\)</span>, <span class="math notranslate nohighlight">\(W\)</span>, <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span>, and the total luminosity of the supernova being modeled. For more information, see <a class="reference internal" href="../../io/visualization/convergence_plot.html"><span class="doc">Convergence Plots</span></a>.</p>
+</section>
+<section id="convergence-criteria">
+<h2>Convergence Criteria<a class="headerlink" href="#convergence-criteria" title="Permalink to this headline">¶</a></h2>
+<p>TARDIS also allows users to stop the simulation if the simulation reaches a certain level of convergence. To enable this, users must set <code class="docutils literal notranslate"><span class="pre">stop_if_converged=True</span></code> in the convergence configuration. Also in the configuration, the quantities <code class="docutils literal notranslate"><span class="pre">hold_iterations</span></code>, <code class="docutils literal notranslate"><span class="pre">threshold</span></code>, and <code class="docutils literal notranslate"><span class="pre">fraction</span></code> are be specified to determine convergence as follows:</p>
+<p>For the simulation to be considered to have converged, for <code class="docutils literal notranslate"><span class="pre">hold_iterations</span></code> successive iterations, the estimated values of <span class="math notranslate nohighlight">\(T_\mathrm{rad}\)</span>, <span class="math notranslate nohighlight">\(W\)</span>, and <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> may differ from the previous value by a fraction of at most <code class="docutils literal notranslate"><span class="pre">threshold</span></code> in at least <code class="docutils literal notranslate"><span class="pre">fraction</span></code> fraction of the shells (for <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span>, since there is only one value, the <code class="docutils literal notranslate"><span class="pre">fraction</span></code> part does not apply). For example, if <code class="docutils literal notranslate"><span class="pre">hold_iterations=3</span></code>, <code class="docutils literal notranslate"><span class="pre">threshold=0.05</span></code> for all three quantities, and <code class="docutils literal notranslate"><span class="pre">fraction=.8</span></code>, the simulation will be considered to have converged if for 3 successive iterations the estimated values of <span class="math notranslate nohighlight">\(T_\mathrm{rad}\)</span> and <span class="math notranslate nohighlight">\(W\)</span> differ from the current respective values by at most 5% in at least 80% of the shells, <em>and</em> the estimated <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> differs by at most 5%. See the <a class="reference internal" href="../../io/configuration/components/montecarlo.html#conv-config"><span class="std std-ref">convergence configuration schema</span></a> for default values of these quantities.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To determine convergence, we compare the estimated value, <strong>not</strong> the updated value (which is related to the estimated value via the damping constant), with the previous value. If <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> is locked (see the previous section), the estimated value will still be calculated so convergence can be checked as usual.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">hold_iterations</span></code> and <code class="docutils literal notranslate"><span class="pre">fraction</span></code> are universal quantities, i.e. they are each a single value that applies to <span class="math notranslate nohighlight">\(T_\mathrm{rad}\)</span> and <span class="math notranslate nohighlight">\(W\)</span>, and for <code class="docutils literal notranslate"><span class="pre">hold_iterations</span></code> also <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span>. <code class="docutils literal notranslate"><span class="pre">threshold</span></code>, on the other hand, is supplied for each quantity separately, so for instance you could require <span class="math notranslate nohighlight">\(T_\mathrm{rad}\)</span> to differ by less than 1%, <span class="math notranslate nohighlight">\(W\)</span> to differ by less than 3%, and <span class="math notranslate nohighlight">\(T_\mathrm{inner}\)</span> to differ by less than 5% for convergence to be reached.</p>
+</div>
+</section>
+<section id="custom-convergence">
+<h2>Custom Convergence<a class="headerlink" href="#custom-convergence" title="Permalink to this headline">¶</a></h2>
+<p>The custom convergence strategy option is not currently implemented in TARDIS.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="estimators.html" class="btn btn-neutral float-left" title="Volume-Based Estimators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../spectrum/index.html" class="btn btn-neutral float-right" title="Spectrum Generation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

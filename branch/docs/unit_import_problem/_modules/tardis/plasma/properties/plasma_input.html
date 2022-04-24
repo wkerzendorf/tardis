@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.plasma.properties.plasma_input &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link href="../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.plasma.properties.plasma_input</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.plasma.properties.plasma_input</h1><div class="highlight"><pre>
+<span></span>from tardis.plasma.properties.base import Input, ArrayInput, DataFrameInput
+
+__all__ = [
+    &quot;TRadiative&quot;,
+    &quot;DilutionFactor&quot;,
+    &quot;AtomicData&quot;,
+    &quot;Abundance&quot;,
+    &quot;Density&quot;,
+    &quot;TimeExplosion&quot;,
+    &quot;JBlueEstimator&quot;,
+    &quot;LinkTRadTElectron&quot;,
+    &quot;HeliumTreatment&quot;,
+    &quot;RInner&quot;,
+    &quot;TInner&quot;,
+    &quot;Volume&quot;,
+    &quot;ContinuumInteractionSpecies&quot;,
+]
+
+
+<div class="viewcode-block" id="TRadiative"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.TRadiative">[docs]</a>class TRadiative(ArrayInput):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    t_rad : Numpy Array, dtype float
+    &quot;&quot;&quot;
+
+    outputs = (&quot;t_rad&quot;,)
+    latex_name = (r&quot;T_{\textrm{rad}}&quot;,)</div>
+
+
+<div class="viewcode-block" id="DilutionFactor"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.DilutionFactor">[docs]</a>class DilutionFactor(ArrayInput):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    w : Numpy Array, dtype float between 0 and 1
+        Factor used in nebular ionisation / dilute excitation calculations
+        to account for the dilution of the radiation field.
+    &quot;&quot;&quot;
+
+    outputs = (&quot;w&quot;,)
+    latex_name = (&quot;W&quot;,)</div>
+
+
+<div class="viewcode-block" id="AtomicData"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.AtomicData">[docs]</a>class AtomicData(Input):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    atomic_data : Object
+    &quot;&quot;&quot;
+
+    outputs = (&quot;atomic_data&quot;,)</div>
+
+
+<div class="viewcode-block" id="Abundance"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.Abundance">[docs]</a>class Abundance(Input):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    abundance : Numpy array, dtype float
+        Fractional abundance of elements
+    &quot;&quot;&quot;
+
+    outputs = (&quot;abundance&quot;,)</div>
+
+
+<div class="viewcode-block" id="Density"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.Density">[docs]</a>class Density(ArrayInput):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    density : Numpy array, dtype float
+      Total density values
+    &quot;&quot;&quot;
+
+    outputs = (&quot;density&quot;,)
+    latex_name = (r&quot;\rho&quot;,)</div>
+
+
+<div class="viewcode-block" id="TimeExplosion"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.TimeExplosion">[docs]</a>class TimeExplosion(Input):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    time_explosion : Float
+         Time since explosion in seconds
+    &quot;&quot;&quot;
+
+    outputs = (&quot;time_explosion&quot;,)
+    latex_name = (r&quot;t_{\textrm{exp}}&quot;,)</div>
+
+
+<div class="viewcode-block" id="JBlueEstimator"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.JBlueEstimator">[docs]</a>class JBlueEstimator(ArrayInput):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    j_blue_estimators : Numpy array
+    &quot;&quot;&quot;
+
+    outputs = (&quot;j_blue_estimators&quot;,)
+    latex_name = (r&quot;J_{\textrm{blue-estimator}}&quot;,)</div>
+
+
+<div class="viewcode-block" id="LinkTRadTElectron"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.LinkTRadTElectron">[docs]</a>class LinkTRadTElectron(Input):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    link_t_rad_t_electron : Float
+        Value used for estimate of electron temperature.
+        Default is 0.9.
+    &quot;&quot;&quot;
+
+    outputs = (&quot;link_t_rad_t_electron&quot;,)
+    latex_name = (r&quot;T_{\textrm{electron}}/T_{\textrm{rad}}&quot;,)</div>
+
+
+<div class="viewcode-block" id="HeliumTreatment"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.HeliumTreatment">[docs]</a>class HeliumTreatment(Input):
+    outputs = (&quot;helium_treatment&quot;,)</div>
+
+
+<div class="viewcode-block" id="RInner"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.RInner">[docs]</a>class RInner(Input):
+    outputs = (&quot;r_inner&quot;,)</div>
+
+
+<div class="viewcode-block" id="TInner"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.TInner">[docs]</a>class TInner(Input):
+    outputs = (&quot;t_inner&quot;,)</div>
+
+
+<div class="viewcode-block" id="Volume"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.Volume">[docs]</a>class Volume(Input):
+    outputs = (&quot;volume&quot;,)</div>
+
+
+<div class="viewcode-block" id="ContinuumInteractionSpecies"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.plasma_input.html#tardis.plasma.properties.plasma_input.ContinuumInteractionSpecies">[docs]</a>class ContinuumInteractionSpecies(Input):
+    &quot;&quot;&quot;
+    Attributes
+    ----------
+    continuum_interaction_species : Pandas MultiIndex, dtype int
+        Atomic and ion numbers of elements for which continuum interactions
+        (radiative/collisional ionization and recombination) are treated
+    &quot;&quot;&quot;
+
+    outputs = (&quot;continuum_interaction_species&quot;,)</div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

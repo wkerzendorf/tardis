@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.montecarlo.montecarlo_numba.numba_interface &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link href="../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.montecarlo.montecarlo_numba.numba_interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.montecarlo.montecarlo_numba.numba_interface</h1><div class="highlight"><pre>
+<span></span>from enum import IntEnum
+
+from numba import float64, int64
+from numba.experimental import jitclass
+import numpy as np
+
+from astropy import units as u
+from tardis import constants as const
+
+from tardis.montecarlo import (
+    montecarlo_configuration as montecarlo_configuration,
+)
+
+C_SPEED_OF_LIGHT = const.c.to(&quot;cm/s&quot;).value
+
+numba_model_spec = [
+    (&quot;r_inner&quot;, float64[:]),
+    (&quot;r_outer&quot;, float64[:]),
+    (&quot;time_explosion&quot;, float64),
+]
+
+
+@jitclass(numba_model_spec)
+class NumbaModel(object):
+    def __init__(self, r_inner, r_outer, time_explosion):
+        &quot;&quot;&quot;
+        Model for the Numba mode
+
+        Parameters
+        ----------
+        r_inner : numpy.ndarray
+        r_outer : numpy.ndarray
+        time_explosion : float
+        &quot;&quot;&quot;
+        self.r_inner = r_inner
+        self.r_outer = r_outer
+        self.time_explosion = time_explosion
+
+
+numba_plasma_spec = [
+    (&quot;electron_density&quot;, float64[:]),
+    (&quot;t_electrons&quot;, float64[:]),
+    (&quot;line_list_nu&quot;, float64[:]),
+    (&quot;tau_sobolev&quot;, float64[:, :]),
+    (&quot;transition_probabilities&quot;, float64[:, :]),
+    (&quot;line2macro_level_upper&quot;, int64[:]),
+    (&quot;macro_block_references&quot;, int64[:]),
+    (&quot;transition_type&quot;, int64[:]),
+    (&quot;destination_level_id&quot;, int64[:]),
+    (&quot;transition_line_id&quot;, int64[:]),
+    (&quot;bf_threshold_list_nu&quot;, float64[:]),
+    (&quot;p_fb_deactivation&quot;, float64[:, :]),
+    (&quot;photo_ion_nu_threshold_mins&quot;, float64[:]),
+    (&quot;photo_ion_nu_threshold_maxs&quot;, float64[:]),
+    (&quot;photo_ion_block_references&quot;, int64[:]),
+    (&quot;chi_bf&quot;, float64[:, :]),
+    (&quot;x_sect&quot;, float64[:]),
+    (&quot;phot_nus&quot;, float64[:]),
+    (&quot;ff_opacity_factor&quot;, float64[:]),
+    (&quot;emissivities&quot;, float64[:,:]),
+    (&quot;photo_ion_activation_idx&quot;, int64[:]),
+    (&quot;k_packet_idx&quot;, int64)
+]
+
+
+@jitclass(numba_plasma_spec)
+class NumbaPlasma(object):
+    def __init__(
+        self,
+        electron_density,
+        t_electrons,
+        line_list_nu,
+        tau_sobolev,
+        transition_probabilities,
+        line2macro_level_upper,
+        macro_block_references,
+        transition_type,
+        destination_level_id,
+        transition_line_id,
+        bf_threshold_list_nu,
+        p_fb_deactivation,
+        photo_ion_nu_threshold_mins,
+        photo_ion_nu_threshold_maxs,
+        photo_ion_block_references,
+        chi_bf,
+        x_sect,
+        phot_nus,
+        ff_opacity_factor,
+        emissivities,
+        photo_ion_activation_idx,
+        k_packet_idx
+    ):
+        &quot;&quot;&quot;
+        Plasma for the Numba code
+
+        Parameters
+        ----------
+        electron_density : numpy.ndarray
+        t_electrons : numpy.ndarray
+        line_list_nu : numpy.ndarray
+        tau_sobolev : numpy.ndarray
+        transition_probabilities : numpy.ndarray
+        line2macro_level_upper : numpy.ndarray
+        macro_block_references : numpy.ndarray
+        transition_type : numpy.ndarray
+        destination_level_id : numpy.ndarray
+        transition_line_id : numpy.ndarray
+        bf_threshold_list_nu : numpy.ndarray
+        &quot;&quot;&quot;
+
+        self.electron_density = electron_density
+        self.t_electrons = t_electrons
+        self.line_list_nu = line_list_nu
+        self.tau_sobolev = tau_sobolev
+        self.bf_threshold_list_nu = bf_threshold_list_nu
+
+        #### Macro Atom transition probabilities
+        self.transition_probabilities = transition_probabilities
+        self.line2macro_level_upper = line2macro_level_upper
+
+        self.macro_block_references = macro_block_references
+        self.transition_type = transition_type
+
+        # Destination level is not needed and/or generated for downbranch
+        self.destination_level_id = destination_level_id
+        self.transition_line_id = transition_line_id
+        self.p_fb_deactivation = p_fb_deactivation
+
+        # Continuum Opacity Data
+        self.photo_ion_nu_threshold_mins = photo_ion_nu_threshold_mins
+        self.photo_ion_nu_threshold_maxs = photo_ion_nu_threshold_maxs
+
+        self.photo_ion_block_references = photo_ion_block_references
+        self.chi_bf = chi_bf
+        self.x_sect = x_sect
+        self.phot_nus = phot_nus
+        self.ff_opacity_factor = ff_opacity_factor
+        self.emissivities = emissivities
+        self.photo_ion_activation_idx = photo_ion_activation_idx
+        self.k_packet_idx = k_packet_idx
+
+<div class="viewcode-block" id="numba_plasma_initialize"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.numba_interface.html#tardis.montecarlo.montecarlo_numba.numba_interface.numba_plasma_initialize">[docs]</a>def numba_plasma_initialize(plasma, line_interaction_type):
+    &quot;&quot;&quot;
+    Initialize the NumbaPlasma object and copy over the data over from TARDIS Plasma
+
+    Parameters
+    ----------
+    plasma : tardis.plasma.BasePlasma
+    line_interaction_type : enum
+    &quot;&quot;&quot;
+
+    electron_densities = plasma.electron_densities.values
+    t_electrons = plasma.t_electrons
+    line_list_nu = plasma.atomic_data.lines.nu.values
+    tau_sobolev = np.ascontiguousarray(
+        plasma.tau_sobolevs.values.copy(), dtype=np.float64
+    )
+    if montecarlo_configuration.disable_line_scattering:
+        tau_sobolev *= 0
+
+    if line_interaction_type == &quot;scatter&quot;:
+        # to adhere to data types, we must have an array of minimum size 1
+        array_size = 1
+        transition_probabilities = np.zeros(
+            (array_size, array_size), dtype=np.float64
+        )  # to adhere to data types
+        line2macro_level_upper = np.zeros(array_size, dtype=np.int64)
+        macro_block_references = np.zeros(array_size, dtype=np.int64)
+        transition_type = np.zeros(array_size, dtype=np.int64)
+        destination_level_id = np.zeros(array_size, dtype=np.int64)
+        transition_line_id = np.zeros(array_size, dtype=np.int64)
+    else:
+        transition_probabilities = np.ascontiguousarray(
+            plasma.transition_probabilities.values.copy(), dtype=np.float64
+        )
+        line2macro_level_upper = (
+            plasma.atomic_data.lines_upper2macro_reference_idx
+        )
+        # TODO: Fix setting of block references for non-continuum mode
+
+        if montecarlo_configuration.CONTINUUM_PROCESSES_ENABLED:
+            macro_block_references = plasma.macro_block_references
+        else:
+            macro_block_references = plasma.atomic_data.macro_atom_references[
+                 &quot;block_references&quot;
+             ].values
+        transition_type = plasma.macro_atom_data[&quot;transition_type&quot;].values
+
+        # Destination level is not needed and/or generated for downbranch
+        destination_level_id = plasma.macro_atom_data[
+            &quot;destination_level_idx&quot;
+        ].values
+        transition_line_id = plasma.macro_atom_data[&quot;lines_idx&quot;].values
+    if montecarlo_configuration.CONTINUUM_PROCESSES_ENABLED:
+        bf_threshold_list_nu = plasma.nu_i.loc[
+            plasma.level2continuum_idx.index
+        ].values
+        p_fb_deactivation = np.ascontiguousarray(
+            plasma.p_fb_deactivation.values.copy(), dtype=np.float64)
+
+        phot_nus = plasma.photo_ion_cross_sections.nu.loc[
+            plasma.level2continuum_idx.index
+        ]
+        photo_ion_block_references = np.pad(
+            phot_nus.groupby(level=[0, 1, 2], sort=False)
+            .count()
+            .values.cumsum(),
+            [1, 0],
+        )
+        photo_ion_nu_threshold_mins = phot_nus.groupby(level=[0, 1, 2], sort=False).first().values
+        photo_ion_nu_threshold_maxs = phot_nus.groupby(level=[0, 1, 2], sort=False).last().values
+
+        chi_bf = plasma.chi_bf.loc[plasma.level2continuum_idx.index].values
+        x_sect = plasma.photo_ion_cross_sections.x_sect.loc[
+            plasma.level2continuum_idx.index
+        ].values
+
+        phot_nus = phot_nus.values
+        ff_opacity_factor = plasma.ff_cooling_factor/np.sqrt(t_electrons)
+        emissivities = plasma.fb_emission_cdf.loc[plasma.level2continuum_idx.index].values
+        photo_ion_activation_idx = plasma.photo_ion_idx.loc[
+            plasma.level2continuum_idx.index, &quot;destination_level_idx&quot;
+        ].values
+        k_packet_idx = np.int64(plasma.k_packet_idx)
+    else:
+        bf_threshold_list_nu = np.zeros(0, dtype=np.float64)
+        p_fb_deactivation = np.zeros((0, 0), dtype=np.float64)
+        photo_ion_nu_threshold_mins = np.zeros(0, dtype=np.float64)
+        photo_ion_nu_threshold_maxs = np.zeros(0, dtype=np.float64)
+        photo_ion_block_references = np.zeros(0, dtype=np.int64)
+        chi_bf = np.zeros((0,0), dtype=np.float64)
+        x_sect = np.zeros(0, dtype=np.float64)
+        phot_nus = np.zeros(0, dtype=np.float64)
+        ff_opacity_factor = np.zeros(0, dtype=np.float64)
+        emissivities = np.zeros((0,0), dtype=np.float64)
+        photo_ion_activation_idx = np.zeros(0, dtype=np.int64)
+        k_packet_idx = np.int64(-1)
+
+    return NumbaPlasma(
+        electron_densities,
+        t_electrons,
+        line_list_nu,
+        tau_sobolev,
+        transition_probabilities,
+        line2macro_level_upper,
+        macro_block_references,
+        transition_type,
+        destination_level_id,
+        transition_line_id,
+        bf_threshold_list_nu,
+        p_fb_deactivation,
+        photo_ion_nu_threshold_mins,
+        photo_ion_nu_threshold_maxs,
+        photo_ion_block_references,
+        chi_bf,
+        x_sect,
+        phot_nus,
+        ff_opacity_factor,
+        emissivities,
+        photo_ion_activation_idx,
+        k_packet_idx
+    )</div>
+
+
+packet_collection_spec = [
+    (&quot;packets_input_radius&quot;, float64[:]),
+    (&quot;packets_input_nu&quot;, float64[:]),
+    (&quot;packets_input_mu&quot;, float64[:]),
+    (&quot;packets_input_energy&quot;, float64[:]),
+    (&quot;packets_output_nu&quot;, float64[:]),
+    (&quot;packets_output_energy&quot;, float64[:]),
+]
+
+
+@jitclass(packet_collection_spec)
+class PacketCollection(object):
+    def __init__(
+        self,
+        packets_input_radius,
+        packets_input_nu,
+        packets_input_mu,
+        packets_input_energy,
+        packets_output_nu,
+        packets_output_energy,
+    ):
+        self.packets_input_radius = packets_input_radius
+        self.packets_input_nu = packets_input_nu
+        self.packets_input_mu = packets_input_mu
+        self.packets_input_energy = packets_input_energy
+        self.packets_output_nu = packets_output_nu
+        self.packets_output_energy = packets_output_energy
+
+
+vpacket_collection_spec = [
+    (&quot;rpacket_index&quot;, int64),
+    (&quot;spectrum_frequency&quot;, float64[:]),
+    (&quot;v_packet_spawn_start_frequency&quot;, float64),
+    (&quot;v_packet_spawn_end_frequency&quot;, float64),
+    (&quot;nus&quot;, float64[:]),
+    (&quot;energies&quot;, float64[:]),
+    (&quot;initial_mus&quot;, float64[:]),
+    (&quot;initial_rs&quot;, float64[:]),
+    (&quot;idx&quot;, int64),
+    (&quot;number_of_vpackets&quot;, int64),
+    (&quot;length&quot;, int64),
+    (&quot;last_interaction_in_nu&quot;, float64[:]),
+    (&quot;last_interaction_type&quot;, int64[:]),
+    (&quot;last_interaction_in_id&quot;, int64[:]),
+    (&quot;last_interaction_out_id&quot;, int64[:]),
+]
+
+
+@jitclass(vpacket_collection_spec)
+class VPacketCollection(object):
+    def __init__(
+        self,
+        rpacket_index,
+        spectrum_frequency,
+        v_packet_spawn_start_frequency,
+        v_packet_spawn_end_frequency,
+        number_of_vpackets,
+        temporary_v_packet_bins,
+    ):
+        self.spectrum_frequency = spectrum_frequency
+        self.v_packet_spawn_start_frequency = v_packet_spawn_start_frequency
+        self.v_packet_spawn_end_frequency = v_packet_spawn_end_frequency
+        self.nus = np.empty(temporary_v_packet_bins, dtype=np.float64)
+        self.energies = np.empty(temporary_v_packet_bins, dtype=np.float64)
+        self.initial_mus = np.empty(temporary_v_packet_bins, dtype=np.float64)
+        self.initial_rs = np.empty(temporary_v_packet_bins, dtype=np.float64)
+        self.number_of_vpackets = number_of_vpackets
+        self.last_interaction_in_nu = np.zeros(
+            temporary_v_packet_bins, dtype=np.float64
+        )
+        self.last_interaction_type = -1 * np.ones(
+            temporary_v_packet_bins, dtype=np.int64
+        )
+        self.last_interaction_in_id = -1 * np.ones(
+            temporary_v_packet_bins, dtype=np.int64
+        )
+        self.last_interaction_out_id = -1 * np.ones(
+            temporary_v_packet_bins, dtype=np.int64
+        )
+        self.idx = 0
+        self.rpacket_index = rpacket_index
+        self.length = temporary_v_packet_bins
+
+    def set_properties(
+        self,
+        nu,
+        energy,
+        initial_mu,
+        initial_r,
+        last_interaction_in_nu,
+        last_interaction_type,
+        last_interaction_in_id,
+        last_interaction_out_id,
+    ):
+        if self.idx &gt;= self.length:
+            temp_length = self.length * 2 + self.number_of_vpackets
+            temp_nus = np.empty(temp_length, dtype=np.float64)
+            temp_energies = np.empty(temp_length, dtype=np.float64)
+            temp_initial_mus = np.empty(temp_length, dtype=np.float64)
+            temp_initial_rs = np.empty(temp_length, dtype=np.float64)
+            temp_last_interaction_in_nu = np.empty(
+                temp_length, dtype=np.float64
+            )
+            temp_last_interaction_type = np.empty(temp_length, dtype=np.int64)
+            temp_last_interaction_in_id = np.empty(temp_length, dtype=np.int64)
+            temp_last_interaction_out_id = np.empty(temp_length, dtype=np.int64)
+
+            temp_nus[: self.length] = self.nus
+            temp_energies[: self.length] = self.energies
+            temp_initial_mus[: self.length] = self.initial_mus
+            temp_initial_rs[: self.length] = self.initial_rs
+            temp_last_interaction_in_nu[
+                : self.length
+            ] = self.last_interaction_in_nu
+            temp_last_interaction_type[
+                : self.length
+            ] = self.last_interaction_type
+            temp_last_interaction_in_id[
+                : self.length
+            ] = self.last_interaction_in_id
+            temp_last_interaction_out_id[
+                : self.length
+            ] = self.last_interaction_out_id
+
+            self.nus = temp_nus
+            self.energies = temp_energies
+            self.initial_mus = temp_initial_mus
+            self.initial_rs = temp_initial_rs
+            self.last_interaction_in_nu = temp_last_interaction_in_nu
+            self.last_interaction_type = temp_last_interaction_type
+            self.last_interaction_in_id = temp_last_interaction_in_id
+            self.last_interaction_out_id = temp_last_interaction_out_id
+            self.length = temp_length
+
+        self.nus[self.idx] = nu
+        self.energies[self.idx] = energy
+        self.initial_mus[self.idx] = initial_mu
+        self.initial_rs[self.idx] = initial_r
+        self.last_interaction_in_nu[self.idx] = last_interaction_in_nu
+        self.last_interaction_type[self.idx] = last_interaction_type
+        self.last_interaction_in_id[self.idx] = last_interaction_in_id
+        self.last_interaction_out_id[self.idx] = last_interaction_out_id
+        self.idx += 1
+
+rpacket_tracker_spec = [
+    (&quot;length&quot;, int64),
+    (&quot;seed&quot;, int64),
+    (&quot;index&quot;, int64),
+    (&quot;status&quot;, int64[:]),
+    (&quot;r&quot;, float64[:]),
+    (&quot;nu&quot;, float64[:]),
+    (&quot;mu&quot;, float64[:]),
+    (&quot;energy&quot;, float64[:]),
+    (&quot;shell_id&quot;, int64[:]),
+    (&quot;interact_id&quot;, int64),
+]
+
+@jitclass(rpacket_tracker_spec)
+class RPacketTracker(object):
+    &quot;&quot;&quot;
+    Numba JITCLASS for storing the information for each interaction a RPacket instance undergoes.
+
+    Parameters
+    ----------
+        length : int
+            Length of the initial array that is instantiated
+        seed : int
+            Seed for each RPacket
+        index : int
+            Index position of each RPacket
+        status : int
+            Current status of the RPacket as per interactions
+        r : float
+            Radius of the shell where the RPacket is present
+        nu : float
+            Luminosity of the RPacket
+        mu : float
+            Cosine of the angle made by the direction of movement of the RPacket from its original direction
+        energy : float
+            Energy possessed by the RPacket at a particular shell
+        shell_id : int
+            Current Shell No in which the RPacket is present
+        interact_id : int
+            Internal counter for the interactions that a particular RPacket undergoes
+    &quot;&quot;&quot;
+
+    def __init__(self):
+        self.length = montecarlo_configuration.INITIAL_TRACKING_ARRAY_LENGTH
+        self.seed = np.int64(0)
+        self.index = np.int64(0)
+        self.status = np.empty(self.length, dtype=np.int64)
+        self.r = np.empty(self.length, dtype=np.float64)
+        self.nu = np.empty(self.length, dtype=np.float64)
+        self.mu = np.empty(self.length, dtype=np.float64)
+        self.energy = np.empty(self.length, dtype=np.float64)
+        self.shell_id = np.empty(self.length, dtype=np.int64)
+        self.interact_id = 0
+
+    def track(self, r_packet):
+        if self.interact_id &gt;= self.length:
+            temp_length = self.length * 2
+            temp_status = np.empty(temp_length, dtype=np.int64)
+            temp_r = np.empty(temp_length, dtype=np.float64)
+            temp_nu = np.empty(temp_length, dtype=np.float64)
+            temp_mu = np.empty(temp_length, dtype=np.float64)
+            temp_energy = np.empty(temp_length, dtype=np.float64)
+            temp_shell_id = np.empty(temp_length, dtype=np.int64)
+
+            temp_status[: self.length] = self.status
+            temp_r[: self.length] = self.r
+            temp_nu[: self.length] = self.nu
+            temp_mu[: self.length] = self.mu
+            temp_energy[: self.length] = self.energy
+            temp_shell_id[: self.length] = self.shell_id
+
+            self.status = temp_status
+            self.r = temp_r
+            self.nu = temp_nu
+            self.mu = temp_mu
+            self.energy = temp_energy
+            self.shell_id = temp_shell_id
+            self.length = temp_length
+
+        self.index = r_packet.index
+        self.seed = r_packet.seed
+        self.status[self.interact_id] = r_packet.status
+        self.r[self.interact_id] = r_packet.r
+        self.nu[self.interact_id] = r_packet.nu
+        self.mu[self.interact_id] = r_packet.mu
+        self.energy[self.interact_id] = r_packet.energy
+        self.shell_id[self.interact_id] = r_packet.current_shell_id
+        self.interact_id += 1
+
+    def finalize_array(self):
+        self.status = self.status[: self.interact_id]
+        self.r = self.r[: self.interact_id]
+        self.nu = self.nu[: self.interact_id]
+        self.mu = self.mu[: self.interact_id]
+        self.energy = self.energy[: self.interact_id]
+        self.shell_id = self.shell_id[: self.interact_id]
+
+
+base_estimators_spec = [
+    (&quot;j_estimator&quot;, float64[:]),
+    (&quot;nu_bar_estimator&quot;, float64[:]),
+    (&quot;j_blue_estimator&quot;, float64[:, :]),
+    (&quot;Edotlu_estimator&quot;, float64[:, :]),
+]
+
+continuum_estimators_spec = [
+    (&quot;photo_ion_estimator&quot;, float64[:, :]),
+    (&quot;stim_recomb_estimator&quot;, float64[:, :]),
+    (&quot;bf_heating_estimator&quot;, float64[:, :]),
+    (&quot;stim_recomb_cooling_estimator&quot;, float64[:, :]),
+    (&quot;photo_ion_estimator_statistics&quot;, int64[:, :]),
+]
+
+
+
+@jitclass(base_estimators_spec + continuum_estimators_spec)
+class Estimators(object):
+    def __init__(
+        self,
+        j_estimator,
+        nu_bar_estimator,
+        j_blue_estimator,
+        Edotlu_estimator,
+        photo_ion_estimator,
+        stim_recomb_estimator,
+        bf_heating_estimator,
+        stim_recomb_cooling_estimator,
+        photo_ion_estimator_statistics,
+    ):
+        self.j_estimator = j_estimator
+        self.nu_bar_estimator = nu_bar_estimator
+        self.j_blue_estimator = j_blue_estimator
+        self.Edotlu_estimator = Edotlu_estimator
+        self.photo_ion_estimator = photo_ion_estimator
+        self.stim_recomb_estimator = stim_recomb_estimator
+        self.bf_heating_estimator = bf_heating_estimator
+        self.stim_recomb_cooling_estimator = stim_recomb_cooling_estimator
+        self.photo_ion_estimator_statistics = photo_ion_estimator_statistics
+
+
+<div class="viewcode-block" id="configuration_initialize"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.numba_interface.html#tardis.montecarlo.montecarlo_numba.numba_interface.configuration_initialize">[docs]</a>def configuration_initialize(runner, number_of_vpackets):
+    if runner.line_interaction_type == &quot;macroatom&quot;:
+        montecarlo_configuration.line_interaction_type = (
+            LineInteractionType.MACROATOM
+        )
+    elif runner.line_interaction_type == &quot;downbranch&quot;:
+        montecarlo_configuration.line_interaction_type = (
+            LineInteractionType.DOWNBRANCH
+        )
+    elif runner.line_interaction_type == &quot;scatter&quot;:
+        montecarlo_configuration.line_interaction_type = (
+            LineInteractionType.SCATTER
+        )
+    else:
+        raise ValueError(
+            f&#39;Line interaction type must be one of &quot;macroatom&quot;,&#39;
+            f&#39;&quot;downbranch&quot;, or &quot;scatter&quot; but is &#39;
+            f&quot;{runner.line_interaction_type}&quot;
+        )
+    montecarlo_configuration.number_of_vpackets = number_of_vpackets
+    montecarlo_configuration.temporary_v_packet_bins = number_of_vpackets
+    montecarlo_configuration.full_relativity = runner.enable_full_relativity
+    montecarlo_configuration.montecarlo_seed = runner.seed
+    montecarlo_configuration.single_packet_seed = runner.single_packet_seed
+    montecarlo_configuration.v_packet_spawn_start_frequency = (
+        runner.virtual_spectrum_spawn_range.end.to(
+            u.Hz, equivalencies=u.spectral()
+        ).value
+    )
+    montecarlo_configuration.v_packet_spawn_end_frequency = (
+        runner.virtual_spectrum_spawn_range.start.to(
+            u.Hz, equivalencies=u.spectral()
+        ).value
+    )
+    montecarlo_configuration.VPACKET_LOGGING = runner.virt_logging</div>
+
+
+# class TrackRPacket(object):
+<div class="viewcode-block" id="LineInteractionType"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.numba_interface.html#tardis.montecarlo.montecarlo_numba.numba_interface.LineInteractionType">[docs]</a>class LineInteractionType(IntEnum):
+    SCATTER = 0
+    DOWNBRANCH = 1
+    MACROATOM = 2</div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

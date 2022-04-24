@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.montecarlo.packet_source &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link href="../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.montecarlo.packet_source</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.montecarlo.packet_source</h1><div class="highlight"><pre>
+<span></span>import abc
+
+import numpy as np
+import numexpr as ne
+from tardis import constants as const
+from tardis.montecarlo import (
+    montecarlo_configuration as montecarlo_configuration,
+)
+
+
+<div class="viewcode-block" id="BasePacketSource"><a class="viewcode-back" href="../../../api/tardis.montecarlo.packet_source.html#tardis.montecarlo.packet_source.BasePacketSource">[docs]</a>class BasePacketSource(abc.ABC):
+    def __init__(self, seed):
+        self.seed = seed
+        np.random.seed(seed)
+
+<div class="viewcode-block" id="BasePacketSource.create_packets"><a class="viewcode-back" href="../../../api/tardis.montecarlo.packet_source.html#tardis.montecarlo.packet_source.BasePacketSource.create_packets">[docs]</a>    @abc.abstractmethod
+    def create_packets(self, seed=None, **kwargs):
+        pass</div>
+
+<div class="viewcode-block" id="BasePacketSource.create_zero_limb_darkening_packet_mus"><a class="viewcode-back" href="../../../api/tardis.montecarlo.packet_source.html#tardis.montecarlo.packet_source.BasePacketSource.create_zero_limb_darkening_packet_mus">[docs]</a>    @staticmethod
+    def create_zero_limb_darkening_packet_mus(no_of_packets, rng):
+        &quot;&quot;&quot;
+        Create zero-limb-darkening packet :math:`\mu` distributed
+        according to :math:`\\mu=\\sqrt{z}, z \isin [0, 1]`
+
+        Parameters
+        ----------
+        no_of_packets : int
+            number of packets to be created
+        &quot;&quot;&quot;
+
+        # For testing purposes
+        if montecarlo_configuration.LEGACY_MODE_ENABLED:
+            return np.sqrt(np.random.random(no_of_packets))
+        else:
+            return np.sqrt(rng.random(no_of_packets))</div>
+
+<div class="viewcode-block" id="BasePacketSource.create_uniform_packet_energies"><a class="viewcode-back" href="../../../api/tardis.montecarlo.packet_source.html#tardis.montecarlo.packet_source.BasePacketSource.create_uniform_packet_energies">[docs]</a>    @staticmethod
+    def create_uniform_packet_energies(no_of_packets, rng):
+        &quot;&quot;&quot;
+        Uniformly distribute energy in arbitrary units where the ensemble of
+        packets has energy of 1.
+
+        Parameters
+        ----------
+        no_of_packets : int
+            number of packets
+
+        Returns
+        -------
+            energies for packets : numpy.ndarray
+        &quot;&quot;&quot;
+        return np.ones(no_of_packets) / no_of_packets</div>
+
+<div class="viewcode-block" id="BasePacketSource.create_blackbody_packet_nus"><a class="viewcode-back" href="../../../api/tardis.montecarlo.packet_source.html#tardis.montecarlo.packet_source.BasePacketSource.create_blackbody_packet_nus">[docs]</a>    @staticmethod
+    def create_blackbody_packet_nus(T, no_of_packets, rng, l_samples=1000):
+        &quot;&quot;&quot;
+        Create packet :math:`\\nu` distributed using the algorithm described in
+        Bjorkman &amp; Wood 2001 (page 4) which references
+        Carter &amp; Cashwell 1975:
+        First, generate a uniform random number, :math:`\\xi_0 \\in [0, 1]` and
+        determine the minimum value of
+        :math:`l, l_{\\rm min}`, that satisfies the condition
+
+        .. math::
+            \\sum_{i=1}^{l} i^{-4} \\ge {{\\pi^4}\\over{90}} m_0 \\;.
+
+        Next obtain four additional uniform random numbers (in the range 0
+        to 1) :math:`\\xi_1, \\xi_2, \\xi_3, {\\rm and } \\xi_4`.
+        Finally, the packet frequency is given by
+
+        .. math::
+            x = -\\ln{(\\xi_1\\xi_2\\xi_3\\xi_4)}/l_{\\rm min}\\;.
+
+        where :math:`x=h\\nu/kT`
+
+        Parameters
+        ----------
+        T : float
+            temperature
+        no_of_packets : int
+        l_samples : int
+            number of l_samples needed in the algorithm
+
+        Returns
+        -------
+            array of frequencies: numpy.ndarray
+        &quot;&quot;&quot;
+        l_samples = l_samples
+        l_array = np.cumsum(np.arange(1, l_samples, dtype=np.float64) ** -4)
+        l_coef = np.pi ** 4 / 90.0
+
+        # For testing purposes
+        if montecarlo_configuration.LEGACY_MODE_ENABLED:
+            xis = np.random.random((5, no_of_packets))
+        else:
+            xis = rng.random((5, no_of_packets))
+
+        l = l_array.searchsorted(xis[0] * l_coef) + 1.0
+        xis_prod = np.prod(xis[1:], 0)
+        x = ne.evaluate(&quot;-log(xis_prod)/l&quot;)
+
+        return x * (const.k_B.cgs.value * T) / const.h.cgs.value</div></div>
+
+
+<div class="viewcode-block" id="BlackBodySimpleSource"><a class="viewcode-back" href="../../../api/tardis.montecarlo.packet_source.html#tardis.montecarlo.packet_source.BlackBodySimpleSource">[docs]</a>class BlackBodySimpleSource(BasePacketSource):
+    &quot;&quot;&quot;
+    Simple packet source that generates Blackbody packets for the Montecarlo
+    part.
+    &quot;&quot;&quot;
+
+<div class="viewcode-block" id="BlackBodySimpleSource.create_packets"><a class="viewcode-back" href="../../../api/tardis.montecarlo.packet_source.html#tardis.montecarlo.packet_source.BlackBodySimpleSource.create_packets">[docs]</a>    def create_packets(self, T, no_of_packets, rng, radius):
+        &quot;&quot;&quot;Generate black-body packet properties as arrays
+
+        Parameters
+        ----------
+        T : float64
+            Temperature
+        no_of_packets : int
+            Number of packets
+        rng : numpy random number generator
+        radius : float64
+            Initial packet radius
+
+        Returns
+        -------
+        array
+            Packet radii
+        array
+            Packet frequencies
+        array
+            Packet directions
+        array
+            Packet energies
+        &quot;&quot;&quot;
+        radii = np.ones(no_of_packets) * radius
+        nus = self.create_blackbody_packet_nus(T, no_of_packets, rng)
+        mus = self.create_zero_limb_darkening_packet_mus(no_of_packets, rng)
+        energies = self.create_uniform_packet_energies(no_of_packets, rng)
+
+        return radii, nus, mus, energies</div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

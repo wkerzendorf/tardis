@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Workflow &mdash; tardis</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Reporting Issues" href="issues.html" />
+    <link rel="prev" title="Contribution Guidelines" href="../CONTRIBUTING.html" />
+    <link href="../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developer Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="issues.html">Reporting Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html">General Workflow to add a new feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#preparation-and-working-with-git">Preparation and Working with Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_guidelines.html">Documentation Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_tests.html">Running tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_quality.html">Code Quality Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer_faq.html">Developer FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tardis-core-team-instructions">TARDIS core team Instructions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="continuous_integration.html">Continuous Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update_refdata.html">Update the Reference Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="matterbridge.html">Matterbridge Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="debug_numba.html">Debugging numba_montecarlo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profiling/index.html">Profiling Information</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Developer Workflow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/contributing/development/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="developer-workflow">
+<h1>Developer Workflow<a class="headerlink" href="#developer-workflow" title="Permalink to this headline">¶</a></h1>
+<p>If you want to contribute to the development of TARDIS, please read through
+this page and follow the guidelines outlined here.  Many of the Development
+workflow is taken from <a class="reference external" href="http://docs.astropy.org/en/stable/development/workflow/development_workflow.html">Astropy</a>, and credit belongs
+to the Astropy team for designing it.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="issues.html">Reporting Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_workflow.html">General Workflow to add a new feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_workflow.html#preparation-and-working-with-git">Preparation and Working with Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#creating-a-fork">Creating a fork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#set-up-and-configure-a-github-account">Set up and configure a GitHub account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#create-your-own-fork-of-a-repository">Create your own fork of a repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#setting-up-the-fork-to-work-on">Setting up the fork to work on</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#installing-tardis-in-develop-mode">Installing TARDIS in develop mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#workflow-summary">Workflow summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#deleting-your-master-branch">Deleting your master branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#updating-the-mirror-of-trunk">Updating the mirror of trunk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#making-a-new-feature-branch">Making a new feature branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#the-editing-workflow">The editing workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#asking-for-your-changes-to-be-reviewed-and-or-merged">Asking for your changes to be reviewed and/or merged</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#making-sure-your-pull-request-stays-up-to-date">Making sure your Pull Request stays up-to-date</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#reviewing-and-helping-others-with-pull-requests">Reviewing and helping others with Pull Requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation_guidelines.html">Documentation Guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documentation_guidelines.html#documenting-the-code-you-write">Documenting the code you write</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_guidelines.html#building-documentation-locally">Building documentation locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_guidelines.html#sharing-the-built-documentation-in-your-pr-documentation-preview">Sharing the built documentation in your PR (Documentation Preview)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="running_tests.html">Running tests</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="running_tests.html#running-the-unit-tests">Running the Unit Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_tests.html#generating-plasma-reference">Generating Plasma Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_tests.html#running-the-integration-tests">Running the Integration Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_tests.html#setting-up-the-dokuwiki-report">Setting up the DokuWiki report</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code_quality.html">Code Quality Guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="code_quality.html#code-style-conventions">Code Style Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_quality.html#docstrings">Docstrings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_quality.html#edge-cases-and-exception-handling">Edge Cases and Exception Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer_faq.html">Developer FAQ</a></li>
+</ul>
+</div>
+<section id="tardis-core-team-instructions">
+<h2>TARDIS core team Instructions<a class="headerlink" href="#tardis-core-team-instructions" title="Permalink to this headline">¶</a></h2>
+<p>Following are <strong>advanced</strong> development guidelines that are mainly intended for
+the core team (active maintainers) of TARDIS.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="continuous_integration.html">Continuous Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="continuous_integration.html#azure-repos">Azure Repos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="continuous_integration.html#azure-pipelines-github-actions">Azure Pipelines &amp; GitHub Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="continuous_integration.html#triggers">Triggers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="continuous_integration.html#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="continuous_integration.html#predefined-variables">Predefined variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="continuous_integration.html#jobs">Jobs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="continuous_integration.html#tardis-pipelines">TARDIS Pipelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="update_refdata.html">Update the Reference Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update_refdata.html#default-procedure">Default Procedure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update_refdata.html#manual-procedure">Manual Procedure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matterbridge.html">Matterbridge Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="matterbridge.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matterbridge.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matterbridge.html#first-time-setup">First-time setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matterbridge.html#update-server-configuration">Update server configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matterbridge.html#cron-job">Cron job</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debug_numba.html">Debugging numba_montecarlo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profiling/index.html">Profiling Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="profiling/profiling_example.html">Basic Profile of TARDIS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling/tardis_profiling_threads.html">Profiling the effect of input parameters on TARDIS runtime</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../CONTRIBUTING.html" class="btn btn-neutral float-left" title="Contribution Guidelines" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="issues.html" class="btn btn-neutral float-right" title="Reporting Issues" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

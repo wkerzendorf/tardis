@@ -1,0 +1,18 @@
+tardis.montecarlo.montecarlo\_numba.continuum package
+=====================================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   tardis.montecarlo.montecarlo_numba.continuum.r_packet_transport_continuum
+
+Module contents
+---------------
+
+.. automodule:: tardis.montecarlo.montecarlo_numba.continuum
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Continuous Integration &mdash; tardis</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Update the Reference Data" href="update_refdata.html" />
+    <link rel="prev" title="Developer FAQ" href="developer_faq.html" />
+    <link href="../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer Workflow</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="issues.html">Reporting Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html">General Workflow to add a new feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_workflow.html#preparation-and-working-with-git">Preparation and Working with Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_guidelines.html">Documentation Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_tests.html">Running tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_quality.html">Code Quality Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer_faq.html">Developer FAQ</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#tardis-core-team-instructions">TARDIS core team Instructions</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Continuous Integration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#azure-repos">Azure Repos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#azure-pipelines-github-actions">Azure Pipelines &amp; GitHub Actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#triggers">Triggers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#variables">Variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#predefined-variables">Predefined variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jobs">Jobs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tardis-pipelines">TARDIS Pipelines</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="update_refdata.html">Update the Reference Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="matterbridge.html">Matterbridge Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="debug_numba.html">Debugging numba_montecarlo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profiling/index.html">Profiling Information</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Developer Workflow</a> &raquo;</li>
+      <li>Continuous Integration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/contributing/development/continuous_integration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="id1">
+<h1>Continuous Integration<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>We use a so-called <a class="reference external" href="https://en.wikipedia.org/wiki/Continuous_integration">continuous integration</a> workflow with TARDIS.
+This means that each time a change is proposed (via pull request)
+or a change is merged into the <em>master</em> branch, a service will
+clone the repository, checkout to the current commit and execute
+all the TARDIS tests. This helps us to detect bugs immediately.</p>
+<section id="azure-repos">
+<h2>Azure Repos<a class="headerlink" href="#azure-repos" title="Permalink to this headline">¶</a></h2>
+<p>Azure Repos is just another service to store Git repositories.
+Currently, we use Azure Repos to mirror <code class="docutils literal notranslate"><span class="pre">tardis-refdata</span></code>
+repository since Azure does not impose limits on LFS bandwith
+nor storage.</p>
+<p><strong>To clone this repository:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://tardis-sn@dev.azure.com/tardis-sn/TARDIS/_git/tardis-refdata
+</pre></div>
+</div>
+<p><strong>To download a LFS file trough HTTPS:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/kurucz_cd23_chianti_H_He.h5&amp;resolveLfs=true
+</pre></div>
+</div>
+<p>This mirror is automatically synced by <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span> <span class="pre">GitHub</span> <span class="pre">workflow</span></code>. If you want
+to <a class="reference external" href="https://docs.microsoft.com/en-us/azure/devops/repos/git/import-git-repository?view=azure-devops#what-if-my-source-repository-contains-git-lfs-objects">update it manually</a>, remember to set <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">http.version</span> <span class="pre">HTTP/1.1</span></code>
+to avoid <a class="reference external" href="https://developercommunity.visualstudio.com/content/problem/867488/git-lfs-push-got-413-error.html">error 413</a> while pushing large files.</p>
+</section>
+<section id="azure-pipelines-github-actions">
+<h2>Azure Pipelines &amp; GitHub Actions<a class="headerlink" href="#azure-pipelines-github-actions" title="Permalink to this headline">¶</a></h2>
+<p>Currently, we use the <a class="reference external" href="http://azure.microsoft.com/en-us/services/devops/?nav=mi">Azure DevOps</a> service to run most of our
+pipelines and GitHub Actions for some others (called “workflows”). The
+following sections explains briefly the different components of a
+pipeline/workflow, mostly focused on the Azure service.</p>
+<p>A pipeline (or a workflow) is essentially a <a class="reference internal" href="../../resources/zreferences.html#term-YAML"><span class="xref std std-term">YAML</span></a> configuration file
+with different sections such as variables, jobs and steps. These files
+run commands or tasks when they are triggered by some event, like a
+commit being pushed to a certain branch.</p>
+<p>Pipelines on Azure must be created through the web UI for the first time.
+Then, making changes to an existing pipeline is as easy as making a pull
+request. To create a new workflow on GitHub, just create a new YAML file
+in <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code>.</p>
+</section>
+<section id="triggers">
+<h2>Triggers<a class="headerlink" href="#triggers" title="Permalink to this headline">¶</a></h2>
+<p>First thing to do is telling the pipeline when it should run. In
+Azure, <em>trigger</em> (also known as the CI trigger) sets up the pipeline
+to run every time changes are pushed to a branch.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">trigger</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span><span class="w"></span>
+</pre></div>
+</div>
+<p>If some trigger is not specified then the default configuration
+is assumed.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">trigger</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">branches</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">include</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span><span class="w"></span>
+
+<span class="nt">pr</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">branches</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">include</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This means the pipeline will start running every time changes are
+merged  to any branch of the repository, or someone pushes new
+commits to a pull request.</p>
+<p>If you want to run a pipeline only manually set both triggers to
+<em>none</em>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span><span class="w"></span>
+
+<span class="nt">pr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Notice that you can test changes in a pipeline by activating the PR
+trigger on a new pull request, even if that trigger is disabled on
+the YAML file present in the <em>master</em> branch.</p>
+<p>On GitHub Actions these triggers are named <code class="docutils literal notranslate"><span class="pre">push</span></code> and <code class="docutils literal notranslate"><span class="pre">pull_request</span></code>,
+and works mostly in the same way.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Triggers also can be set on the Azure’s web interface
+too, but this action is discouraged, since it overrides
+any trigger specified in the YAML file and could lead to
+confusing sitations.</p>
+</div>
+<p>There are more useful triggers such as the <em>cron</em> trigger, see the
+<a class="reference external" href="https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&amp;tabs=yaml#ci-triggers">Azure documentation section on triggers</a> for more information.</p>
+</section>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<section id="variable-syntax">
+<h3>Variable syntax<a class="headerlink" href="#variable-syntax" title="Permalink to this headline">¶</a></h3>
+<p>Azure Pipelines supports three different ways to reference variables:
+<em>macro</em>, <em>template expression</em>, and <em>runtime expression</em>. Each syntax
+can be used for a different purpose and has some limitations.</p>
+<img alt="../../_images/variables.png" class="align-center" src="../../_images/variables.png" />
+<p><strong>What syntax should I use?</strong> Use <em>macro syntax</em> if you are providing
+input for a task. Choose a <em>runtime expression</em> if you are working with
+conditions and expressions. If you are defining a variable in a template,
+use a <em>template expression</em>.</p>
+</section>
+<section id="define-variables">
+<h3>Define variables<a class="headerlink" href="#define-variables" title="Permalink to this headline">¶</a></h3>
+<p>Usually, we define variables at the top of the YAML file.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">variables</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">my.var</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;foo&#39;</span><span class="w"></span>
+
+<span class="nt">steps</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">bash</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">echo $(my.var)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>When a variable is defined at the top of a YAML, it will be available
+to all jobs and stages in the pipeline as a <em>global variable</em>.
+Variables at the <em>stage</em> level override variables at the <em>root</em> level,
+while variables at the <em>job</em> level override variables at the <em>root</em>
+and <em>stage</em> level.</p>
+<p>Also, variables are available to scripts through environment variables.
+The name is upper-cased and <code class="docutils literal notranslate"><span class="pre">.</span></code>  is replaced with <code class="docutils literal notranslate"><span class="pre">_</span></code>. For example</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">variables</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">my.var</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;foo&#39;</span><span class="w"></span>
+
+<span class="nt">steps</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">bash</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">echo $MY_VAR</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To set a variable from a script task, use the <code class="docutils literal notranslate"><span class="pre">task.setvariable</span></code> logging
+command.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">steps</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">bash</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">echo &quot;##vso[task.setvariable variable=my.var]foo&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">bash</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">echo $(my.var)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>See the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&amp;tabs=yaml%2Cbatch">Azure documentation section on variables</a> for more information.</p>
+</section>
+</section>
+<section id="predefined-variables">
+<h2>Predefined variables<a class="headerlink" href="#predefined-variables" title="Permalink to this headline">¶</a></h2>
+<p>The most important (and confusing) predefined variables are the ones related
+to paths in Azure:</p>
+<ul class="simple">
+<li><p>All folders for a given pipeline are created under <code class="docutils literal notranslate"><span class="pre">Agent.BuildDirectory</span></code>
+variable, alias <code class="docutils literal notranslate"><span class="pre">Pipeline.Workspace</span></code>. This includes subdirectories like
+<code class="docutils literal notranslate"><span class="pre">/s</span></code> for sources or <code class="docutils literal notranslate"><span class="pre">/a</span></code> for artifacts.</p></li>
+<li><p>Path to source code varies depending on how many repositories we fetch.
+For example, source code is located under the <code class="docutils literal notranslate"><span class="pre">Build.Repository.LocalPath</span></code>
+variable (alias <code class="docutils literal notranslate"><span class="pre">Build.SourcesDirectory</span></code>) when fetching a single repository,
+but after fetching a second repository code is moved automatically to
+<code class="docutils literal notranslate"><span class="pre">Build.Repository.LocalPath/repository-name</span></code>.</p></li>
+</ul>
+<p>See the Azure documentation to learn more about <a class="reference external" href="https://github.com/microsoft/azure-pipelines-yaml/blob/master/design/multi-checkout.md#behavior-changes-in-multi-checkout-mode">checking out multiple repositories</a>.</p>
+</section>
+<section id="jobs">
+<h2>Jobs<a class="headerlink" href="#jobs" title="Permalink to this headline">¶</a></h2>
+<p>You can organize your pipeline into jobs. Every pipeline has at least one job.
+A job is a series of steps that run sequentially as a unit. In other words,
+a job is the smallest unit of work that can be scheduled to run.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myJob</span><span class="w"></span>
+
+<span class="w">  </span><span class="nt">pool</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vmImage</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ubuntu-latest&#39;</span><span class="w"></span>
+
+<span class="w">  </span><span class="nt">steps</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">bash</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;Hello world&quot;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Jobs can run in parallel (for example: run the same job on multiple OSes) or
+depend on a previous job.</p>
+<p>See the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&amp;tabs=yaml">Azure documentation section on jobs</a> for more information.</p>
+</section>
+<section id="tardis-pipelines">
+<h2>TARDIS Pipelines<a class="headerlink" href="#tardis-pipelines" title="Permalink to this headline">¶</a></h2>
+<p>Brief description of pipelines already implemented on Azure or GitHub Actions.</p>
+<section id="the-default-template">
+<h3>The default template<a class="headerlink" href="#the-default-template" title="Permalink to this headline">¶</a></h3>
+<p>Templates let you define reusable content, logic, and parameters. It functions
+like an include directive in many programming languages (content from one file
+is inserted into another file).</p>
+<p>The common set of steps used across most TARDIS pipelines resides in the
+“default” template:</p>
+<ul class="simple">
+<li><p>Force <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-e</span></code> on all Bash steps.</p></li>
+<li><p>Set TARDIS custom variables.</p></li>
+<li><p>Fetch TARDIS main repository.</p></li>
+<li><p>Fetch TARDIS reference data repository from mirror (optional).</p></li>
+<li><p>Configure Anaconda for Linux and macOS agents.</p></li>
+<li><p>Install Mamba package manager (optional).</p></li>
+<li><p>Install TARDIS environment (optional).</p></li>
+<li><p>Build and install TARDIS (optional).</p></li>
+</ul>
+<p>It was written to make pipelines easier to create and mantain. For example,
+to start a new pipeline use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>steps:
+  - template: templates/default.yml
+    parameters:
+      useMamba: true
+</pre></div>
+</div>
+<p><strong>List of template parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fetchDepth</span></code> (<em>int</em>): the depth of commits to fetch from <code class="docutils literal notranslate"><span class="pre">tardis</span></code> repository,
+default is <code class="docutils literal notranslate"><span class="pre">0</span></code> (no limit).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetchRefdata</span></code> (<em>bool</em>): fetch the <code class="docutils literal notranslate"><span class="pre">tardis-refdata</span></code> repository from Azure Repos,
+default is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">refdataRepo</span></code> (<em>option</em>): source of the <code class="docutils literal notranslate"><span class="pre">tardis-refdata</span></code> repository,
+options are <code class="docutils literal notranslate"><span class="pre">azure</span></code> (default) or <code class="docutils literal notranslate"><span class="pre">github</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">useMamba</span></code> (<em>bool</em>): use the <code class="docutils literal notranslate"><span class="pre">mamba</span></code> package manager instead of <code class="docutils literal notranslate"><span class="pre">conda</span></code>,
+default is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tardisEnv</span></code> (<em>bool</em>): setup the TARDIS environment, default is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
+</ul>
+<p><strong>List of predefined custom variables:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tardis.dir</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">$(Build.SourcesDirectory)/tardis</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">refdata.dir</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">$(Build.SourcesDirectory)/tardis-refdata</span></code>.</p></li>
+</ul>
+<p>See the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops">Azure documentation section on templates</a> for more information.</p>
+</section>
+<section id="documentation-build-pipeline">
+<h3>Documentation build pipeline<a class="headerlink" href="#documentation-build-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>A GitHub Actions workflow that builds and deploys the TARDIS documentation website.</p>
+</section>
+<section id="documentation-preview-pipeline">
+<h3>Documentation preview pipeline<a class="headerlink" href="#documentation-preview-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>This workflow does not run on the main repository, just on forks.
+See the <a class="reference internal" href="documentation_guidelines.html#doc-preview"><span class="std std-ref">Documentation Preview</span></a> section for more information.</p>
+</section>
+<section id="id2">
+<h3>Testing pipeline<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://github.com/tardis-sn/tardis/blob/master/azure-pipelines/simple_test_framework.yml">testing pipeline</a> (CI) consists basically in the same job running twice
+in parallel (one for each OS) with the steps from the default template, plus
+extra steps to run the tests and upload the coverage results.</p>
+</section>
+<section id="authors-pipeline">
+<h3>Authors pipeline<a class="headerlink" href="#authors-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>This pipeline runs a notebook located in <code class="docutils literal notranslate"><span class="pre">tardis-zenodo</span></code> repository and
+pushes a new version of <code class="docutils literal notranslate"><span class="pre">.zenodo.json</span></code> to the root of <code class="docutils literal notranslate"><span class="pre">tardis</span></code>
+repository if new commiters are found (or author order changes). The
+rendered notebook is uploaded to the pipeline results as an artifact.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Fails if some author name is incomplete (due to an incomplete
+GitHub profile) or duplicated (commited with more than one
+email adress). In both cases update <code class="docutils literal notranslate"><span class="pre">.mailmap</span></code> to fix it.</p>
+</div>
+<p>In the near future we want to auto-update the citation guidelines in the
+<code class="docutils literal notranslate"><span class="pre">README.rst</span></code> and the documentation.</p>
+</section>
+<section id="release-pipeline">
+<h3>Release pipeline<a class="headerlink" href="#release-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>Publishes a new release of TARDIS every sunday at 00:00 UTC.</p>
+</section>
+<section id="compare-reference-data-pipeline">
+<h3>Compare reference data pipeline<a class="headerlink" href="#compare-reference-data-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>This pipeline compares two versions of the reference data. It’s triggered manually via
+the Azure Pipelines web UI, or when a TARDIS contributor leaves the following comment
+on a pull request:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/AzurePipelines run compare-refdata
+</pre></div>
+</div>
+<p>For brevity, you can comment using <code class="docutils literal notranslate"><span class="pre">/azp</span></code> instead of <code class="docutils literal notranslate"><span class="pre">/AzurePipelines</span></code>.</p>
+<p>By default, generates new reference data for the <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> of the pull request. Then,
+compares against latest reference data stored in <code class="docutils literal notranslate"><span class="pre">tardis-refdata</span></code> repository. If
+you want to compare two different labels (SHAs, branches, tags, etc.) uncomment and
+set the <code class="docutils literal notranslate"><span class="pre">ref1.hash</span></code> and <code class="docutils literal notranslate"><span class="pre">ref2.hash</span></code> variables in
+<code class="docutils literal notranslate"><span class="pre">.github/workflows/compare-refdata.yml</span></code> on your pull request. For example:
+.. code-block:: yaml</p>
+<blockquote>
+<div><p>ref1.hash: ‘upstream/pr/11’
+ref2.hash: ‘upstream/master’</p>
+</div></blockquote>
+<p>The web UI also allows to compare any version of the reference data by providing those
+variables at runtime, but the access to the dashboard is restricted to a small group
+of developers.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If using the Azure dashboard, do not define <code class="docutils literal notranslate"><span class="pre">ref1.hash</span></code> and <code class="docutils literal notranslate"><span class="pre">ref2.hash</span></code>
+between quotation marks or <strong>the pipeline will fail</strong>. This does not apply for
+the YAML file.</p>
+</div>
+<p>Finally, the report is uploaded to the
+<a class="reference external" href="http://opensupernova.org/~azuredevops/files/refdata-results/">OpenSupernova.org server</a>
+following the <code class="docutils literal notranslate"><span class="pre">&lt;pr&gt;/&lt;commit&gt;</span></code> folder structure. If the pipeline fails, also a report is
+generated, but not necessarily gives useful debug information (depends on which step the
+pipeline has failed).</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="developer_faq.html" class="btn btn-neutral float-left" title="Developer FAQ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="update_refdata.html" class="btn btn-neutral float-right" title="Update the Reference Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

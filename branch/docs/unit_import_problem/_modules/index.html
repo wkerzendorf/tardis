@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview: module code &mdash; tardis</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link href="../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Overview: module code</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>All modules for which code is available</h1>
+<ul><li><a href="abc.html">abc</a></li>
+<li><a href="ipywidgets/widgets/widget_output.html">ipywidgets.widgets.widget_output</a></li>
+<li><a href="tardis/analysis.html">tardis.analysis</a></li>
+<li><a href="tardis/base.html">tardis.base</a></li>
+<li><a href="tardis/grid/base.html">tardis.grid.base</a></li>
+<li><a href="tardis/io/atom_data/atom_web_download.html">tardis.io.atom_data.atom_web_download</a></li>
+<li><a href="tardis/io/atom_data/base.html">tardis.io.atom_data.base</a></li>
+<li><a href="tardis/io/atom_data/util.html">tardis.io.atom_data.util</a></li>
+<li><a href="tardis/io/config_internal.html">tardis.io.config_internal</a></li>
+<li><a href="tardis/io/config_reader.html">tardis.io.config_reader</a></li>
+<li><a href="tardis/io/config_validator.html">tardis.io.config_validator</a></li>
+<li><a href="tardis/io/decay.html">tardis.io.decay</a></li>
+<li><a href="tardis/io/logger/colored_logger.html">tardis.io.logger.colored_logger</a></li>
+<li><a href="tardis/io/logger/logger.html">tardis.io.logger.logger</a></li>
+<li><a href="tardis/io/logger/montecarlo_tracking.html">tardis.io.logger.montecarlo_tracking</a></li>
+<li><a href="tardis/io/model_reader.html">tardis.io.model_reader</a></li>
+<li><a href="tardis/io/parsers/arepo.html">tardis.io.parsers.arepo</a></li>
+<li><a href="tardis/io/parsers/blondin_toymodel.html">tardis.io.parsers.blondin_toymodel</a></li>
+<li><a href="tardis/io/parsers/csvy.html">tardis.io.parsers.csvy</a></li>
+<li><a href="tardis/io/parsers/stella.html">tardis.io.parsers.stella</a></li>
+<li><a href="tardis/io/util.html">tardis.io.util</a></li>
+<li><a href="tardis/model/base.html">tardis.model.base</a></li>
+<li><a href="tardis/model/density.html">tardis.model.density</a></li>
+<li><a href="tardis/montecarlo/base.html">tardis.montecarlo.base</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/base.html">tardis.montecarlo.montecarlo_numba.base</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/calculate_distances.html">tardis.montecarlo.montecarlo_numba.calculate_distances</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/continuum/r_packet_transport_continuum.html">tardis.montecarlo.montecarlo_numba.continuum.r_packet_transport_continuum</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/estimators.html">tardis.montecarlo.montecarlo_numba.estimators</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/formal_integral.html">tardis.montecarlo.montecarlo_numba.formal_integral</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/formal_integral_cuda.html">tardis.montecarlo.montecarlo_numba.formal_integral_cuda</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/frame_transformations.html">tardis.montecarlo.montecarlo_numba.frame_transformations</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/interaction.html">tardis.montecarlo.montecarlo_numba.interaction</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/macro_atom.html">tardis.montecarlo.montecarlo_numba.macro_atom</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/numba_interface.html">tardis.montecarlo.montecarlo_numba.numba_interface</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/opacities.html">tardis.montecarlo.montecarlo_numba.opacities</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/r_packet.html">tardis.montecarlo.montecarlo_numba.r_packet</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/r_packet_transport.html">tardis.montecarlo.montecarlo_numba.r_packet_transport</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/single_packet_loop.html">tardis.montecarlo.montecarlo_numba.single_packet_loop</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/utils.html">tardis.montecarlo.montecarlo_numba.utils</a></li>
+<li><a href="tardis/montecarlo/montecarlo_numba/vpacket.html">tardis.montecarlo.montecarlo_numba.vpacket</a></li>
+<li><a href="tardis/montecarlo/packet_source.html">tardis.montecarlo.packet_source</a></li>
+<li><a href="tardis/montecarlo/spectrum.html">tardis.montecarlo.spectrum</a></li>
+<li><a href="tardis/plasma/base.html">tardis.plasma.base</a></li>
+<li><a href="tardis/plasma/exceptions.html">tardis.plasma.exceptions</a></li>
+<li><a href="tardis/plasma/properties/atomic.html">tardis.plasma.properties.atomic</a></li>
+<li><a href="tardis/plasma/properties/base.html">tardis.plasma.properties.base</a></li>
+<li><a href="tardis/plasma/properties/continuum_processes.html">tardis.plasma.properties.continuum_processes</a></li>
+<li><a href="tardis/plasma/properties/general.html">tardis.plasma.properties.general</a></li>
+<li><a href="tardis/plasma/properties/ion_population.html">tardis.plasma.properties.ion_population</a></li>
+<li><a href="tardis/plasma/properties/j_blues.html">tardis.plasma.properties.j_blues</a></li>
+<li><a href="tardis/plasma/properties/level_population.html">tardis.plasma.properties.level_population</a></li>
+<li><a href="tardis/plasma/properties/nlte.html">tardis.plasma.properties.nlte</a></li>
+<li><a href="tardis/plasma/properties/partition_function.html">tardis.plasma.properties.partition_function</a></li>
+<li><a href="tardis/plasma/properties/plasma_input.html">tardis.plasma.properties.plasma_input</a></li>
+<li><a href="tardis/plasma/properties/property_collections.html">tardis.plasma.properties.property_collections</a></li>
+<li><a href="tardis/plasma/properties/radiative_properties.html">tardis.plasma.properties.radiative_properties</a></li>
+<li><a href="tardis/plasma/properties/transition_probabilities.html">tardis.plasma.properties.transition_probabilities</a></li>
+<li><a href="tardis/plasma/properties/util/macro_atom.html">tardis.plasma.properties.util.macro_atom</a></li>
+<li><a href="tardis/plasma/standard_plasmas.html">tardis.plasma.standard_plasmas</a></li>
+<li><a href="tardis/scripts/cmfgen2tardis.html">tardis.scripts.cmfgen2tardis</a></li>
+<li><a href="tardis/simulation/base.html">tardis.simulation.base</a></li>
+<li><a href="tardis/stats/base.html">tardis.stats.base</a></li>
+<li><a href="tardis/util/base.html">tardis.util.base</a></li>
+<li><a href="tardis/visualization/plot_util.html">tardis.visualization.plot_util</a></li>
+<li><a href="tardis/visualization/tools/convergence_plot.html">tardis.visualization.tools.convergence_plot</a></li>
+<li><a href="tardis/visualization/tools/sdec_plot.html">tardis.visualization.tools.sdec_plot</a></li>
+<li><a href="tardis/visualization/widgets/custom_abundance.html">tardis.visualization.widgets.custom_abundance</a></li>
+<li><a href="tardis/visualization/widgets/line_info.html">tardis.visualization.widgets.line_info</a></li>
+<li><a href="tardis/visualization/widgets/shell_info.html">tardis.visualization.widgets.shell_info</a></li>
+<li><a href="tardis/visualization/widgets/util.html">tardis.visualization.widgets.util</a></li>
+</ul>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

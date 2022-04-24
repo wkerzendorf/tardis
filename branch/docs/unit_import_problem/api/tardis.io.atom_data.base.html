@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.io.atom_data.base module &mdash; tardis</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="tardis.io.atom_data.util module" href="tardis.io.atom_data.util.html" />
+    <link rel="prev" title="tardis.io.atom_data.atom_web_download module" href="tardis.io.atom_data.atom_web_download.html" />
+    <link href="../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="tardis.html">tardis package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="tardis.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="tardis.grid.html">tardis.grid package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="tardis.io.html">tardis.io package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.model.html">tardis.model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.montecarlo.html">tardis.montecarlo package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.plasma.html">tardis.plasma package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.scripts.html">tardis.scripts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.simulation.html">tardis.simulation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.stats.html">tardis.stats package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.util.html">tardis.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tardis.visualization.html">tardis.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tardis.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tardis.html#module-tardis">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">tardis</a> &raquo;</li>
+          <li><a href="tardis.html">tardis package</a> &raquo;</li>
+          <li><a href="tardis.io.html">tardis.io package</a> &raquo;</li>
+          <li><a href="tardis.io.atom_data.html">tardis.io.atom_data package</a> &raquo;</li>
+      <li>tardis.io.atom_data.base module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/tardis.io.atom_data.base.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="module-tardis.io.atom_data.base">
+<span id="tardis-io-atom-data-base-module"></span><h1>tardis.io.atom_data.base module<a class="headerlink" href="#module-tardis.io.atom_data.base" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="tardis.io.atom_data.base.AtomData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tardis.io.atom_data.base.</span></span><span class="sig-name descname"><span class="pre">AtomData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ionization_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">macro_atom_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">macro_atom_references</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collision_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collision_data_temperatures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synpp_refs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photoionization_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yg_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two_photon_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/atom_data/base.html#AtomData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.atom_data.base.AtomData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class for storing atomic data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>atom_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>A DataFrame containing the *basic atomic data* with:</strong></dt><dd><p>index : atomic_number
+columns : symbol, name, mass[u].</p>
+</dd>
+<dt><strong>ionization_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>A DataFrame containing the *ionization data* with:</strong></dt><dd><p>index : atomic_number, ion_number
+columns : ionization_energy[eV].</p>
+</dd>
+<dt><strong>It is important to note here is that `ion_number` describes the *final ion state*</strong></dt><dd></dd>
+<dt><strong>e.g. H I - H II is described with ion=1</strong></dt><dd></dd>
+<dt><strong>levels</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>A DataFrame containing the *levels data* with:</strong></dt><dd><p>index : numerical index
+columns : atomic_number, ion_number, level_number, energy[eV], g[1], metastable.</p>
+</dd>
+<dt><strong>lines</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>A DataFrame containing the *lines data* with:</strong></dt><dd><p>index : numerical index
+columns : line_id, atomic_number, ion_number, level_number_lower, level_number_upper,
+wavelength[angstrom], nu[Hz], f_lu[1], f_ul[1], B_ul[?], B_ul[?], A_ul[1/s].</p>
+</dd>
+<dt><strong>macro_atom_data</strong></dt><dd></dd>
+<dt><strong>A DataFrame containing the *macro atom data* with:</strong></dt><dd><p>index : numerical index
+columns : atomic_number, ion_number, source_level_number, destination_level_number,
+transition_line_id, transition_type, transition_probability;</p>
+</dd>
+<dt><strong>macro_atom_references</strong></dt><dd></dd>
+<dt><strong>A DataFrame containing  the *macro atom references* with:</strong></dt><dd><p>index : numerical index
+columns : atomic_number, ion_number, source_level_number, count_down, count_up, count_total.</p>
+</dd>
+<dt><strong>Refer to the docs: http://tardis.readthedocs.io/en/latest/physics/plasma/macroatom.html</strong></dt><dd></dd>
+<dt><strong>collision_data</strong><span class="classifier">(pandas.DataFrame, np.array)</span></dt><dd></dd>
+<dt><strong>A DataFrame containing the *electron collisions data* with:</strong></dt><dd><p>index : atomic_number, ion_number, level_number_lower, level_number_upper
+columns : e_col_id, delta_e, g_ratio, c_ul;</p>
+</dd>
+<dt><strong>collision_data_temperatures</strong><span class="classifier">np.array</span></dt><dd><p>An array with the collision temperatures.</p>
+</dd>
+<dt><strong>zeta_data</strong></dt><dd></dd>
+<dt><strong>A DataFrame containing the *zeta data* for the</strong></dt><dd></dd>
+<dt><strong>nebular ionization calculation</strong></dt><dd></dd>
+<dt><strong>(i.e., the fraction of recombinations that go directly to the</strong></dt><dd></dd>
+<dt><strong>ground state) with:</strong></dt><dd><p>index : atomic_number, ion_charge
+columns : temperatures[K]</p>
+</dd>
+<dt><strong>synpp_refs</strong><span class="classifier">?</span></dt><dd></dd>
+<dt><strong>photoionization_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>A DataFrame containing the *photoionization data* with:</strong></dt><dd><p>index : numerical index
+columns : atomic_number, ion_number, level_number, nu[Hz], x_sect[cm^2]</p>
+</dd>
+<dt><strong>two_photon_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>A DataFrame containing the *two photon decay data* with:</strong></dt><dd><p>index: atomic_number, ion_number, level_number_lower, level_number_upper
+columns: A_ul[1/s], nu0[Hz], alpha, beta, gamma</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ol class="arabic simple">
+<li><p>The units of some columns are given in the square brackets. They are <strong>NOT</strong> the parts of columns’ names!</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>prepared</strong><span class="classifier">bool</span></dt><dd></dd>
+<dt><strong>atom_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>ionization_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>macro_atom_data_all</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>macro_atom_references_all</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>collision_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>collision_data_temperatures</strong><span class="classifier">numpy.array</span></dt><dd></dd>
+<dt><strong>zeta_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>synpp_refs</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>symbol2atomic_number</strong><span class="classifier">OrderedDict</span></dt><dd></dd>
+<dt><strong>atomic_number2symbol</strong><span class="classifier">OrderedDict</span></dt><dd></dd>
+<dt><strong>photoionization_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+<dt><strong>two_photon_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 91%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>from_hdf:</strong></p></td>
+<td><p>Function to read the atom data from a TARDIS atom HDF Store</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>prepare_atom_data:</strong></p></td>
+<td><p>Prepares the atom data to set the lines, levels and if requested macro atom data.  This function mainly cuts the <code class="xref py py-obj docutils literal notranslate"><span class="pre">levels</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">lines</span></code> by discarding any data that is not needed (any data for atoms that are not needed</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="tardis.io.atom_data.base.AtomData.from_hdf">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_hdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/atom_data/base.html#AtomData.from_hdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.atom_data.base.AtomData.from_hdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to read the atom data from a TARDIS atom HDF Store</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fname</strong><span class="classifier">str, optional</span></dt><dd><p>Path to the HDFStore file or name of known atom data file
+(default: None)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tardis.io.atom_data.base.AtomData.hdf_names">
+<span class="sig-name descname"><span class="pre">hdf_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['atom_data',</span> <span class="pre">'ionization_data',</span> <span class="pre">'levels',</span> <span class="pre">'lines',</span> <span class="pre">'macro_atom_data',</span> <span class="pre">'macro_atom_references',</span> <span class="pre">'zeta_data',</span> <span class="pre">'collision_data',</span> <span class="pre">'collision_data_temperatures',</span> <span class="pre">'synpp_refs',</span> <span class="pre">'photoionization_data',</span> <span class="pre">'yg_data',</span> <span class="pre">'two_photon_data']</span></em><a class="headerlink" href="#tardis.io.atom_data.base.AtomData.hdf_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tardis.io.atom_data.base.AtomData.prepare_atom_data">
+<span class="sig-name descname"><span class="pre">prepare_atom_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_atomic_numbers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_interaction_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scatter'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlte_species</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/atom_data/base.html#AtomData.prepare_atom_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.atom_data.base.AtomData.prepare_atom_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares the atom data to set the lines, levels and if requested macro
+atom data.  This function mainly cuts the <code class="xref py py-obj docutils literal notranslate"><span class="pre">levels</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">lines</span></code> by
+discarding any data that is not needed (any data for atoms that are not
+needed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>selected_atoms</strong><span class="classifier">set</span></dt><dd><p>set of selected atom numbers, e.g. set([14, 26])</p>
+</dd>
+<dt><strong>line_interaction_type</strong><span class="classifier">str</span></dt><dd><p>can be ‘scatter’, ‘downbranch’ or ‘macroatom’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tardis.io.atom_data.base.AtomData.related_groups">
+<span class="sig-name descname"><span class="pre">related_groups</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('macro_atom_data_all',</span> <span class="pre">'macro_atom_references_all'),</span> <span class="pre">('collision_data',</span> <span class="pre">'collision_data_temperatures')]</span></em><a class="headerlink" href="#tardis.io.atom_data.base.AtomData.related_groups" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="tardis.io.atom_data.base.AtomDataMissingError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tardis.io.atom_data.base.</span></span><span class="sig-name descname"><span class="pre">AtomDataMissingError</span></span><a class="reference internal" href="../_modules/tardis/io/atom_data/base.html#AtomDataMissingError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.atom_data.base.AtomDataMissingError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="tardis.io.atom_data.base.AtomDataNotPreparedError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tardis.io.atom_data.base.</span></span><span class="sig-name descname"><span class="pre">AtomDataNotPreparedError</span></span><a class="reference internal" href="../_modules/tardis/io/atom_data/base.html#AtomDataNotPreparedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.atom_data.base.AtomDataNotPreparedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tardis.io.atom_data.base.NLTEData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tardis.io.atom_data.base.</span></span><span class="sig-name descname"><span class="pre">NLTEData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlte_species</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/atom_data/base.html#NLTEData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.atom_data.base.NLTEData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tardis.io.atom_data.base.NLTEData.get_collision_matrix">
+<span class="sig-name descname"><span class="pre">get_collision_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_electrons</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/atom_data/base.html#NLTEData.get_collision_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.atom_data.base.NLTEData.get_collision_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creat collision matrix by interpolating the C_ul values for
+the desired temperatures.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tardis.io.atom_data.atom_web_download.html" class="btn btn-neutral float-left" title="tardis.io.atom_data.atom_web_download module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tardis.io.atom_data.util.html" class="btn btn-neutral float-right" title="tardis.io.atom_data.util module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

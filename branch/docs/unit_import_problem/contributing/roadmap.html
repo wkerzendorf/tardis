@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Development Roadmap &mdash; tardis</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Credits &amp; Publication Policies" href="../resources/credits.html" />
+    <link rel="prev" title="Change Log" href="CHANGELOG.html" />
+    <link href="../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Development Roadmap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#physics">Physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#website-and-documentation">Website and Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#maintenance">Maintenance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#performance">Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interoperability">Interoperability</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Development Roadmap</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contributing/roadmap.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="development-roadmap">
+<span id="roadmap"></span><h1>Development Roadmap<a class="headerlink" href="#development-roadmap" title="Permalink to this headline">¶</a></h1>
+<p>This is a current status summary of ongoing development projects
+in the TARDIS collaboration. Brief summaries of the projects as
+well as timelines are listed below. More detailed descriptions
+of the projects can be found in the Github Projects or the TARDIS
+Enhancement Proposals (TEPS) repository under the TARDIS-SN
+collaboration github page.</p>
+<section id="physics">
+<h2>Physics<a class="headerlink" href="#physics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Simulate Type IIP Supernovae  (Fall 2020)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>TARDIS is currently capable of simulating type Ia and stripped
+envelope supernovae, but Type IIP require new physics.</p></li>
+<li><p>NLTE ionization and excitation treatment of Hydrogen, relativistic
+effects, free-free and bound-free processes have all been implemented
+and are being integrated into the main TARDIS branch.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Simulate Supernovae in the Nebular Phase (Summer 2021)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Currently TARDIS assumes an inner boundary approximation to the
+photosphere.  New physics is required to handle the breakdown of the
+photosphere at late times. This involves a detailed treatment of the
+decay products of the radioactive isotopes in SN ejecta, as well as
+their deposition in various processes such as Compton scattering,
+photoabsorption and pair production.</p></li>
+<li><p>Deposited energy needs to be thermalized by solving the Spencer-Fano
+equations, resulting in fractions of the energy going into heating,
+non-thermal excitation and non-thermal ionization.</p></li>
+<li><p>At late times when the densities are low collisions become too
+infrequent to quickly de-excite metastable energy levels. Forbidden
+lines arising from these levels need to be included. Transitions between
+levels have to include ion-electron collisions.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="website-and-documentation">
+<h2>Website and Documentation<a class="headerlink" href="#website-and-documentation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Notebookify (Fall 2021)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>TARDIS currently has detailed code and physics documentation
+(<a class="reference external" href="https://tardis-sn.github.io/tardis/">https://tardis-sn.github.io/tardis/</a>)</p></li>
+<li><p>In order to help new members join the TARDIS development team, we want
+to create interactive jupyter notebooks that are incorporated into the
+documentation to better illustrate how the code is used and show how
+the physics of TARDIS works.</p></li>
+<li><p>Apply to Google Summer of Docs to get a dedicated, professional
+documentation writer.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Visualization (Fall 2020)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>TARDIS is used to explore potential models for observed supernovae,
+and it is often difficult to find optimal parameter values.</p></li>
+<li><p>We are working on an interactive Graphical User Interface for
+TARDIS that will allow users to visually inspect their models and
+obtain physical information from the TARDIS simulation easily.</p></li>
+<li><p>Most of the analysis will be used via Jupyter Notebooks.</p></li>
+<li><p>This is a Google Summer of Code project
+(see <a class="reference external" href="https://github.com/tardis-sn/tardis/projects/5">https://github.com/tardis-sn/tardis/projects/5</a> ) with time to
+completion aimed Fall 2020.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="maintenance">
+<h2>Maintenance<a class="headerlink" href="#maintenance" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>TARDIS Code Restructure (Fall 2020)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>TARDIS needs to be more modularized to facilitate the addition of
+new physics modules (see <a class="reference external" href="https://github.com/tardis-sn/tardis/projects/11">https://github.com/tardis-sn/tardis/projects/11</a> )
+and improve maintainability.</p></li>
+<li><p>Google Summer of Code project is currently underway to restructure the
+model classes that TARDIS uses.</p></li>
+<li><p>Cython and C code for monte carlo simulation is currently being replaced
+with Numba to facilitate modularity and debugging.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="performance">
+<h2>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Numba (Spring 2021)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>In the past, TARDIS has used Cython and C for performance-critical parts
+of the code. However, this requires significant code overhead and is difficult
+to maintain given that many of our developers are junior researchers who may
+be less familiar with C code.</p></li>
+<li><p>As one of TARDIS’ key focuses is its use as an educational tool, we would like
+to minimize the complexity of the code so that it can be understood by a wider
+audience.</p></li>
+<li><p>We are currently in the process of converting this Cython and C code to Numba,
+which we hope will allow us to maintain the performance of Cython but with code
+that is now exclusively written in (numba-fied) Python.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>GPU (Spring 20201)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>As part of our work to optimize TARDIS’ performance, we would like to explore
+GPUs and see if there are parts of the code which would benefit from GPU
+acceleration.</p></li>
+<li><p>We are looking into using CUDA-accelerated Numba for this (does TARDIS use
+matrices a lot? CuPy might also be useful here).</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="interoperability">
+<h2>Interoperability<a class="headerlink" href="#interoperability" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Carsus (Fall 2020)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>There is evidence that the choice of atomic data has a significant impact on
+model results. As part of Google Summer of Code a version control system for
+atomic data is being implemented, so that previously published results become
+reproducible.</p></li>
+<li><p>Carsus will include readers for the biggest atomic data compilations such as
+CMFGEN, Chianti and Kurucz, and output the data in the Tardis format.</p></li>
+<li><p>Updated properties of the atomic data will be automatically collected and
+ingested by Carsus. In addition, a comparison spectrum will be computed,
+highlighting the effects of the new atomic data.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Read different model data (Fall 2020)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Add readers for more types of initial model data.</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CHANGELOG.html" class="btn btn-neutral float-left" title="Change Log" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../resources/credits.html" class="btn btn-neutral float-right" title="Credits &amp; Publication Policies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.montecarlo.montecarlo_numba.estimators &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link href="../../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.montecarlo.montecarlo_numba.estimators</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.montecarlo.montecarlo_numba.estimators</h1><div class="highlight"><pre>
+<span></span>from math import exp
+from numba import njit
+
+from tardis.montecarlo.montecarlo_numba import numba_config as nc
+from tardis.montecarlo.montecarlo_numba.numba_config import H, KB
+
+from tardis.montecarlo.montecarlo_numba import (
+    njit_dict_no_parallel,
+)
+
+from tardis.montecarlo.montecarlo_numba.frame_transformations import (
+    calc_packet_energy,
+    calc_packet_energy_full_relativity,
+)
+
+<div class="viewcode-block" id="set_estimators"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.estimators.html#tardis.montecarlo.montecarlo_numba.estimators.set_estimators">[docs]</a>@njit(**njit_dict_no_parallel)
+def set_estimators(r_packet, distance, numba_estimator, comov_nu, comov_energy):
+    &quot;&quot;&quot;
+    Updating the estimators
+    &quot;&quot;&quot;
+    numba_estimator.j_estimator[r_packet.current_shell_id] += (
+        comov_energy * distance
+    )
+    numba_estimator.nu_bar_estimator[r_packet.current_shell_id] += (
+        comov_energy * distance * comov_nu
+    )</div>
+
+
+<div class="viewcode-block" id="update_bound_free_estimators"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.estimators.html#tardis.montecarlo.montecarlo_numba.estimators.update_bound_free_estimators">[docs]</a>@njit(**njit_dict_no_parallel)
+def update_bound_free_estimators(
+    comov_nu,
+    comov_energy,
+    shell_id,
+    distance,
+    numba_estimator,
+    t_electron,
+    x_sect_bfs,
+    current_continua,
+    bf_threshold_list_nu,
+):
+    &quot;&quot;&quot;
+    Update the estimators for bound-free processes.
+
+    Parameters
+    ----------
+    comov_nu : float
+    comov_energy : float
+    shell_id : int
+    distance : float
+    numba_estimator : tardis.montecarlo.montecarlo_numba.numba_interface.Estimators
+    t_electron : float
+        Electron temperature in the current cell.
+    x_sect_bfs : numpy.ndarray, dtype float
+        Photoionization cross-sections of all bound-free continua for
+        which absorption is possible for frequency `comov_nu`.
+    current_continua : numpy.ndarray, dtype int
+        Continuum ids for which absorption is possible for frequency `comov_nu`.
+    bf_threshold_list_nu : numpy.ndarray, dtype float
+        Threshold frequencies for photoionization sorted by decreasing frequency.
+    &quot;&quot;&quot;
+    # TODO: Add full relativity mode
+    boltzmann_factor = exp(-(H * comov_nu) / (KB * t_electron))
+    for i, current_continuum in enumerate(current_continua):
+        photo_ion_rate_estimator_increment = (
+            comov_energy * distance * x_sect_bfs[i] / comov_nu
+        )
+        numba_estimator.photo_ion_estimator[
+            current_continuum, shell_id
+        ] += photo_ion_rate_estimator_increment
+        numba_estimator.stim_recomb_estimator[current_continuum, shell_id] += (
+            photo_ion_rate_estimator_increment * boltzmann_factor
+        )
+        numba_estimator.photo_ion_estimator_statistics[
+            current_continuum, shell_id
+        ] += 1
+
+        nu_th = bf_threshold_list_nu[current_continuum]
+        bf_heating_estimator_increment = (
+            comov_energy * distance * x_sect_bfs[i] * (1 - nu_th / comov_nu)
+        )
+        numba_estimator.bf_heating_estimator[
+            current_continuum, shell_id
+        ] += bf_heating_estimator_increment
+        numba_estimator.stim_recomb_cooling_estimator[
+            current_continuum, shell_id
+        ] += (bf_heating_estimator_increment * boltzmann_factor)</div>
+
+
+<div class="viewcode-block" id="update_line_estimators"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.estimators.html#tardis.montecarlo.montecarlo_numba.estimators.update_line_estimators">[docs]</a>@njit(**njit_dict_no_parallel)
+def update_line_estimators(
+    estimators, r_packet, cur_line_id, distance_trace, time_explosion
+):
+    &quot;&quot;&quot;
+    Function to update the line estimators
+
+    Parameters
+    ----------
+    estimators : tardis.montecarlo.montecarlo_numba.numba_interface.Estimators
+    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket
+    cur_line_id : int
+    distance_trace : float
+    time_explosion : float
+    &quot;&quot;&quot;
+
+    &quot;&quot;&quot; Actual calculation - simplified below
+    r_interaction = math.sqrt(r_packet.r**2 + distance_trace**2 +
+                            2 * r_packet.r * distance_trace * r_packet.mu)
+    mu_interaction = (r_packet.mu * r_packet.r + distance_trace) / r_interaction
+    doppler_factor = 1.0 - mu_interaction * r_interaction /
+    ( time_explosion * C)
+    &quot;&quot;&quot;
+
+    if not nc.ENABLE_FULL_RELATIVITY:
+        energy = calc_packet_energy(r_packet, distance_trace, time_explosion)
+    else:
+        energy = calc_packet_energy_full_relativity(r_packet)
+
+    estimators.j_blue_estimator[cur_line_id, r_packet.current_shell_id] += (
+        energy / r_packet.nu
+    )
+    estimators.Edotlu_estimator[
+        cur_line_id, r_packet.current_shell_id
+    ] += energy</div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

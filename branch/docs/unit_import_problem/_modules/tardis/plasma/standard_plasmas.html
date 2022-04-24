@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tardis.plasma.standard_plasmas &mdash; tardis</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/tardis_logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link href="../../../_static/tardis.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> tardis
+          </a>
+              <div class="version">
+                latest
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart for TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Input/Output</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/output/index.html">Additional Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/grid/TardisGridTutorial.html">Running TARDIS Model Grids</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Walkthrough</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/spectrum/index.html">Spectrum Generation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing to TARDIS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/CONTRIBUTING.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/development/index.html">Developer Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/CHANGELOG.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/roadmap.html">Development Roadmap</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/credits.html">Credits &amp; Publication Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/research_done_using_TARDIS/research_papers.html">Papers Using TARDIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/code_comparison/index.html">Code Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/zreferences.html">References and Glossary</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../outdated/index.html">Outdated Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tardis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>tardis.plasma.standard_plasmas</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tardis.plasma.standard_plasmas</h1><div class="highlight"><pre>
+<span></span>import os
+import logging
+
+import numpy as np
+import pandas as pd
+
+from tardis.io.atom_data import AtomData
+from tardis.util.base import species_string_to_tuple
+from tardis.plasma import BasePlasma
+from tardis.plasma.properties.base import TransitionProbabilitiesProperty
+from tardis.plasma.properties.property_collections import (
+    basic_inputs,
+    basic_properties,
+    lte_excitation_properties,
+    lte_ionization_properties,
+    macro_atom_properties,
+    dilute_lte_excitation_properties,
+    nebular_ionization_properties,
+    non_nlte_properties,
+    nlte_properties,
+    helium_nlte_properties,
+    helium_numerical_nlte_properties,
+    helium_lte_properties,
+    detailed_j_blues_properties,
+    detailed_j_blues_inputs,
+    continuum_interaction_properties,
+    continuum_interaction_inputs,
+    adiabatic_cooling_properties,
+    two_photon_properties,
+)
+from tardis.plasma.exceptions import PlasmaConfigError
+
+from tardis.plasma.properties import (
+    LevelBoltzmannFactorNLTE,
+    JBluesBlackBody,
+    JBluesDiluteBlackBody,
+    JBluesDetailed,
+    RadiationFieldCorrection,
+    StimulatedEmissionFactor,
+    HeliumNumericalNLTE,
+    IonNumberDensity,
+    IonNumberDensityHeNLTE,
+    MarkovChainTransProbsCollector,
+)
+
+logger = logging.getLogger(__name__)
+
+
+<div class="viewcode-block" id="assemble_plasma"><a class="viewcode-back" href="../../../api/tardis.plasma.standard_plasmas.html#tardis.plasma.standard_plasmas.assemble_plasma">[docs]</a>def assemble_plasma(config, model, atom_data=None):
+    &quot;&quot;&quot;
+    Create a BasePlasma instance from a Configuration object
+    and a Radial1DModel.
+
+    Parameters
+    ----------
+    config : io.config_reader.Configuration
+    model : model.Radial1DModel
+    atom_data : atomic.AtomData
+        If None, an attempt will be made to read the atomic data
+        from config.
+
+    Returns
+    -------
+    : plasma.BasePlasma
+
+    &quot;&quot;&quot;
+    # Convert the nlte species list to a proper format.
+    nlte_species = [
+        species_string_to_tuple(s) for s in config.plasma.nlte.species
+    ]
+
+    # Convert the continuum interaction species list to a proper format.
+    continuum_interaction_species = [
+        species_string_to_tuple(s)
+        for s in config.plasma.continuum_interaction.species
+    ]
+    continuum_interaction_species = pd.MultiIndex.from_tuples(
+        continuum_interaction_species, names=[&quot;atomic_number&quot;, &quot;ion_number&quot;]
+    )
+
+    if atom_data is None:
+        if &quot;atom_data&quot; in config:
+            if os.path.isabs(config.atom_data):
+                atom_data_fname = config.atom_data
+            else:
+                atom_data_fname = os.path.join(
+                    config.config_dirname, config.atom_data
+                )
+        else:
+            raise ValueError(&quot;No atom_data option found in the configuration.&quot;)
+
+        logger.info(f&quot;\n\tReading Atomic Data from {atom_data_fname}&quot;)
+
+        try:
+            atom_data = AtomData.from_hdf(atom_data_fname)
+        except TypeError as e:
+            print(
+                e,
+                &quot;Error might be from the use of an old-format of the atomic database, \n&quot;
+                &quot;please see https://github.com/tardis-sn/tardis-refdata/tree/master/atom_data&quot;
+                &quot; for the most recent version.&quot;,
+            )
+            raise
+
+    atom_data.prepare_atom_data(
+        model.abundance.index,
+        line_interaction_type=config.plasma.line_interaction_type,
+        nlte_species=nlte_species,
+    )
+
+    # Check if continuum interaction species are in selected_atoms
+    continuum_atoms = continuum_interaction_species.get_level_values(
+        &quot;atomic_number&quot;
+    )
+    continuum_atoms_in_selected_atoms = np.all(
+        continuum_atoms.isin(atom_data.selected_atomic_numbers)
+    )
+    if not continuum_atoms_in_selected_atoms:
+        raise PlasmaConfigError(
+            &quot;Not all continuum interaction species &quot;
+            &quot;belong to atoms that have been specified &quot;
+            &quot;in the configuration.&quot;
+        )
+
+    kwargs = dict(
+        t_rad=model.t_radiative,
+        abundance=model.abundance,
+        density=model.density,
+        atomic_data=atom_data,
+        time_explosion=model.time_explosion,
+        w=model.dilution_factor,
+        link_t_rad_t_electron=0.9,
+        continuum_interaction_species=continuum_interaction_species,
+    )
+
+    plasma_modules = basic_inputs + basic_properties
+    property_kwargs = {}
+    if config.plasma.continuum_interaction.species:
+        line_interaction_type = config.plasma.line_interaction_type
+        if line_interaction_type != &quot;macroatom&quot;:
+            raise PlasmaConfigError(
+                &quot;Continuum interactions require line_interaction_type &quot;
+                &quot;macroatom (instead of {}).&quot;.format(line_interaction_type)
+            )
+
+        plasma_modules += continuum_interaction_properties
+        plasma_modules += continuum_interaction_inputs
+
+        if config.plasma.continuum_interaction.enable_adiabatic_cooling:
+            plasma_modules += adiabatic_cooling_properties
+
+        if config.plasma.continuum_interaction.enable_two_photon_decay:
+            plasma_modules += two_photon_properties
+
+        transition_probabilities_outputs = [
+            plasma_property.transition_probabilities_outputs
+            for plasma_property in plasma_modules
+            if issubclass(plasma_property, TransitionProbabilitiesProperty)
+        ]
+        transition_probabilities_outputs = [
+            item
+            for sublist in transition_probabilities_outputs
+            for item in sublist
+        ]
+
+        property_kwargs[MarkovChainTransProbsCollector] = {
+            &quot;inputs&quot;: transition_probabilities_outputs
+        }
+
+        kwargs.update(
+            gamma_estimator=None,
+            bf_heating_coeff_estimator=None,
+            stim_recomb_cooling_coeff_estimator=None,
+            alpha_stim_estimator=None,
+            volume=model.volume,
+            r_inner=model.r_inner,
+            t_inner=model.t_inner,
+        )
+    if config.plasma.radiative_rates_type == &quot;blackbody&quot;:
+        plasma_modules.append(JBluesBlackBody)
+    elif config.plasma.radiative_rates_type == &quot;dilute-blackbody&quot;:
+        plasma_modules.append(JBluesDiluteBlackBody)
+    elif config.plasma.radiative_rates_type == &quot;detailed&quot;:
+        plasma_modules += detailed_j_blues_properties + detailed_j_blues_inputs
+        kwargs.update(
+            r_inner=model.r_inner,
+            t_inner=model.t_inner,
+            volume=model.volume,
+            j_blue_estimator=None,
+        )
+        property_kwargs[JBluesDetailed] = {&quot;w_epsilon&quot;: config.plasma.w_epsilon}
+    else:
+        raise ValueError(
+            f&quot;radiative_rates_type type unknown - {config.plasma.radiative_rates_type}&quot;
+        )
+
+    if config.plasma.excitation == &quot;lte&quot;:
+        plasma_modules += lte_excitation_properties
+    elif config.plasma.excitation == &quot;dilute-lte&quot;:
+        plasma_modules += dilute_lte_excitation_properties
+
+    if config.plasma.ionization == &quot;lte&quot;:
+        plasma_modules += lte_ionization_properties
+    elif config.plasma.ionization == &quot;nebular&quot;:
+        plasma_modules += nebular_ionization_properties
+
+    if nlte_species:
+        plasma_modules += nlte_properties
+        nlte_conf = config.plasma.nlte
+        plasma_modules.append(LevelBoltzmannFactorNLTE.from_config(nlte_conf))
+        property_kwargs[StimulatedEmissionFactor] = dict(
+            nlte_species=nlte_species
+        )
+    else:
+        plasma_modules += non_nlte_properties
+
+    if config.plasma.line_interaction_type in (&quot;downbranch&quot;, &quot;macroatom&quot;):
+        if not config.plasma.continuum_interaction.species:
+            plasma_modules += macro_atom_properties
+
+    if &quot;delta_treatment&quot; in config.plasma:
+        property_kwargs[RadiationFieldCorrection] = dict(
+            delta_treatment=config.plasma.delta_treatment
+        )
+
+    if config.plasma.helium_treatment == &quot;recomb-nlte&quot;:
+        plasma_modules += helium_nlte_properties
+    elif config.plasma.helium_treatment == &quot;numerical-nlte&quot;:
+        plasma_modules += helium_numerical_nlte_properties
+        # TODO: See issue #633
+        if config.plasma.heating_rate_data_file in [&quot;none&quot;, None]:
+            raise PlasmaConfigError(&quot;Heating rate data file not specified&quot;)
+        else:
+            property_kwargs[HeliumNumericalNLTE] = dict(
+                heating_rate_data_file=config.plasma.heating_rate_data_file
+            )
+    else:
+        plasma_modules += helium_lte_properties
+
+    if model._electron_densities:
+        electron_densities = pd.Series(model._electron_densities.cgs.value)
+        if config.plasma.helium_treatment == &quot;numerical-nlte&quot;:
+            property_kwargs[IonNumberDensityHeNLTE] = dict(
+                electron_densities=electron_densities
+            )
+        else:
+            property_kwargs[IonNumberDensity] = dict(
+                electron_densities=electron_densities
+            )
+
+    kwargs[&quot;helium_treatment&quot;] = config.plasma.helium_treatment
+
+    plasma = BasePlasma(
+        plasma_properties=plasma_modules,
+        property_kwargs=property_kwargs,
+        **kwargs,
+    )
+
+    return plasma</div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2013-2022, TARDIS Collaboration.
+      <span class="lastupdated">Last updated on 24 Apr 2022.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
