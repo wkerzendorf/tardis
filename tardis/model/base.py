@@ -746,7 +746,7 @@ class Radial1DModel(HDFWriterMixin):
             ].index("electron_density")
             n_e_unit = u.Unit(csvy_model_config.datatype.fields[electron_density_field_index]["unit"])
             electron_densities = csvy_model_data["electron_density"].values * n_e_unit
-            electron_densities = electron_densities.to("g/cm^3")[1:]
+            electron_densities = electron_densities.to("1/cm^3")[1:].values
             electron_densities = electron_densities.insert(0, 0)
  
         no_of_shells = len(velocity) - 1
