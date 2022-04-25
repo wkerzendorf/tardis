@@ -632,6 +632,7 @@ class Radial1DModel(HDFWriterMixin):
             "density",
             "t_rad",
             "dilution_factor",
+            "electron_density"
         }
 
         if os.path.isabs(config.csvy_model):
@@ -679,7 +680,6 @@ class Radial1DModel(HDFWriterMixin):
                 )
 
         time_explosion = config.supernova.time_explosion.cgs
-
         electron_densities = None
         temperature = None
 
@@ -740,6 +740,15 @@ class Radial1DModel(HDFWriterMixin):
             density_0 = density_0.insert(0, 0)
             homologous_density = HomologousDensity(density_0, time_0)
 
+        if hasattr(csvy_model_config, "electron_density"):
+            electron_density_field_index = [
+                field["name"] for field in csvy_model_config.datatype.fields
+            ].index("electron_density")
+            n_e_unit = u.Unit(csvy_model_config.datatype.fields[electron_density_field_index]["unit"])
+            electron_densities = csvy_model_data["electron_density"].values * n_e_unit
+            electron_densities = electron_densities.to("g/cm^3")[1:]
+            electron_densities = electron_densities.insert(0, 0)
+ 
         no_of_shells = len(velocity) - 1
 
         # TODO -- implement t_radiative
