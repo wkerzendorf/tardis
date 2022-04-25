@@ -169,7 +169,7 @@ def convert_stella_to_csvy(fname, out_fname=None):
     csvy_meta["datatype"]["fields"].append(
         {
             "name": "density",
-            "unit": "g1/cm^3",
+            "unit": "g/cm^3",
             "desc": "Average density from stella",
         }
     )
