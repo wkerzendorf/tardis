@@ -29,6 +29,7 @@ STELLA_COL_MAPPER = {
     "avg opacity": "opacity",
     "outer edge m (g)": "mass_outer",
     "outer edge r (cm)": "r_outer",
+    "n_e" : "electron_density"
 }
 
 def read_stella(fname):
@@ -168,10 +169,19 @@ def convert_stella_to_csvy(fname, out_fname=None):
     csvy_meta["datatype"]["fields"].append(
         {
             "name": "density",
-            "unit": "g/cm^3",
+            "unit": "1/cm^3",
             "desc": "Average density from stella",
         }
     )
+    csvy_table["electron_density"] = stella_model.electron_density
+    csvy_meta["datatype"]["fields"].append(
+        {
+            "name": "electron_density",
+            "unit": "g/cm^3",
+            "desc": "Average electron density from stella",
+        }
+    )
+
 
     csvy_table["velocity"] = homologous_velocity.to(u.km / u.s).value
     csvy_meta["datatype"]["fields"].append(
