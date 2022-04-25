@@ -29,6 +29,7 @@ STELLA_COL_MAPPER = {
     "avg opacity": "opacity",
     "outer edge m (g)": "mass_outer",
     "outer edge r (cm)": "r_outer",
+    "n_e" : "electron_density"
 }
 
 def read_stella(fname):
@@ -151,7 +152,7 @@ def convert_stella_to_csvy(fname, out_fname=None):
     )
     # velocity needed for future check against homology
     #velocity = v_interpolator(stella_model["r_outer"].values) * u.cm / u.s
-    time_explosion = stella_meta.time_explosion.values * u.day
+    time_explosion = stella_meta.time_explosion.values[0] * u.day
     homologous_velocity = (
         stella_model.r_outer.values * u.cm / (time_explosion)
     )
@@ -172,6 +173,15 @@ def convert_stella_to_csvy(fname, out_fname=None):
             "desc": "Average density from stella",
         }
     )
+    csvy_table["electron_density"] = stella_model.electron_density
+    csvy_meta["datatype"]["fields"].append(
+        {
+            "name": "electron_density",
+            "unit": "1/cm^3",
+            "desc": "Average electron density from stella",
+        }
+    )
+
 
     csvy_table["velocity"] = homologous_velocity.to(u.km / u.s).value
     csvy_meta["datatype"]["fields"].append(
