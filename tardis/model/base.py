@@ -200,7 +200,7 @@ class SimulationState(HDFWriterMixin):
 
     def __init__(
         self,
-        velocity,
+        geometry,
         density,
         abundance,
         isotope_abundance,
@@ -223,8 +223,7 @@ class SimulationState(HDFWriterMixin):
         self._abundance = abundance
         self.time_explosion = time_explosion
         self._electron_densities = electron_densities
-        v_outer = self.velocity[1:]
-        v_inner = self.velocity[:-1]
+
         if len(density) != len(self.velocity) - 1:
             density = density[
                 self.v_boundary_inner_index
@@ -274,12 +273,6 @@ class SimulationState(HDFWriterMixin):
             density=density,
             elemental_mass_fraction=self.abundance,
             atomic_mass=atomic_mass,
-        )
-        geometry = Radial1DGeometry(
-            r_inner=self.time_explosion * v_inner,
-            r_outer=self.time_explosion * v_outer,
-            v_inner=v_inner,
-            v_outer=v_outer,
         )
         self.model_state = ModelState(
             composition=composition,
@@ -554,50 +547,18 @@ class SimulationState(HDFWriterMixin):
         """
         time_explosion = config.supernova.time_explosion.cgs
 
-        structure = config.model.structure
-        electron_densities = None
-        temperature = None
-        if structure.type == "specific":
-            velocity = quantity_linspace(
-                structure.velocity.start,
-                structure.velocity.stop,
-                structure.velocity.num + 1,
-            ).cgs
-            density = parse_config_v1_density(config)
-
-        elif structure.type == "file":
-            if os.path.isabs(structure.filename):
-                structure_fname = structure.filename
-            else:
-                structure_fname = os.path.join(
-                    config.config_dirname, structure.filename
-                )
-
-            (
-                time_0,
-                velocity,
-                density_0,
-                electron_densities,
-                temperature,
-            ) = read_density_file(structure_fname, structure.filetype)
-            density_0 = density_0.insert(0, 0)
-
-            density = calculate_density_after_time(
-                density_0, time_0, time_explosion
-            )
-
-        else:
-            raise NotImplementedError
-
-        # Note: This is the number of shells *without* taking in mind the
-        #       v boundaries.
-        no_of_shells = len(velocity) - 1
+        (
+            electron_densities,
+            temperature,
+            geometry,
+            density
+        ) = parse_structure_config(config.model.structure, time_explosion)
 
         if temperature is not None:
             t_radiative = temperature
         elif config.plasma.initial_t_rad > 0 * u.K:
             t_radiative = (
-                np.ones(no_of_shells + 1) * config.plasma.initial_t_rad
+                np.ones(geometry.no_of_shells + 1) * config.plasma.initial_t_rad
             )
         else:
             t_radiative = None
@@ -616,7 +577,7 @@ class SimulationState(HDFWriterMixin):
 
         if abundances_section.type == "uniform":
             abundance, isotope_abundance = read_uniform_abundances(
-                abundances_section, no_of_shells
+                abundances_section, geometry.no_of_shells
             )
 
         elif abundances_section.type == "file":
@@ -650,7 +611,6 @@ class SimulationState(HDFWriterMixin):
             elemental_mass = atom_data.atom_data.mass
 
         return cls(
-            velocity=velocity,
             density=density,
             abundance=abundance,
             isotope_abundance=isotope_abundance,
@@ -871,3 +831,51 @@ class SimulationState(HDFWriterMixin):
             v_boundary_outer=v_boundary_outer,
             electron_densities=electron_densities,
         )
+
+
+def parse_structure_config(config, time_explosion, enable_homology=True):
+    electron_densities = None
+    temperature = None
+    structure_config = config.model.structure
+    if structure_config.type == "specific":
+        velocity = quantity_linspace(
+            structure_config.velocity.start,
+            structure_config.velocity.stop,
+            structure_config.velocity.num + 1,
+        ).cgs
+        density = parse_config_v1_density(config)
+
+    elif structure_config.type == "file":
+        if os.path.isabs(structure_config.filename):
+            structure_config_fname = structure_config.filename
+        else:
+            structure_config_fname = os.path.join(
+                config.config_dirname, structure_config.filename
+            )
+
+        (
+            time_0,
+            velocity,
+            density_0,
+            electron_densities,
+            temperature,
+        ) = read_density_file(structure_config_fname, structure_config.filetype)
+        density_0 = density_0.insert(0, 0)
+
+        density = calculate_density_after_time(
+            density_0, time_0, time_explosion
+        )
+
+    else:
+        raise NotImplementedError
+
+    # Note: This is the number of shells *without* taking in mind the
+    #       v boundaries.
+
+    geometry = Radial1DGeometry(
+        velocity[:-1] * time_explosion, # r_inner
+        velocity[1:] * time_explosion, # r_outer
+        velocity[:-1], # v_inner
+        velocity[1:], # v_outer
+    )
+    return electron_densities, temperature, geometry, density
