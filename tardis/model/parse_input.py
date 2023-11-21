@@ -300,6 +300,11 @@ def convert_to_nuclide_mass_fraction(isotope_mass_fraction, mass_fraction):
         nuclide_mass_fraction = pd.concat(
             [nuclide_mass_fraction, isotope_mass_fraction]
         )
+    assert (
+        nuclide_mass_fraction < 0.0
+    ).sum().sum() == 0, (
+        "Nuclide mass fraction must be positive. Negative values found."
+    )
     return nuclide_mass_fraction
 
 
