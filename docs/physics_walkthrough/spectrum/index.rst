@@ -5,8 +5,8 @@ Spectrum Generation
 *******************
 
 During the final :ref:`Monte Carlo iteration <montecarlo>`, TARDIS calculates the emitted spectrum. We currently 
-employ three diiferent methods for doing this: a basic spectrum generation directly from the Monte Carlo packets,
-a method using so-called "virtual packets," and by the formal intrgral method. These are all detailed in the links
+employ three different methods for doing this: a basic spectrum generation directly from the Monte Carlo packets,
+a method using so-called "virtual packets," and by the formal integral method. These are all detailed in the links
 below.
 
 .. note::

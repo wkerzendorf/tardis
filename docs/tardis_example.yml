@@ -40,6 +40,8 @@ montecarlo:
   nthreads: 1
 
   last_no_of_packets: 1.e+5
+  # Virtual packets use tracker-based postprocessing
+  # After sim.run(), call sim.generate_virtual_spectrum() to create virtual packet spectrum
   no_of_virtual_packets: 10
 
   convergence_strategy:

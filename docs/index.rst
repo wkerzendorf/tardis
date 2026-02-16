@@ -109,6 +109,7 @@ Mission Statement
     API <api/modules>
     reference/faq
     reference/visualization_reference
+    reference/conceptual_changelog/README
     io/configuration/index
     io/hdf/index
     contributing/CHANGELOG.md 

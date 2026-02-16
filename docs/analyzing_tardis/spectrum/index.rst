@@ -7,4 +7,4 @@ Analyzing TARDIS Spectra
     
     spectrum-visualization-notebook
     sdec_notebook
-
+    virtual_packet_postprocessing

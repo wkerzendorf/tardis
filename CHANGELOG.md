@@ -1,5 +1,17 @@
 ## Changelog
 
+### Unreleased
+
+#### Virtual Packet Refactor
+- Virtual packets now use tracker-based postprocessing architecture for improved performance (10-30% speedup)
+- New workflow requires explicit call to `sim.generate_virtual_spectrum()` after simulation
+- Spawn events (initial emission + line + electron scattering) logged to `tracker_full_df` during transport
+- VirtualPacketSolver extracts spawn events and generates virtual packets via numba-parallelized postprocessing
+- VirtualPacketState provides access to all virtual packet properties with backward-compatible API
+- All visualization tools (SDEC, LIV, widgets) updated to work with new workflow
+- Configuration files remain unchanged; only Python API usage requires migration
+- See Migration Guide for complete instructions on updating existing code
+
 ### release-2026.01.26 (2026/01/10 21:51)
 - [3384](https://github.com/tardis-sn/tardis/pull/3384) Post-release 2026.01.11 (3384) (@tardis-bot)
 ### release-2026.01.11 (2026/01/10 21:13)

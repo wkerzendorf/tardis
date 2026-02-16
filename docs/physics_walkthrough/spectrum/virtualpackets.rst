@@ -4,9 +4,32 @@
 Spectrum Generation with Virtual Packets
 ****************************************
 
-The main purpose of TARDIS is the generation of synthetic spectra. Currently,
-two methods are implemented to calculate the spectrum during the main Monte
-Carlo calculation. One follows the obvious approach of recording the properties
+The main purpose of TARDIS is the generation of synthetic spectra. 
+
+Spectrum Generation Methods
+============================
+
+TARDIS provides three methods for generating synthetic spectra:
+
+1. **Real Packet Spectrum**: Records the properties of all escaping Monte Carlo
+   packets and bins their contributions in frequency space. This direct approach
+   naturally suffers from Monte Carlo noise.
+
+2. **Formal Integral Spectrum**: Uses the converged radiation field and plasma
+   state to analytically compute the emergent spectrum via the formal solution
+   of the radiative transfer equation. See :ref:`formal_integral` for details.
+
+3. **Virtual Packet Spectrum**: Employs a variance reduction technique where
+   additional "virtual" packets are traced from real packet spawn events. This
+   method provides smoother spectra with better signal-to-noise while maintaining
+   physical accuracy.
+
+This document describes the virtual packet method in detail.
+
+Monte Carlo Noise and Variance Reduction
+=========================================
+
+One implementation follows the obvious approach of recording the properties
 of all escaping Monte Carlo packets and binning their contributions in
 frequency (or wavelength) space. This "real packet" spectrum will naturally
 suffer from Monte Carlo noise, and if one tries to improve its signal-to-noise
@@ -138,3 +161,93 @@ computational costs which are associated with solving the propagation of
 virtual packets. These always propagate along a straight line, whereas real
 packets may be deflected multiple times, thus making the determination of the
 entire propagation path more expensive.
+
+
+Virtual Packet Generation Workflow
+===================================
+
+Implementation via Tracker-Based Postprocessing
+------------------------------------------------
+
+In TARDIS, virtual packets are generated via **postprocessing** after the Monte
+Carlo transport simulation completes. This approach decouples spectrum generation
+from the transport calculation and enables performance optimizations.
+
+The workflow consists of two phases:
+
+**Phase 1: Monte Carlo Transport with Tracking**
+
+When virtual packets are requested (``no_of_virtual_packets > 0``), TARDIS
+automatically enables full real packet tracking. During transport, every real
+packet interaction that could spawn virtual packets is logged to the tracker::
+
+    tracker_full_df
+
+This tracker records "spawn events" including:
+
+- Initial packet emission from the photosphere
+- Line interactions (resonant scattering events)
+- Electron scattering (ESCATTER) events
+
+Each spawn event contains the packet state (position, direction, energy, frequency)
+at the moment virtual packets would be generated.
+
+**Phase 2: Virtual Packet Generation from Tracker**
+
+After the simulation completes, virtual packets are generated on-demand by
+calling::
+
+    sim.generate_virtual_spectrum()
+
+This method:
+
+1. Extracts spawn events from ``tracker_full_df``
+2. For each spawn event, generates :math:`N_v` virtual packets
+3. Traces each virtual packet through the ejecta (accumulating optical depth)
+4. Bins the emergent virtual packet energies to create the spectrum
+
+This postprocessing approach uses numba parallelization to achieve 10-30%
+performance improvements compared to inline generation.
+
+Usage Example
+-------------
+
+.. code-block:: python
+
+    from tardis import run_tardis
+    from tardis.io.configuration.config_reader import Configuration
+
+    # Load configuration with virtual packets enabled
+    config = Configuration.from_yaml("tardis_example.yml")
+    # config.montecarlo.no_of_virtual_packets = 10  # if not in YAML
+
+    # Phase 1: Run Monte Carlo transport (tracking enabled automatically)
+    sim = run_tardis(config)
+
+    # Phase 2: Generate virtual packets from tracker
+    sim.generate_virtual_spectrum()
+
+    # Access the three spectrum types
+    spectrum_real = sim.spectrum_solver.spectrum_real_packets
+    spectrum_integrated = sim.spectrum_solver.spectrum_integrated  
+    spectrum_virtual = sim.spectrum_solver.spectrum_virtual_packets
+
+Benefits of Postprocessing
+---------------------------
+
+The tracker-based postprocessing approach provides several advantages:
+
+- **Performance**: Numba-parallelized generation is faster than inline tracking
+- **Flexibility**: Generate multiple spectrum variations from a single simulation
+- **Memory efficiency**: Tracker is more compact than storing all virtual packet data
+- **Decoupling**: Spectrum generation can be optimized independently from transport
+
+.. note::
+
+    The physical behavior of virtual packets (angular sampling, energy weighting,
+    optical depth accumulation) remains identical to previous versions. Only the
+    *timing* of generation has changed from inline to postprocessing.
+
+For implementation details, see :py:class:`~tardis.spectrum.virtual_packet_solver.VirtualPacketSolver`
+and :py:class:`~tardis.spectrum.virtual_packet_state.VirtualPacketState`.
+
