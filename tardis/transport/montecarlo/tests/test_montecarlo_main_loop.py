@@ -77,10 +77,14 @@ def test_montecarlo_transport_vpacket_log(
     montecarlo_transport_simulation.run_convergence()
     montecarlo_transport_simulation.run_final()
 
+    # Generate virtual packets via postprocessing
+    montecarlo_transport_simulation.generate_virtual_spectrum()
+
     transport = montecarlo_transport_simulation.transport
 
     assert transport.montecarlo_configuration.ENABLE_VPACKET_TRACKING is True
 
+    # TODO: Update regression data - virtual packet data now stored in spectrum_solver instead of transport_state
     expected_hdf_store = regression_data.sync_hdf_store(
         montecarlo_transport_simulation
     )
@@ -98,10 +102,10 @@ def test_montecarlo_transport_vpacket_log(
         "/simulation/transport/transport_state/j_estimator"
     ]
     expected_vpacket_log_nus = expected_hdf_store[
-        "/simulation/transport/transport_state/virt_packet_nus"
+        "/simulation/spectrum_solver/virtual_packet_state/nus"
     ]
     expected_vpacket_log_energies = expected_hdf_store[
-        "/simulation/transport/transport_state/virt_packet_energies"
+        "/simulation/spectrum_solver/virtual_packet_state/energies"
     ]
 
     transport_state = transport.transport_state
@@ -110,8 +114,10 @@ def test_montecarlo_transport_vpacket_log(
     actual_nu = transport_state.packet_collection.output_nus
     actual_nu_bar_estimator = transport_state.nu_bar_estimator
     actual_j_estimator = transport_state.j_estimator
-    actual_vpacket_log_nus = transport_state.vpacket_tracker.nus
-    actual_vpacket_log_energies = transport_state.vpacket_tracker.energies
+    actual_vpacket_log_nus = (
+        montecarlo_transport_simulation.spectrum_solver.virtual_packet_state.nus
+    )
+    actual_vpacket_log_energies = montecarlo_transport_simulation.spectrum_solver.virtual_packet_state.energies
 
     expected_hdf_store.close()
     # Compare

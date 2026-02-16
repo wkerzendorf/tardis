@@ -24,8 +24,6 @@ from tardis.transport.montecarlo.modes.classic.packet_propagation import (
 )
 from tardis.transport.montecarlo.packets.packet_collections import (
     PacketCollection,
-    VPacketCollection,
-    consolidate_vpacket_tracker,
 )
 from tardis.transport.montecarlo.packets.radiative_packet import (
     PacketStatus,
@@ -41,13 +39,9 @@ def montecarlo_transport(
     time_explosion: float,
     opacity_state_numba: OpacityStateNumba,
     montecarlo_configuration: MonteCarloConfiguration,
-    spectrum_frequency_grid: np.ndarray,
     trackers: List,
-    number_of_vpackets: int,
     show_progress_bars: bool,
 ) -> tuple[
-    np.ndarray,
-    VPacketCollection,
     type,
     type,
 ]:
@@ -72,42 +66,19 @@ def montecarlo_transport(
     montecarlo_configuration : MonteCarloConfiguration
         Configuration object containing Monte Carlo simulation parameters
         and flags for various physics modules
-    spectrum_frequency_grid : np.ndarray
-        Frequency grid array for virtual packet spectrum calculation
     trackers : List
         List of packet trackers for detailed packet interaction logging
-    number_of_vpackets : int
-        Number of virtual packets to spawn per real packet interaction
     show_progress_bars : bool
         Flag to enable/disable progress bar updates during simulation
 
     Returns
     -------
-    tuple[np.ndarray, VPacketCollection, type, type]
+    tuple[type, type]
         A tuple containing:
-        - v_packets_energy_hist : Energy histogram of virtual packets binned by frequency
-        - vpacket_tracker : Consolidated virtual packet collection
         - estimators_bulk : Updated bulk radiation field estimator object
         - estimators_line : Updated line radiation field estimator object
     """
     no_of_packets = len(packet_collection.initial_nus)
-
-    v_packets_energy_hist = np.zeros_like(spectrum_frequency_grid)
-    delta_nu = spectrum_frequency_grid[1] - spectrum_frequency_grid[0]
-
-    # Pre-allocate a list of vpacket collections for later storage
-    vpacket_collections = List()
-    for i in range(no_of_packets):
-        vpacket_collections.append(
-            VPacketCollection(
-                i,
-                spectrum_frequency_grid,
-                montecarlo_configuration.VPACKET_SPAWN_START_FREQUENCY,
-                montecarlo_configuration.VPACKET_SPAWN_END_FREQUENCY,
-                number_of_vpackets,
-                montecarlo_configuration.TEMPORARY_V_PACKET_BINS,
-            )
-        )
 
     # Get the ID of the main thread and the number of threads
     main_thread_id = get_thread_id()
@@ -157,8 +128,6 @@ def montecarlo_transport(
         estimators_bulk_thread = estimators_bulk_list_thread[thread_id]
         estimators_line_thread = estimators_line_list_thread[thread_id]
 
-        # Get the thread-local v_packet_collection for this thread
-        vpacket_collection = vpacket_collections[i]
         # RPacket Tracker for this thread
         tracker = trackers[i]
 
@@ -169,7 +138,6 @@ def montecarlo_transport(
             opacity_state_numba,
             estimators_bulk_thread,
             estimators_line_thread,
-            vpacket_collection,
             tracker,
             montecarlo_configuration,
         )
@@ -184,46 +152,13 @@ def montecarlo_transport(
         # Finalize the tracker (e.g. trim arrays to actual size)
         tracker.finalize()
 
-        # Finalize the vpacket collection to trim arrays to actual size
-        vpacket_collection.finalize_arrays()
-
-        v_packets_idx = np.floor(
-            (vpacket_collection.nus - spectrum_frequency_grid[0]) / delta_nu
-        ).astype(np.int64)
-
-        for j, idx in enumerate(v_packets_idx):
-            if (vpacket_collection.nus[j] < spectrum_frequency_grid[0]) or (
-                vpacket_collection.nus[j] > spectrum_frequency_grid[-1]
-            ):
-                continue
-            v_packets_energy_hist[idx] += vpacket_collection.energies[j]
-
     for estimator_thread in estimators_bulk_list_thread:
         estimators_bulk.increment(estimator_thread)
 
     for estimator_thread in estimators_line_list_thread:
         estimators_line.increment(estimator_thread)
 
-    if montecarlo_configuration.ENABLE_VPACKET_TRACKING:
-        vpacket_tracker = consolidate_vpacket_tracker(
-            vpacket_collections,
-            spectrum_frequency_grid,
-            montecarlo_configuration.VPACKET_SPAWN_START_FREQUENCY,
-            montecarlo_configuration.VPACKET_SPAWN_END_FREQUENCY,
-        )
-    else:
-        vpacket_tracker = VPacketCollection(
-            -1,
-            spectrum_frequency_grid,
-            montecarlo_configuration.VPACKET_SPAWN_START_FREQUENCY,
-            montecarlo_configuration.VPACKET_SPAWN_END_FREQUENCY,
-            -1,
-            1,
-        )
-
     return (
-        v_packets_energy_hist,
-        vpacket_tracker,
         estimators_bulk,
         estimators_line,
     )

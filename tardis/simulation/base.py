@@ -1,5 +1,6 @@
 import logging
 import time
+import warnings
 from collections import OrderedDict
 
 import numpy as np
@@ -29,10 +30,12 @@ from tardis.spectrum.formal_integral.formal_integral_solver import (
 from tardis.spectrum.luminosity import (
     calculate_filtered_luminosity,
 )
-from tardis.transport.montecarlo.modes.classic.solver import MCTransportSolverClassic
 from tardis.transport.montecarlo.configuration import montecarlo_globals
 from tardis.transport.montecarlo.estimators.continuum_radfield_properties import (
     MCContinuumPropertiesSolver,
+)
+from tardis.transport.montecarlo.modes.classic.solver import (
+    MCTransportSolverClassic,
 )
 from tardis.transport.montecarlo.progress_bars import initialize_iterations_pbar
 from tardis.util.environment import Environment
@@ -175,6 +178,16 @@ class Simulation(PlasmaStateStorerMixin, HDFWriterMixin):
         self.spectrum_solver = spectrum_solver
         self.show_progress_bars = show_progress_bars
         self.version = tardis.__version__
+
+        # Deprecation warning for virtual packets (now postprocessing-only)
+        if self.no_of_virtual_packets > 0:
+            warnings.warn(
+                "Virtual packets are now generated via postprocessing (not inline during MC transport). "
+                "After running the simulation, call sim.generate_virtual_spectrum() to generate virtual packets. "
+                "Full rpacket tracking is automatically enabled when no_of_virtual_packets > 0.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
         # Convergence
         self.convergence_strategy = convergence_strategy
@@ -483,7 +496,8 @@ class Simulation(PlasmaStateStorerMixin, HDFWriterMixin):
             iteration=self.iterations_executed,
         )
 
-        v_packets_energy_hist = self.transport.run(
+        # transport.run() returns None (vpackets are now postprocessing-only)
+        self.transport.run(
             transport_state,
             show_progress_bars=self.show_progress_bars,
         )
@@ -527,7 +541,7 @@ class Simulation(PlasmaStateStorerMixin, HDFWriterMixin):
 
         self.log_run_results(emitted_luminosity, reabsorbed_luminosity)
         self.iterations_executed += 1
-        return emitted_luminosity, v_packets_energy_hist
+        return emitted_luminosity
 
     def run_convergence(self):
         """
@@ -546,9 +560,7 @@ class Simulation(PlasmaStateStorerMixin, HDFWriterMixin):
                 self.plasma.electron_densities,
                 self.simulation_state.t_inner,
             )
-            emitted_luminosity, v_packets_energy_hist = self.iterate(
-                self.no_of_packets
-            )
+            emitted_luminosity = self.iterate(self.no_of_packets)
             self.converged = self.advance_state(emitted_luminosity)
             if hasattr(self, "convergence_plots"):
                 self.convergence_plots.update()
@@ -575,7 +587,7 @@ class Simulation(PlasmaStateStorerMixin, HDFWriterMixin):
         )
 
         # Set up spectrum solver integrator and virtual spectrum
-        emitted_luminosity, v_packets_energy_hist = self.iterate(
+        emitted_luminosity = self.iterate(
             self.last_no_of_packets, self.no_of_virtual_packets
         )
 
@@ -588,7 +600,7 @@ class Simulation(PlasmaStateStorerMixin, HDFWriterMixin):
 
         self.spectrum_solver.setup_optional_spectra(
             self.transport.transport_state,
-            v_packets_energy_hist,
+            None,  # virtual_packet_luminosity is now generated via postprocessing
             formal_integral_solver,
             self.simulation_state,
             self.transport,
@@ -610,6 +622,57 @@ class Simulation(PlasmaStateStorerMixin, HDFWriterMixin):
             )
 
         self._call_back()
+
+    def generate_virtual_spectrum(self):
+        """
+        Generate virtual packets via postprocessing from tracker data.
+
+        This method delegates to the SpectrumSolver's generate_virtual_spectrum
+        method, which creates virtual packets from rpacket tracker data in
+        postprocessing (not inline during MC transport).
+
+        Returns
+        -------
+        VirtualPacketState
+            State containing virtual packet data and spectrum
+
+        Notes
+        -----
+        Requires that the simulation was run with tracking enabled and
+        no_of_virtual_packets > 0 in the configuration.
+
+        Raises
+        ------
+        ValueError
+            If tracking is not enabled or tracker_full_df is None
+
+        Examples
+        --------
+        >>> sim = Simulation.from_config(config)
+        >>> sim.run()
+        >>> sim.generate_virtual_spectrum()  # Generate vpackets in postprocessing
+        >>> sim.spectrum_solver.spectrum_virtual_packets  # Access virtual spectrum
+        """
+        if self.no_of_virtual_packets == 0:
+            warnings.warn(
+                "no_of_virtual_packets is 0. No virtual packets will be generated. "
+                "Set montecarlo.no_of_virtual_packets > 0 in your configuration.",
+                UserWarning,
+            )
+            return None
+
+        # Get configuration parameters
+        montecarlo_config = self.transport.montecarlo_configuration
+
+        return self.spectrum_solver.generate_virtual_spectrum(
+            number_of_vpackets=self.no_of_virtual_packets,
+            enable_full_relativity=montecarlo_config.ENABLE_FULL_RELATIVITY,
+            tau_russian=montecarlo_config.VPACKET_TAU_RUSSIAN,
+            survival_probability=montecarlo_config.SURVIVAL_PROBABILITY,
+            v_packet_spawn_start_frequency=montecarlo_config.VPACKET_SPAWN_START_FREQUENCY,
+            v_packet_spawn_end_frequency=montecarlo_config.VPACKET_SPAWN_END_FREQUENCY,
+            temporary_v_packet_bins=montecarlo_config.TEMPORARY_V_PACKET_BINS,
+        )
 
     def log_plasma_state(
         self,

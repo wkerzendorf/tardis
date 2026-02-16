@@ -193,7 +193,6 @@ class MCTransportSolverClassic(HDFWriterMixin):
         set_num_threads(self.nthreads)
         self.transport_state = transport_state
 
-        number_of_vpackets = self.montecarlo_configuration.NUMBER_OF_VPACKETS
         number_of_rpackets = len(transport_state.packet_collection.initial_nus)
 
         if self.enable_rpacket_tracking:
@@ -211,10 +210,8 @@ class MCTransportSolverClassic(HDFWriterMixin):
         if show_progress_bars:
             reset_packet_pbar(number_of_rpackets)
 
-        # Classic mode: returns 4 values (no continuum estimators)
+        # Classic mode: returns 2 values (estimators only, no vpackets)
         (
-            v_packets_energy_hist,
-            vpacket_tracker,
             estimators_bulk,
             estimators_line,
         ) = montecarlo_transport(
@@ -223,9 +220,7 @@ class MCTransportSolverClassic(HDFWriterMixin):
             transport_state.time_explosion.cgs.value,
             transport_state.opacity_state,
             self.montecarlo_configuration,
-            self.spectrum_frequency_grid.value,
             trackers_list,
-            number_of_vpackets,
             show_progress_bars=show_progress_bars,
         )
 
@@ -235,11 +230,6 @@ class MCTransportSolverClassic(HDFWriterMixin):
 
         # Last interaction trackers are already populated directly in the list
         # No finalization needed with direct list approach
-
-        if self.montecarlo_configuration.ENABLE_VPACKET_TRACKING and (
-            number_of_vpackets > 0
-        ):
-            transport_state.vpacket_tracker = vpacket_tracker
 
         update_iterations_pbar(1)
         refresh_packet_pbar()
@@ -261,12 +251,6 @@ class MCTransportSolverClassic(HDFWriterMixin):
             self.transport_state.tracker_last_interaction_df = (
                 trackers_last_interaction_to_df(trackers_list)
             )
-
-        transport_state.virt_logging = (
-            self.montecarlo_configuration.ENABLE_VPACKET_TRACKING
-        )
-
-        return v_packets_energy_hist
 
     @classmethod
     def from_config(
@@ -352,7 +336,10 @@ class MCTransportSolverClassic(HDFWriterMixin):
                 config.spectrum.virtual.virtual_packet_logging
                 | enable_virtual_packet_logging
             ),
-            enable_rpacket_tracking=config.montecarlo.tracking.track_rpacket,
+            enable_rpacket_tracking=(
+                config.montecarlo.tracking.track_rpacket
+                or config.montecarlo.no_of_virtual_packets > 0
+            ),
             nthreads=config.montecarlo.nthreads,
             use_gpu=use_gpu,
             montecarlo_configuration=montecarlo_configuration,

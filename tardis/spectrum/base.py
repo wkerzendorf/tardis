@@ -6,6 +6,7 @@ from astropy import units as u
 from tardis.io.hdf_writer_mixin import HDFWriterMixin
 from tardis.spectrum.formal_integral.base import IntegrationError
 from tardis.spectrum.spectrum import TARDISSpectrum
+from tardis.spectrum.virtual_packet_solver import VirtualPacketSolver
 from tardis.util.base import (
     quantity_linspace,
 )
@@ -33,10 +34,19 @@ class SpectrumSolver(HDFWriterMixin):
         self._integrator = None
         self.integrator_settings = integrator_settings
         self._spectrum_integrated = None
+        self.virtual_packet_state = None
+        self.virtual_packet_solver = None
 
     def setup_optional_spectra(
-        self, transport_state, virtual_packet_luminosity=None, integrator=None,
-        simulation_state=None, transport=None, plasma=None, opacity_state=None, macro_atom_state=None
+        self,
+        transport_state,
+        virtual_packet_luminosity=None,
+        integrator=None,
+        simulation_state=None,
+        transport=None,
+        plasma=None,
+        opacity_state=None,
+        macro_atom_state=None,
     ):
         """Set up the solver to handle real and virtual spectra
 
@@ -75,11 +85,20 @@ class SpectrumSolver(HDFWriterMixin):
 
     @property
     def spectrum_virtual_packets(self):
+        # Use VirtualPacketState if available (postprocessing), otherwise fall back to old method
+        if self.virtual_packet_state is not None:
+            luminosity = (
+                u.Quantity(self.virtual_packet_state.luminosity, "erg / s")[:-1]
+                / self.transport_state.time_of_simulation.value
+            )
+            return TARDISSpectrum(self.spectrum_frequency_grid, luminosity)
+
         if np.all(self.montecarlo_virtual_luminosity == 0):
             warnings.warn(
                 "SpectrumSolver.spectrum_virtual_packets "
-                "is zero. Please run the montecarlo simulation with "
-                "no_of_virtual_packets > 0",
+                "is zero. Virtual packets are now generated via postprocessing. "
+                "Please call sim.generate_virtual_spectrum() after running the simulation "
+                "with no_of_virtual_packets > 0",
                 UserWarning,
             )
 
@@ -164,6 +183,87 @@ class SpectrumSolver(HDFWriterMixin):
             self._montecarlo_virtual_luminosity[:-1]
             / self.transport_state.time_of_simulation.value
         )
+
+    def generate_virtual_spectrum(
+        self,
+        number_of_vpackets,
+        enable_full_relativity=False,
+        tau_russian=10.0,
+        survival_probability=0.0,
+        v_packet_spawn_start_frequency=0.0,
+        v_packet_spawn_end_frequency=np.inf,
+        temporary_v_packet_bins=10000,
+    ):
+        """
+        Generate virtual packets via postprocessing from tracker data.
+
+        This method creates a VirtualPacketSolver, extracts spawn events from
+        the tracker data, and generates virtual packets in postprocessing.
+
+        Parameters
+        ----------
+        number_of_vpackets : int
+            Number of virtual packets to generate per spawn event
+        enable_full_relativity : bool, optional
+            Enable full relativistic effects, by default False
+        tau_russian : float, optional
+            Russian roulette optical depth threshold, by default 10.0
+        survival_probability : float, optional
+            Survival probability for Russian roulette, by default 0.0
+        v_packet_spawn_start_frequency : float, optional
+            Start frequency for vpacket spawning [Hz], by default 0.0
+        v_packet_spawn_end_frequency : float, optional
+            End frequency for vpacket spawning [Hz], by default np.inf
+        temporary_v_packet_bins : int, optional
+            Initial size of temporary storage arrays, by default 10000
+
+        Returns
+        -------
+        VirtualPacketState
+            State containing virtual packet data and spectrum
+
+        Notes
+        -----
+        Requires that the simulation was run with tracking enabled.
+        The tracker_full_df must be available in transport_state.
+        """
+        if self.transport_state.tracker_full_df is None:
+            raise ValueError(
+                "Cannot generate virtual packets: tracker_full_df is None. "
+                "Please run the simulation with tracking enabled "
+                "(set rpacket_tracking to True in the montecarlo configuration)."
+            )
+
+        if number_of_vpackets == 0:
+            warnings.warn(
+                "number_of_vpackets is 0. No virtual packets will be generated.",
+                UserWarning,
+            )
+
+        # Create solver if not already created or if parameters changed
+        self.virtual_packet_solver = VirtualPacketSolver(
+            enable_full_relativity=enable_full_relativity,
+            tau_russian=tau_russian,
+            survival_probability=survival_probability,
+            v_packet_spawn_start_frequency=v_packet_spawn_start_frequency,
+            v_packet_spawn_end_frequency=v_packet_spawn_end_frequency,
+            number_of_vpackets=number_of_vpackets,
+            temporary_v_packet_bins=temporary_v_packet_bins,
+        )
+
+        # Generate virtual packets
+        self.virtual_packet_state = (
+            self.virtual_packet_solver.generate_virtual_packets(
+                self.transport_state.tracker_full_df,
+                self.transport_state.geometry_state,
+                self.transport_state.opacity_state,
+                self.transport_state.time_explosion.cgs.value,
+                self.spectrum_frequency_grid.value,
+                self.transport_state.time_of_simulation.cgs.value,
+            )
+        )
+
+        return self.virtual_packet_state
 
     def solve(self, transport_state):
         """Solve the spectra

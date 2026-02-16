@@ -70,6 +70,9 @@ class TestTransportSimple:
         simulation.run_convergence()
         simulation.run_final()
 
+        # Generate virtual packets via postprocessing
+        simulation.generate_virtual_spectrum()
+
         request.cls.regression_data = RegressionData(request)
         data = request.cls.regression_data.sync_hdf_store(simulation)
 
