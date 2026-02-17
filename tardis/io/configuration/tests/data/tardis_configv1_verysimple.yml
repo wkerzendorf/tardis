@@ -35,7 +35,7 @@ montecarlo:
     no_of_packets : 2.0e+5
     iterations: 5
     last_no_of_packets: 5.0e+5
-    no_of_virtual_packets: 5
+    no_of_virtual_packets: 0  # Set to 0 for performance; enable explicitly in tests that need vpackets
     convergence_strategy:
         type: damped
         damping_constant: 0.5
@@ -48,4 +48,4 @@ spectrum:
     stop: 20000 angstrom
     num: 10000
     virtual:
-        virtual_packet_logging: True
+        virtual_packet_logging: False  # Disabled by default; enable explicitly in vpacket tests
